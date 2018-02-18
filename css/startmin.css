@@ -125,6 +125,7 @@ body {
 
 .sidebar ul li a.activeLayer{
 	background-color:#286090;
+	color : #FFFFFF;
 }
 
 .sidebar .arrow {
