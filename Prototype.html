@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Prototype Mapbox GL</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <link href="css/startmin.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+
+    <!-- API MAPBOX GL-->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css' rel='stylesheet' />
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+</head>
+<body>
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
+
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+
+
+
+        <!-- Sidebar -->
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+
+
+
+        		<!-- Search bar -->
+
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search">
+                        <div class="input-group custom-search-form">
+                            <input id= "searchfield" type="text" class="form-control" placeholder="Rechercher...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                        </div>
+                    </li>
+
+
+
+        		<!-- Gestion des couches -->
+
+
+
+                    <li>
+                        <a href="#">Zoomer sur un campus<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#" id = "Villejean">Villejean</a>
+                            </li>
+                            <li>
+                                <a href="#" id = "LaHarpe">La Harpe</a>
+                            </li>
+                            <li>
+                                <a href="#" id = "Mazier">Mazier (St Brieuc)</a>
+                            </li>                            
+                        </ul>
+                    </li>                    
+
+
+					<li>
+                        <a href="#">Amphis et salles spécifiques<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Amphithéâtres</a>
+                            </li>
+                            <li>
+                                <a href="#">Salles des conseils</a>
+                            </li>                            
+                            <li>
+                                <a href="#">Salle Jacques Léonard</a>
+                            </li>
+                            <li>
+                                <a href="#">Salle Pina Bausch</a>
+                            </li>
+                            <li>
+                                <a href="#">Salles Kennedy</a>
+                            </li>
+                            <li>
+                                <a href="#">...</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+					<li>
+                        <a href="#">Scolarité et Administration<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Scolarités</a>
+                            </li>
+                            <li>
+                                <a href="#">Secrétariat</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+
+					<li>
+                        <a href="#">Bibliothèques et Culture<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Bibliothèques</a>
+                            </li>
+                            <li>
+                                <a href="#">Le Tambour</a>
+                            </li>
+                            <li>
+                                <a href="#">Galerie arts et essais</a>
+                            </li>                            
+                        </ul>
+                    </li>
+
+
+
+
+					<li>
+                        <a href="#">Logement et restauration<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Restaurant universitaire</a>
+                            </li>
+                            <li>
+                                <a href="#">Caféterias</a>
+                            </li>
+                            <li>
+                                <a href="#">Machines à café</a>
+                            </li>
+                            <li>
+                                <a href="#">Résidences universitaires</a>
+                            </li>                            
+                        </ul>
+                    </li>
+
+
+
+
+					<li>
+                        <a href="#">Sport et santé<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Equipements sportifs</a>
+                            </li>
+                            <li>
+                                <a href="#">Pole santé</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+
+                    <li>
+                        <a href="#">Vie associative<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Associations</a>
+                            </li>
+                            <li>
+                                <a href="#">Ressourcerie</a>
+                            </li>
+                            <li>
+                                <a href="#">Le potager</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="#">Services divers<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level" >
+                            <li>
+                                <a href="#">Toilettes</a>
+                            </li>
+                            <li id = "sallesInfo">
+                                
+                            </li>
+                            <li>
+                                <a href="#">Copieur</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="#">Mobilités et accessibilité<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Se déplacer sur le campus <span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="#">Ascenceurs</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Escaliers</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Accès PMR</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Cheminements accessibles</a>
+                                    </li>                                                                                                             
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="#">Accéder au campus <span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="#">Réseau de bus</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Métro</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Stations vélostar</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Parking</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Places handicapé</a>
+                                    </li>                                                                                                                                                   
+                                </ul>
+                            </li>	
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+     <div id="page-wrapper" style = "padding:0">
+        <div class="container-fluid" style = "padding-left:0;padding-right:0;padding-top : 0;padding-bottom : 0;margin-right: 0;margin-top : 0;margin-left: :0;margin-bottom : 0">
+
+            <div class="row">
+                <div class="col-lg-12">
+                </div>
+            </div>
+
+            <div id="map" style="position:relative;margin-top:45px;margin-right:0;margin-left:0;margin-bottom:0;padding-right : 0:padding-left : 0; padding-top:0;padding-bottom:0;z-index:1;height:580px"></div>
+        
+        </div>
+    </div>
+
+</div>
+
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="js/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="js/startmin.js"></script>
+
+
+<script>
+
+    mapboxgl.accessToken = 'undefined';
+    map = new mapboxgl.Map({
+        container: 'map',
+        style: {
+            version: 8,
+            sources: {
+                "raster-tiles": {
+                    type: "raster",
+                    tiles: [
+                        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    ],
+                    tileSize: 256
+                }
+            },
+            layers: [{
+                id: "simple-tiles",
+                type: "raster",
+                source: "raster-tiles",
+                minzoom: 0,
+                maxzoom: 19
+            }]
+        },
+        center: [-1.7013, 48.119365], // starting position [lng, lat]
+        zoom: 15,
+        pitch : 35
+    });
+
+  //  var map = new mapboxgl.Map({
+  //      container: 'map', // container id
+ //       style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
+ //       center: [-1.7013, 48.119365], // starting position [lng, lat]
+  //      zoom: 15,
+ //       pitch : 35, // starting zoom
+//    });
+
+
+    var batiCentroids = (function (){
+        var json = null;
+
+        $.ajax({
+            'async':false,
+            'global':false,
+            'url' : "data/batiments_centroides.geojson",
+            'dataType' : "json",
+            'success' : function(data){
+                json = data;
+            }
+                });
+            return json;
+    })();
+
+
+    var campus = (function (){
+        var json = null;
+
+        $.ajax({
+            'async':false,
+            'global':false,
+            'url' : "data/campus.geojson",
+            'dataType' : "json",
+            'success' : function(data){
+                json = data;
+            }
+                });
+            return json;
+    })();
+
+
+
+    var bati = (function (){
+        var json = null;
+
+        $.ajax({
+            'async':false,
+            'global':false,
+            'url' : "data/batiments.geojson",
+            'dataType' : "json",
+            'success' : function(data){
+                json = data;
+            }
+                });
+            return json;
+    })();
+    
+
+    var grass = (function (){
+        var json = null;
+
+        $.ajax({
+            'async':false,
+            'global':false,
+            'url' : "data/grass.geojson",
+            'dataType' : "json",
+            'success' : function(data){
+                json = data;
+            }
+                });
+            return json;
+    })();
+    
+
+    var sallesInfo = (function (){
+        var json = null;
+
+        $.ajax({
+            'async':false,
+            'global':false,
+            'url' : "data/salles_informatique_pts.geojson",
+            'dataType' : "json",
+            'success' : function(data){
+                json = data;
+            }
+                });
+            return json;
+    })();
+
+   
+// Initialisation de la carte
+
+map.on("load", function() {
+    
+    map.addLayer({
+        id: "grass",
+        type: "fill",
+        source: {
+            type: "geojson",
+            data: grass
+        },
+        paint: {
+        	'fill-color': '#A4E463',
+        	'fill-opacity':0.5
+		}
+    });
+
+
+    map.addLayer({
+        id: "bati",
+        type: "fill-extrusion",
+        source: {
+            type: "geojson",
+            data: bati
+        },
+        paint: {
+        	'fill-extrusion-color': '#BCAB84', 
+        	'fill-extrusion-height':{
+        		'type': 'identity',
+        		'property': 'height'
+        	},
+			'fill-extrusion-base': {
+				'type': 'identity',
+				'property': 'min_height'},
+			'fill-extrusion-opacity': 0.8
+		}
+    });
+    
+    map.addLayer({
+        id: "bati-hover",
+        type: "fill-extrusion",
+        source: {
+            type: "geojson",
+            data: bati
+        },
+        filter: ["==", "id", ""],
+
+        paint: {
+        	'fill-extrusion-color': '#286090', 
+        	'fill-extrusion-height':{
+        		'type': 'identity',
+        		'property': 'height'
+        	},
+			'fill-extrusion-base': {
+				'type': 'identity',
+				'property': 'min_height'},
+			'fill-extrusion-opacity': 0.8
+		}
+    });
+    
+	map.on("mousemove", "bati", function(e) {
+	        map.setFilter("bati-hover", ["==", "id", e.features[0].properties.id]);
+	    });
+
+	    // Reset the state-fills-hover layer's filter when the mouse leaves the layer.
+	    map.on("mouseleave", "bati", function() {
+	        map.setFilter("bati-hover", ["==", "id", ""]);
+	    });	
+
+	map.addLayer({
+	        id: "BatiCentroids",
+	        type: "symbol",
+	        source: {
+	            type: "geojson",
+	            data: batiCentroids
+	        },
+			layout: {
+		        "text-field": "{name}",
+		        "text-anchor": "center",
+		        "text-size":8
+    		},
+    		minzoom : 14,
+	    });
+
+	map.addLayer({
+        id: "Campus",
+        type: "symbol",
+        source: {
+            type: "geojson",
+            data: campus
+        },
+		layout: {
+	        "text-field": "{campus}",
+	        "text-anchor": "center",
+	        "text-size":11
+		},
+		maxzoom : 14,
+    });
+  
+
+
+
+	sallesInfo = map.addLayer({
+        id: "Salles informatique",
+        type: "circle",
+        source: {
+            type: "geojson",
+            data: sallesInfo
+        },
+        layout: {'visibility': 'none'}, 
+		paint: {
+	        "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
+	        "circle-color" :'#FF0000',
+	        "circle-opacity":0.9
+		}
+	});
+
+	var toggleableLayerIds = [ 'Salles informatique' ];
+
+	for (var i = 0; i < toggleableLayerIds.length; i++) {
+	    var id = toggleableLayerIds[i];
+
+        link = document.createElement('a')
+	    link.href = '#';
+	    link.className = '';
+	    link.textContent = id;
+
+	    link.onclick = function (e) {
+	        var clickedLayer = this.textContent;
+	        e.preventDefault();
+	        e.stopPropagation();
+
+	        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+	        if (visibility === 'visible') {
+	            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+	            this.className = '';
+	        } else {
+	            this.className = 'active';
+	            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+	        }
+	    };
+
+
+
+	    var layers = document.getElementById('sallesInfo');
+	    layers.appendChild(link);
+	}
+
+	map.on('click', function (e) {
+		var features = map.queryRenderedFeatures(e.point, { 
+			layers: ['Salles informatique'] 
+		});
+		
+		if (!features.length) {
+			return;
+		}
+		
+		var feature = features[0];
+		var popup = new mapboxgl.Popup({ 
+			offset: [0, -15] 
+		})
+			.setLngLat(feature.geometry.coordinates)
+			.setHTML('<h1><b>Salle informatique</b></h1><br>'+feature.properties.nom+'<br>Batiment '+feature.properties.batiment)
+				.addTo(map);
+		});
+		
+		map.on('mousemove', function (e) {
+		var features = map.queryRenderedFeatures(e.point, { layers: ['Salles informatique'] });
+		map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+		});
+
+});
+
+
+// Interactivité menus
+
+
+	// ZOOMS sur les campus
+
+    document.getElementById("LaHarpe").addEventListener('click', function(){
+        map.flyTo({
+            zoom:17,
+            center:[-1.7091, 48.1254]
+        });
+    });
+    document.getElementById("Villejean").addEventListener('click', function(){
+        map.flyTo({
+            zoom:16,
+            center:[-1.7013, 48.119365]
+        });
+    });
+    document.getElementById("Mazier").addEventListener('click',function(){
+        map.flyTo({
+            zoom:17,
+            center:[-2.7410000,48.513033]
+        });
+    });
+
+
+
+
+  $(function() {
+    function log( message ) {
+      $( "<div>" ).text( message ).prependTo( "#log" );
+      $( "#log" ).scrollTop( 0 );
+    }
+
+    $( "#searchfield" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "data/salles_informatique_pts.geojson",
+          dataType: "json",
+          data: {
+            q: request.term
+          },
+          success: function( data ) {
+            response( data );
+          }
+        });
+      },
+      minLength: 3,
+      select: function( event, ui ) {
+        log( ui.item ?
+          "Selected: " + ui.item.label :
+          "Nothing selected, input was " + this.value);
+      },
+      open: function() {
+        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+      },
+      close: function() {
+        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
+    });
+  });
+
+
+var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
+
+
+map.addControl(new mapboxgl.ScaleControl({
+maxWidth: 120,
+unit: 'metric'}));
+
+</script>
+</body>
+</html>
