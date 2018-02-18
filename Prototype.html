@@ -610,19 +610,6 @@ map.on("load", function() {
 
 
 
-// Vue 3D
-	
-	var vueCompteur = 0;	
-	
-	document.getElementById('3D').addEventListener('click', function () {
-		vueCompteur = vueCompteur + 1;
-		if (vueCompteur % 2 != 0){
-			map.setPitch(60);
-		} else {
-			map.setPitch(90);
-		}
-	});
-
 var nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
 
