@@ -205,8 +205,8 @@
                             <li>
                                 <a href="#">Toilettes</a>
                             </li>
-                            <li id = "sallesInfo">
-                                
+                            <li>
+                                <a href="#" id = "sallesInfo">Salles informatique</a>
                             </li>
                             <li>
                                 <a href="#">Copieur</a>
@@ -535,38 +535,24 @@ map.on("load", function() {
 		}
 	});
 
-	var toggleableLayerIds = [ 'Salles informatique' ];
-
-	for (var i = 0; i < toggleableLayerIds.length; i++) {
-	    var id = toggleableLayerIds[i];
-
-        link = document.createElement('a')
-	    link.href = '#';
-	    link.className = '';
-	    link.textContent = id;
-
-	    link.onclick = function (e) {
-	        var clickedLayer = this.textContent;
-	        e.preventDefault();
-	        e.stopPropagation();
-
-	        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-
-	        if (visibility === 'visible') {
-	            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-	            this.className = '';
-	        } else {
-	            this.className = 'activeLayer';
-	            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-	        }
-	    };
-
-
-
-	    var layers = document.getElementById('sallesInfo');
-	    layers.appendChild(link);
-	}
-
+	var sallesInfoLink = document.getElementById('SallesInfo');
+	
+	sallesInfoLink.onclick = function (e) {
+		var clickedLayer = this.textContent;
+		e.preventDefault();
+		e.stopPropagation();
+		
+		var visibility = map.getLayoutProperty(clickedLayer,'visibility');
+		
+		if (visibility === 'visible') {
+			map.setLayoutProperty(clickedLayer,'visibility','none');
+			this.className = '';
+		} else {
+			this.className = 'activeLayer';
+			map.setLayoutProperty(clickedLayer,'visibility','visible');
+		}
+	};
+	
 	map.on('click', function (e) {
 		var features = map.queryRenderedFeatures(e.point, { 
 			layers: ['Salles informatique'] 
