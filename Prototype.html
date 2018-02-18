@@ -17,7 +17,14 @@
     <link href="css/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+	
+<script src="js/jquery.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="js/metisMenu.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="js/startmin.js"></script>
 
     <!-- API MAPBOX GL-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
@@ -33,12 +40,14 @@
 
 </head>
 <body>
+<!-- jQuery -->
+
 
 <div id="wrapper">
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
-
+	<!-- Gestion du menu de couches -->
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -46,18 +55,14 @@
             <span class="icon-bar"></span>
         </button>
 
-
-
-
         <!-- Sidebar -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
 
-
-
-        		<!-- Search bar -->
-
+	<!-- Search bar -->
+		    
                 <ul class="nav" id="side-menu">
+			
                     <li class="sidebar-search">
                         <div class="input-group custom-search-form">
                             <input id= "searchfield" type="text" class="form-control" placeholder="Rechercher...">
@@ -91,7 +96,7 @@
                     </li>                    
 
 
-					<li>
+		    <li>
                         <a href="#">Amphis et salles spécifiques<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -116,7 +121,7 @@
                     </li>
 
 
-					<li>
+		    <li>
                         <a href="#">Scolarité et Administration<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -129,9 +134,7 @@
                     </li>
 
 
-
-
-					<li>
+		    <li>
                         <a href="#">Bibliothèques et Culture<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -147,9 +150,7 @@
                     </li>
 
 
-
-
-					<li>
+		     <li>
                         <a href="#">Logement et restauration<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -168,9 +169,7 @@
                     </li>
 
 
-
-
-					<li>
+		    <li>
                         <a href="#">Sport et santé<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -181,8 +180,6 @@
                             </li>
                         </ul>
                     </li>
-
-
 
 
                     <li>
@@ -214,7 +211,6 @@
                             <li>
                                 <a href="#">Copieur</a>
                             </li>
-
                         </ul>
                     </li>
 
@@ -267,34 +263,38 @@
         </div>
     </nav>
 
-
-
      <div id="page-wrapper" style = "padding:0">
-        <div class="container-fluid" style = "padding-left:0;padding-right:0;padding-top : 0;padding-bottom : 0;margin-right: 0;margin-top : 0;margin-left: :0;margin-bottom : 0">
+        <div class="container-fluid" style = "padding-left:0;
+					      padding-right:0;
+					      padding-top : 0;
+					      padding-bottom : 0;
+					      margin-right: 0;
+					      margin-top : 0;
+					      margin-left: :0;
+					      margin-bottom : 0">
 
             <div class="row">
                 <div class="col-lg-12">
                 </div>
             </div>
 
-            <div id="map" style="position:relative;margin-top:45px;margin-right:0;margin-left:0;margin-bottom:0;padding-right : 0:padding-left : 0; padding-top:0;padding-bottom:0;z-index:1;height:580px"></div>
+            <div id="map" style="position:relative;
+				 margin-top:45px;
+				 margin-right:0;
+				 margin-left:0;
+				 margin-bottom:0;
+				 padding-right : 0;
+				 padding-left : 0; 
+				 padding-top:0;
+				 padding-bottom:0;
+				 z-index:1;
+				 height:580px"></div>
         
         </div>
     </div>
 
 </div>
 
-<!-- jQuery -->
-<script src="js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="js/metisMenu.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="js/startmin.js"></script>
 
 
 <script>
