@@ -306,42 +306,42 @@
 
 <script>
 
-    mapboxgl.accessToken = 'undefined';
-    map = new mapboxgl.Map({
-        container: 'map',
-        style: {
-            version: 8,
-            sources: {
-                "raster-tiles": {
-                    type: "raster",
-                    tiles: [
-                        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    ],
-                    tileSize: 256
-                }
-            },
-            layers: [{
-                id: "simple-tiles",
-                type: "raster",
-                source: "raster-tiles",
-                minzoom: 0,
-                maxzoom: 19
-            }]
-        },
+ //   mapboxgl.accessToken = 'undefined';
+//    map = new mapboxgl.Map({
+//        container: 'map',
+//        style: {
+///           version: 8,
+//            sources: {
+//                "raster-tiles": {
+//                    type: "raster",
+//                    tiles: [
+//                        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+//                        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+//                        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//                    ],
+ //                   tileSize: 256
+  //              }
+//            },
+ //           layers: [{
+ //               id: "simple-tiles",
+  //              type: "raster",
+   //             source: "raster-tiles",
+   //             minzoom: 0,
+    //            maxzoom: 19
+    //        }]
+    //    },
+    //    center: [-1.7013, 48.119365], // starting position [lng, lat]
+    //    zoom: 15,
+    //    pitch : 35
+    //});
+
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
         center: [-1.7013, 48.119365], // starting position [lng, lat]
         zoom: 15,
-        pitch : 35
+        pitch : 35, // starting zoom
     });
-
-  //  var map = new mapboxgl.Map({
-  //      container: 'map', // container id
- //       style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
- //       center: [-1.7013, 48.119365], // starting position [lng, lat]
-  //      zoom: 15,
- //       pitch : 35, // starting zoom
-//    });
 
 
     var batiCentroids = (function (){
