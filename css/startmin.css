@@ -170,7 +170,7 @@ body {
 	font-size : 12px;
 }
 
-.sidebar ul li a.activeLayer{
+a.activeLayer{
 	background-color:#286090;
 	color : #FFFFFF;
 }
