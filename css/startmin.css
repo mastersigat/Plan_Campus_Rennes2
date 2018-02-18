@@ -170,7 +170,7 @@ body {
 	font-size : 12px;
 }
 
-a.activeLayer{
+.activeLayer {
 	background-color:#286090;
 	color : #FFFFFF;
 }
