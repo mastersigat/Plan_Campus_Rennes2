@@ -123,10 +123,7 @@ body {
     background-color: #eee;
 }
 
-.sidebar ul li a.activeLayer{
-	background-color:#286090;
-	color : #FFFFFF;
-}
+
 
 .sidebar .arrow {
     float: right;
@@ -173,7 +170,10 @@ body {
 	font-size : 12px;
 }
 
-
+.sidebar ul li a.activeLayer{
+	background-color:#286090;
+	color : #FFFFFF;
+}
 
 h1 {
     font-size : 12px;
