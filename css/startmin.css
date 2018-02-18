@@ -119,10 +119,6 @@ body {
     border-bottom: 1px solid #e7e7e7;
 }
 
-.sidebar ul li a.active {
-    background-color: #eee;
-}
-
 
 
 .sidebar .arrow {
@@ -170,11 +166,10 @@ body {
 	font-size : 12px;
 }
 
-.activeLayer {
-	background-color:#286090;
-	color : #FFFFFF;
-}
 
 h1 {
     font-size : 12px;
 }
+
+
+
