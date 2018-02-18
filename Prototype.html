@@ -278,7 +278,7 @@
                 </div>
             </div>
 
-            <div id="map" style="position:relative;
+         <div id="map" style="position:relative;
 				 margin-top:50px;
 				 margin-right:0;
 				 margin-left:0;
@@ -288,7 +288,10 @@
 				 padding-top:0;
 				 padding-bottom:0;
 				 z-index:1;
-				 height:650px"></div>
+				 height:650px">
+	
+	<button id="3D" class="btn btn-primary">3D</button>	
+	</div>
         
         </div>
     </div>
@@ -607,7 +610,17 @@ map.on("load", function() {
 
 
 
-
+// Vue 3D
+	
+	var vueCompteur = 0	
+	
+	document.getElementById('3D').addEventListener('click', function () {
+		vueCompteur = vueCompteur + 1;
+		if (vueCompteur % 2 != 0){
+			map.setPitch(60);
+		} else {
+			map.setPitch(90);
+		}
 
 var nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
