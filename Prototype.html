@@ -18,13 +18,13 @@
     <!-- Custom CSS -->
     <link href="css/startmin.css" rel="stylesheet">
 	
-<script src="js/jquery.min.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
-<!-- Metis Menu Plugin JavaScript -->
-<script src="js/metisMenu.min.js"></script>
-<!-- Custom Theme JavaScript -->
-<script src="js/startmin.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="js/metisMenu.min.js"></script>
+	<!-- Custom Theme JavaScript -->
+	<script src="js/startmin.js"></script>
 
     <!-- API MAPBOX GL-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
@@ -61,18 +61,18 @@
 
 	<!-- Search bar -->
 		    
-                <ul class="nav" id="side-menu">
-			
-                    <li class="sidebar-search">
-                        <div class="input-group custom-search-form">
-                            <input id= "searchfield" type="text" class="form-control" placeholder="Rechercher...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                        </div>
-                    </li>
+			<ul class="nav" id="side-menu">
+
+				<li class="sidebar-search">
+					<div class="input-group custom-search-form">
+						<input id= "searchfield" type="text" class="form-control" placeholder="Rechercher...">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button">
+									<i class="fa fa-search"></i>
+								</button>
+							</span>
+					</div>
+				</li>
 
 
 
@@ -80,24 +80,24 @@
 
 
 
-                    <li>
-                       <a href="#">Zoomer sur un campus<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#" id = "Villejean">Villejean</a>
-                            </li>
-                            <li>
-                                <a href="#" id = "LaHarpe">La Harpe</a>
-                            </li>
-                            <li>
-                                <a href="#" id = "Mazier">Mazier (St Brieuc)</a>
-                            </li>                            
-                        </ul>
-                    </li>                    
+				<li>
+				   <a href="#">Zoomer sur un campus<span class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li>
+							<a href="#" id = "Villejean">Villejean</a>
+						</li>
+						<li>
+							<a href="#" id = "LaHarpe">La Harpe</a>
+						</li>
+						<li>
+							<a href="#" id = "Mazier">Mazier (St Brieuc)</a>
+						</li>                            
+					</ul>
+				</li>                    
 
 
-		    <li>
-                        <a href="#">Amphis et salles spécifiques<span class="fa arrow"></span></a>
+		    	<li>
+                	<a href="#">Amphis et salles spécifiques<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="#">Amphithéâtres</a>
@@ -121,7 +121,7 @@
                     </li>
 
 
-		    <li>
+					<li>
                         <a href="#">Scolarité et Administration<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -134,7 +134,7 @@
                     </li>
 
 
-		    <li>
+		    		<li>
                         <a href="#">Bibliothèques et Culture<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -150,7 +150,7 @@
                     </li>
 
 
-		     <li>
+				 	<li>
                         <a href="#">Logement et restauration<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -169,7 +169,7 @@
                     </li>
 
 
-		    <li>
+		    		<li>
                         <a href="#">Sport et santé<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -222,7 +222,7 @@
                                 <a href="#">Se déplacer sur le campus <span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level">
                                     <li>
-                                        <a href="#">Ascenceurs</a>
+                                    	<a href="#">Ascenceurs</a>
                                     </li>
                                     <li>
                                         <a href="#">Escaliers</a>
@@ -305,35 +305,6 @@
 
 <script>
 
- //   mapboxgl.accessToken = 'undefined';
-//    map = new mapboxgl.Map({
-//        container: 'map',
-//        style: {
-///           version: 8,
-//            sources: {
-//                "raster-tiles": {
-//                    type: "raster",
-//                    tiles: [
-//                        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-//                        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
-//                        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//                    ],
- //                   tileSize: 256
-  //              }
-//            },
- //           layers: [{
- //               id: "simple-tiles",
-  //              type: "raster",
-   //             source: "raster-tiles",
-   //             minzoom: 0,
-    //            maxzoom: 19
-    //        }]
-    //    },
-    //    center: [-1.7013, 48.119365], // starting position [lng, lat]
-    //    zoom: 15,
-    //    pitch : 35
-    //});
-
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
@@ -357,8 +328,6 @@
                 });
             return json;
     })();
-
-
     var campus = (function (){
         var json = null;
 
@@ -373,9 +342,6 @@
                 });
             return json;
     })();
-
-
-
     var bati = (function (){
         var json = null;
 
@@ -390,9 +356,8 @@
                 });
             return json;
     })();
-    
-
-    var grass = (function (){
+	
+	var grass = (function (){
         var json = null;
 
         $.ajax({
@@ -406,7 +371,6 @@
                 });
             return json;
     })();
-    
 
     var sallesInfo = (function (){
         var json = null;
@@ -422,7 +386,6 @@
                 });
             return json;
     })();
-
    
 // Initialisation de la carte
 
@@ -441,8 +404,7 @@ map.on("load", function() {
 		}
     });
 
-
-    map.addLayer({
+	map.addLayer({
         id: "bati",
         type: "fill-extrusion",
         source: {
@@ -522,10 +484,7 @@ map.on("load", function() {
 		},
 		maxzoom : 14,
     });
-  
-
-
-
+ 
 	sallesInfo = map.addLayer({
         id: "Salles informatique",
         type: "circle",
@@ -583,12 +542,9 @@ map.on("load", function() {
 		var features = map.queryRenderedFeatures(e.point, { layers: ['Salles informatique'] });
 		map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 		});
-
 });
 
-
 // Interactivité menus
-
 
 	// ZOOMS sur les campus
 
@@ -610,7 +566,6 @@ map.on("load", function() {
             center:[-2.7410000,48.513033]
         });
     });
-
 	
 	// 3D
 
@@ -625,10 +580,8 @@ document.getElementById('listing-group').addEventListener('change', function(e) 
 	}
 });
 
-
 var nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
-
 
 map.addControl(new mapboxgl.ScaleControl({
 maxWidth: 120,
