@@ -294,7 +294,7 @@
 	
 	<nav id='listing-group' class='listing-group'>
 		<input type='checkbox' id='dragRotate' checked='checked'>
-    		<label for='dragRotate'>Drag rotate</label> 
+    		<label for='dragRotate'>3D</label> 
 	</nav>
         </div>
     </div>
@@ -339,7 +339,7 @@
         style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
         center: [-1.7013, 48.119365], // starting position [lng, lat]
         zoom: 15,
-        pitch : 35, // starting zoom
+        pitch : 0, // starting zoom
     });
 
 
@@ -618,8 +618,11 @@ document.getElementById('listing-group').addEventListener('change', function(e) 
     var handler = e.target.id;
     if (e.target.checked) {
         map[handler].enable();
+	map.setPitch(35):
     } else {
         map[handler].disable();
+	map.setPitch(0);
+	    
     }
 });
 
