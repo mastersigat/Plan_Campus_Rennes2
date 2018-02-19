@@ -290,12 +290,9 @@
 				 z-index:1;
 			     height:550px">
 	
-	</div>
+		</div>
 	
-	<nav id='listing-group' class='listing-group'>
-		<input type='checkbox' id='dragRotate' checked='checked'>
-    		<label for='dragRotate'>3D</label> 
-	</nav>
+
         </div>
     </div>
 
@@ -567,18 +564,7 @@ map.on("load", function() {
         });
     });
 	
-	// 3D
 
-document.getElementById('listing-group').addEventListener('change', function(e) {
-    var handler = e.target.id;
-    if (e.target.checked) {
-        map[handler].enable();
-	map.setPitch(35);
-    } else {
-        map[handler].disable();
-	map.setPitch(0); 
-	}
-});
 
 var nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
