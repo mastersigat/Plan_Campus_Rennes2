@@ -611,6 +611,17 @@ map.on("load", function() {
         });
     });
 
+	
+	// 3D
+
+document.getElementById('listing-group').addEventListener('change', function(e) {
+    var handler = e.target.id;
+    if (e.target.checked) {
+        map[handler].enable();
+    } else {
+        map[handler].disable();
+    }
+});
 
 
 var nav = new mapboxgl.NavigationControl();
