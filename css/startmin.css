@@ -221,4 +221,6 @@ content: '✔';
 margin-right: 5px;
 }
 
-
+a {
+	font-size: 10px;
+}
