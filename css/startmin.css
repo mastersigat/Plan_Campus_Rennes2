@@ -224,3 +224,7 @@ margin-right: 5px;
 a {
 	font-size: 10px;
 }
+
+.sidebar .sidebar-search {
+	max-width:235px;
+}
