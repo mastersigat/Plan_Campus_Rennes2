@@ -1,6 +1,5 @@
 // Se lance lors d'une première recherche
 
-<script src="C:/Users/Simon Berthoumieux/Desktop/Prototypes/Plan-interactif-master/EasyAutocomplete-1.3.5/jquery.easy-autocomplete.min.js"></script> 
 
  var POI = (function (){
         var json = null;
