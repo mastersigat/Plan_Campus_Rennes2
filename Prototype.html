@@ -27,7 +27,10 @@
 	
 	<!-- Stylesheet for search box -->
 	<link rel="stylesheet" href="EasyAutocomplete-1.3.5/easy-autocomplete.min.css"> 
-	
+
+	<!-- library for search box -->
+	<script src= "EasyAutocomplete-1.3.5/jquery.easy-autocomplete.min.js"></script> 
+
 	
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
@@ -573,11 +576,55 @@ map.on("load", function() {
     });
 	
 
-</script>
-	<script src= "EasyAutocomplete-1.3.5/jquery.easy-autocomplete.min.js"></script> 
-	<script src = "search_box.js"></script>
-<script>
-		
+var POI = (function (){
+        var json = null;
+
+        $.ajax({
+            'async':false,
+            'global':false,
+            'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/POI.json",
+            'dataType' : "json",
+            'success' : function(data){
+                json = data;
+            }
+                });
+            return json;
+    })();
+
+
+var features = []; 
+features = POI.features; 
+var jproperties = POI.features.map(function (el) {
+    return el.properties; 
+});
+
+var options = {
+    data: jproperties,
+
+    getValue: "name",
+
+    template: {
+        type: "description",
+        fields: {
+        // Possibilité de mettre le campus en description
+            description: "name"
+        }
+    },
+
+    list: {
+        match: {
+            enabled: true
+        }
+    },
+
+    theme: "plate-dark"
+};
+
+$("#searchfield").easyAutocomplete(options);		
+	
+	
+	
+	
 	
 
 var nav = new mapboxgl.NavigationControl();
