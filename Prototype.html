@@ -78,7 +78,7 @@
 
 				<li class="sidebar-search">
 					<div class="input-group custom-search-form">
-						<input id= "searchfield" type="text" class="form-control" placeholder="Rechercher...">
+						<input id= "searchfield" type="text" placeholder="Rechercher...">
 							<span class="input-group-btn">
 								<button class="btn btn-primary" type="button">
 									<i class="fa fa-search"></i>
@@ -394,7 +394,29 @@
                 });
             return json;
     })();
-   
+	
+	var searchPOI = (function (){
+			var json = null;
+
+			$.ajax({
+				'async':false,
+				'global':false,
+				'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/POI.json",
+				'dataType' : "json",
+				'success' : function(data){
+					json = data;
+				}
+					});
+				return json;
+		})();
+	// Récupération des propriétés du json
+	var features = []; 
+	features = searchPOI.features; 
+	var jproperties = searchPOI.features.map(function (el) {
+		return el.properties; 
+	});
+	
+	
 // Initialisation de la carte
 
 map.on("load", function() {
@@ -576,33 +598,13 @@ map.on("load", function() {
     });
 	
 
-var POI = (function (){
-        var json = null;
-
-        $.ajax({
-            'async':false,
-            'global':false,
-            'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/POI.json",
-            'dataType' : "json",
-            'success' : function(data){
-                json = data;
-            }
-                });
-            return json;
-    })();
 
 
-var features = []; 
-features = POI.features; 
-var jproperties = POI.features.map(function (el) {
-    return el.properties; 
-});
+
 
 var options = {
     data: jproperties,
-
     getValue: "name",
-
     template: {
         type: "description",
         fields: {
@@ -610,16 +612,13 @@ var options = {
             description: "name"
         }
     },
-
     list: {
         match: {
             enabled: true
         }
     },
-
     theme: "plate-dark"
 };
-
 $("#searchfield").easyAutocomplete(options);		
 	
 	
