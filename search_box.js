@@ -46,4 +46,4 @@ var options = {
     theme: "plate-dark"
 };
 
-$("#example-mail").easyAutocomplete(options);
+$("#searchfield").easyAutocomplete(options);
