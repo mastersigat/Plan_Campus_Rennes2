@@ -229,7 +229,17 @@ a {
 	max-width:235px;
 }
 
-
 #searchButton {
     height:30px;
+}
+
+#DDD {
+    position : absolute;
+    right : 5px;
+    top:5px;
+    z-index:9999;
+}
+#DDD button {
+    background-color : grey;
+    border:none;
 }
