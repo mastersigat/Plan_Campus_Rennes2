@@ -401,8 +401,8 @@
 				return json;
 		})();
 	// Récupération des propriétés du json
-	var features = []; 
-	features = searchPOI.features; 
+	var POI = []; 
+	POI = searchPOI.features; 
 	var jproperties = searchPOI.features.map(function (el) {
 		return el.properties; 
 	});
@@ -593,6 +593,14 @@ map.on("load", function() {
 
 
 
+var searchValue	= null;
+var searchItem = [];
+var searchX = null;
+var searchY = null;
+var searchLayerCount = 0;
+var searchLayerId = 'SearchResult';
+var searchPopup = null
+
 var options = {
     data: jproperties,
     getValue: "nom",
@@ -612,7 +620,58 @@ var options = {
 };
 $("#searchfield").easyAutocomplete(options);		
 	
-	
+
+function runScript(e) {
+    if (e.keyCode == 13) {
+    	if (searchValue !==null){
+    		searchValue = null
+			searchItem = [];
+			searchX = null;
+			searchY = null;
+			searchLayerCount+=1;
+			searchPopup.remove();
+			map.removeLayer(searchLayerId)
+			searchLayerId = 'searchResult'+searchLayerCount;
+;
+    	};
+
+        searchValue = document.getElementById("searchfield").value;
+        console.log(searchValue);
+		for(var i = 0; i < POI.length; i++){
+        	if (POI[i].properties.nom === searchValue){
+        		searchItem = POI[i];
+        		map.addLayer({
+        			id: searchLayerId,
+        			type:'circle',
+        			source:{
+        				type:"geojson",
+        				data: searchItem
+        			},
+        			layout:{'visibility':'visible'},
+        			paint:{
+				        "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
+				        "circle-color" :'#FF0000',
+				        "circle-opacity":0.9
+        			}
+
+        		});
+        	searchX = searchItem.geometry.coordinates[0];
+        	searchY = searchItem.geometry.coordinates[1];
+        	map.flyTo({
+        		center:[searchX,searchY],
+        		zoom:16.5,
+        		pitch:25     		
+        	});
+        	searchPopup = new mapboxgl.Popup({
+        		offset:[0,-15]
+        	})
+        		.setLngLat(searchItem.geometry.coordinates)
+        		.setHTML('blablabla')
+        			.addTo(map);
+        	}
+        }
+    }
+}
 	
 	
 	
