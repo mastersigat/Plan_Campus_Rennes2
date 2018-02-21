@@ -294,7 +294,9 @@
 				 padding-bottom:0;
 				 z-index:1;
 			     height:90vh">
-
+	<div id="DDD" class="btn-group">
+	<button  class="btn btn-primary" id="DDDButton">3D</button>
+ 	</div>	 
 		 
 		 
 		</div>
@@ -690,7 +692,29 @@ function runScriptClic(e){
 	getSearchedItem();
 }
 
+var DDD = false
 
+document.getElementById('DDD').addEventListener('click',function(){
+	var X = map.getCenter()["lng"];
+	var Y = map.getCenter()["lat"];
+	var button = document.getElementById('DDDButton')
+	console.log('clic');
+	if (DDD===false){
+		map.flyTo({
+			center:[X,Y],
+			pitch:45
+		});
+		button.style.backgroundColor = 'blue';
+		DDD=true
+	} else {
+		map.flyTo({
+			center:[X,Y],
+			pitch:0
+		});	
+		button.style.backgroundColor = 'grey';
+		DDD=false	
+	}
+})
 	
 	
 	
