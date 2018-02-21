@@ -310,9 +310,14 @@
 
 
 <script>
-	var bounds = [
+	var rennesBounds = [
     [-1.787293,48.067191 ], // Southwest coordinates
     [-1.525772,48.169255 ]  // Northeast coordinates
+	];
+	
+	var mazierBounds = [
+	[-2.810090, 48.488519],
+	[-2.668165,48.534886]
 	];
 
 	var DDD = false
@@ -323,7 +328,7 @@
         zoom: 15,
 		minZoom:13,
         pitch : 0,
-		maxBounds:bounds // starting zoom
+		maxBounds: rennesBounds // starting zoom
     });
 
 	map.dragRotate.disable();
@@ -585,19 +590,22 @@ map.on("load", function() {
 	// ZOOMS sur les campus
 
     document.getElementById("LaHarpe").addEventListener('click', function(){
-        map.flyTo({
+        map.setMaxBounds(rennesBounds);
+		map.flyTo({
             zoom:16,
             center:[-1.7091, 48.1254]
         });
     });
     document.getElementById("Villejean").addEventListener('click', function(){
-        map.flyTo({
+        map.setMaxBounds(rennesBounds);
+		map.flyTo({
             zoom:16,
             center:[-1.7013, 48.119365]
         });
     });
     document.getElementById("Mazier").addEventListener('click',function(){
-        map.flyTo({
+        map.setMaxBounds(mazierBounds);
+		map.flyTo({
             zoom:16,
             center:[-2.7410000,48.513033]
         });
