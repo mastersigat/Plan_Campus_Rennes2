@@ -702,14 +702,16 @@ document.getElementById('DDD').addEventListener('click',function(){
 	if (DDD===false){
 		map.flyTo({
 			center:[X,Y],
-			pitch:45
+			pitch:45,
+			speed:0.2
 		});
 		button.style.backgroundColor = 'blue';
 		DDD=true
 	} else {
 		map.flyTo({
 			center:[X,Y],
-			pitch:0
+			pitch:0,
+			speed:0.2
 		});	
 		button.style.backgroundColor = 'grey';
 		DDD=false	
