@@ -376,6 +376,22 @@
             return json;
     })();
 	
+	var villejean_bati_height = (function (){
+        var json = null;
+
+        $.ajax({
+            'async':false,
+            'global':false,
+            'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson",
+            'dataType' : "json",
+            'success' : function(data){
+                json = data;
+            }
+                });
+            return json;
+    })();
+	
+	
 	var grass = (function (){
         var json = null;
 
@@ -452,6 +468,7 @@ map.on("load", function() {
             type: "geojson",
             data: bati
         },
+		layout: {'visibility': 'none'}, 
         paint: {
         	'fill-extrusion-color': '#BCAB84', 
         	'fill-extrusion-height':{
@@ -461,6 +478,26 @@ map.on("load", function() {
 			'fill-extrusion-base': {
 				'type': 'identity',
 				'property': 'min_height'},
+			'fill-extrusion-opacity': 0.8
+		}
+    });
+	
+	map.addLayer({
+        id: "bati_height",
+        type: "fill-extrusion",
+        source: {
+            type: "geojson",
+            data: villejean_bati_height
+        },
+        paint: {
+        	'fill-extrusion-color': '#BCAB84', 
+        	'fill-extrusion-height':{
+        		'type': 'identity',
+        		'property': 'building_l'
+        	},
+			'fill-extrusion-base': {
+				'type': 'identity',
+				'property': 'building_1'},
 			'fill-extrusion-opacity': 0.8
 		}
     });
