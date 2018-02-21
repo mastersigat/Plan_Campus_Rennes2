@@ -705,14 +705,13 @@ document.getElementById('DDD').addEventListener('click',function(){
 	var X = map.getCenter()["lng"];
 	var Y = map.getCenter()["lat"];
 	var button = document.getElementById('DDDButton')
-	console.log('clic');
 	if (DDD===false){
 		map.flyTo({
 			center:[X,Y],
 			pitch:45,
 			speed:0.2
 		});
-		button.style.backgroundColor = '#F8F8F8';
+		button.style.backgroundColor = '#286090';
 		DDD=true
 	} else {
 		map.flyTo({
