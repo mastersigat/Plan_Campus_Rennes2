@@ -310,7 +310,7 @@
 
 
 <script>
-
+	var DDD = false
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
@@ -664,11 +664,19 @@ function getSearchedItem(){
         		});
         	searchX = searchItem.geometry.coordinates[0];
         	searchY = searchItem.geometry.coordinates[1];
-        	map.flyTo({
-        		center:[searchX,searchY],
-        		zoom:16.5,
-        		pitch:25     		
-        	});
+			if (DDD){
+	        	map.flyTo({
+	        		center:[searchX,searchY],
+	        		zoom:16.5,
+	        		pitch:25     		
+	        	});
+	        } else {
+	        	map.flyTo({
+	        		center:[searchX,searchY],
+	        		zoom:16.5,
+	        		pitch:0    		
+	        	});	        	
+	        }
         	searchPopup = new mapboxgl.Popup({
         		offset:[0,-15]
         	})
@@ -692,7 +700,6 @@ function runScriptClic(e){
 	getSearchedItem();
 }
 
-var DDD = false
 
 document.getElementById('DDD').addEventListener('click',function(){
 	var X = map.getCenter()["lng"];
