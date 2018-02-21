@@ -319,7 +319,8 @@
         pitch : 0, // starting zoom
     });
 
-
+	map.dragRotate.disable();
+	
     var batiCentroids = (function (){
         var json = null;
 
@@ -713,6 +714,7 @@ document.getElementById('DDD').addEventListener('click',function(){
 		});
 		button.style.backgroundColor = '#286090';
 		DDD=true
+		map.dragRotate.enable();
 	} else {
 		map.flyTo({
 			center:[X,Y],
@@ -722,6 +724,7 @@ document.getElementById('DDD').addEventListener('click',function(){
 		});	
 		button.style.backgroundColor = 'grey';
 		DDD=false	
+		map.dragRotate.disable();
 	}
 })
 	
