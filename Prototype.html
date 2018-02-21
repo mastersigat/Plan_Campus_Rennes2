@@ -310,13 +310,20 @@
 
 
 <script>
+	var bounds = [
+    [-1.795906707313975, 48.15767365719179], // Southwest coordinates
+    [-1.5270185832007428, 48.06707584857361]  // Northeast coordinates
+	];
+
 	var DDD = false
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
         center: [-1.7013, 48.119365], // starting position [lng, lat]
         zoom: 15,
-        pitch : 0, // starting zoom
+		minZoom:13,
+        pitch : 0,
+		maxBounds:bounds // starting zoom
     });
 
 	map.dragRotate.disable();
