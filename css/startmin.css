@@ -228,3 +228,8 @@ a {
 .sidebar .sidebar-search {
 	max-width:235px;
 }
+
+
+#searchButton {
+    height:30px;
+}
