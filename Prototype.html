@@ -529,7 +529,7 @@ map.on("load", function() {
 	    });
 
 	    // Reset the state-fills-hover layer's filter when the mouse leaves the layer.
-	    map.on("mouseleave", "bati", function() {
+	    map.on("mouseleave", "bati_height", function() {
 	        map.setFilter("bati-hover", ["==", "id", ""]);
 	    });	
 
