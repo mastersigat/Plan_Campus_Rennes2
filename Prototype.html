@@ -717,17 +717,20 @@ function getSearchedItem(){
         		});
         	searchX = searchItem.geometry.coordinates[0];
         	searchY = searchItem.geometry.coordinates[1];
+			
 			if (DDD){
 	        	map.flyTo({
 	        		center:[searchX,searchY],
 	        		zoom:16.5,
-	        		pitch:25     		
+	        		pitch:45,
+					speed:0.2
 	        	});
 	        } else {
 	        	map.flyTo({
 	        		center:[searchX,searchY],
 	        		zoom:16.5,
-	        		pitch:0    		
+	        		pitch:0,
+					speed:0.2
 	        	});	        	
 	        }
         	searchPopup = new mapboxgl.Popup({
