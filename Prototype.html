@@ -497,7 +497,7 @@ map.on("load", function() {
         	},
 			'fill-extrusion-base': {
 				'type': 'identity',
-				'property': 'hauteur_min'},
+				'property': 'hauteur_mi'},
 			'fill-extrusion-opacity': 0.8
 		}
     });
@@ -519,12 +519,12 @@ map.on("load", function() {
         	},
 			'fill-extrusion-base': {
 				'type': 'identity',
-				'property': 'hauteur_min'},
+				'property': 'hauteur_mi'},
 			'fill-extrusion-opacity': 0.8
 		}
     });
     
-	map.on("mousemove", "bati", function(e) {
+	map.on("mousemove", "bati_height", function(e) {
 	        map.setFilter("bati-hover", ["==", "id", e.features[0].properties.id]);
 	    });
 
