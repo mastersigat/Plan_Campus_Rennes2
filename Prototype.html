@@ -333,95 +333,8 @@
 
 	map.dragRotate.disable();
 	
-    var batiCentroids = (function (){
-        var json = null;
 
-        $.ajax({
-            'async':false,
-            'global':false,
-            'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments_centroides.geojson",
-            'dataType' : "json",
-            'success' : function(data){
-                json = data;
-            }
-                });
-            return json;
-    })();
-    var campus = (function (){
-        var json = null;
 
-        $.ajax({
-            'async':false,
-            'global':false,
-            'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/campus.geojson",
-            'dataType' : "json",
-            'success' : function(data){
-                json = data;
-            }
-                });
-            return json;
-    })();
-    var bati = (function (){
-        var json = null;
-
-        $.ajax({
-            'async':false,
-            'global':false,
-            'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments.geojson",
-            'dataType' : "json",
-            'success' : function(data){
-                json = data;
-            }
-                });
-            return json;
-    })();
-	
-	var villejean_bati_height = (function (){
-        var json = null;
-
-        $.ajax({
-            'async':false,
-            'global':false,
-            'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson",
-            'dataType' : "json",
-            'success' : function(data){
-                json = data;
-            }
-                });
-            return json;
-    })();
-	
-	
-	var grass = (function (){
-        var json = null;
-
-        $.ajax({
-            'async':false,
-            'global':false,
-            'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/grass.geojson",
-            'dataType' : "json",
-            'success' : function(data){
-                json = data;
-            }
-                });
-            return json;
-    })();
-
-    var sallesInfo = (function (){
-        var json = null;
-
-        $.ajax({
-            'async':false,
-            'global':false,
-            'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/salles_informatique_pts.geojson",
-            'dataType' : "json",
-            'success' : function(data){
-                json = data;
-            }
-                });
-            return json;
-    })();
-	
 	var searchPOI = (function (){
 			var json = null;
 
@@ -453,7 +366,7 @@ map.on("load", function() {
         type: "fill",
         source: {
             type: "geojson",
-            data: grass
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/grass.geojson"
         },
         paint: {
         	'fill-color': '#A4E463',
@@ -461,33 +374,13 @@ map.on("load", function() {
 		}
     });
 
-	map.addLayer({
-        id: "bati",
-        type: "fill-extrusion",
-        source: {
-            type: "geojson",
-            data: bati
-        },
-		layout: {'visibility': 'none'}, 
-        paint: {
-        	'fill-extrusion-color': '#BCAB84', 
-        	'fill-extrusion-height':{
-        		'type': 'identity',
-        		'property': 'height'
-        	},
-			'fill-extrusion-base': {
-				'type': 'identity',
-				'property': 'min_height'},
-			'fill-extrusion-opacity': 0.8
-		}
-    });
 	
 	map.addLayer({
         id: "bati_height",
         type: "fill-extrusion",
         source: {
             type: "geojson",
-            data: villejean_bati_height
+            data: v "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson"
         },
         paint: {
         	'fill-extrusion-color': '#f2f2f2', 
@@ -507,7 +400,7 @@ map.on("load", function() {
         type: "fill-extrusion",
         source: {
             type: "geojson",
-            data: villejean_bati_height
+            data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson"
         },
         filter: ["==", "id", ""],
 
@@ -538,7 +431,7 @@ map.on("load", function() {
 	        type: "symbol",
 	        source: {
 	            type: "geojson",
-	            data: batiCentroids
+	            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments_centroides.geojson"
 	        },
 			layout: {
 		        "text-field": "{name}",
@@ -553,7 +446,7 @@ map.on("load", function() {
         type: "symbol",
         source: {
             type: "geojson",
-            data: campus
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/campus.geojson"
         },
 		layout: {
 	        "text-field": "{campus}",
@@ -568,7 +461,7 @@ map.on("load", function() {
         type: "circle",
         source: {
             type: "geojson",
-            data: sallesInfo
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/salles_informatique_pts.geojson"
         },
         layout: {'visibility': 'none'}, 
 		paint: {
