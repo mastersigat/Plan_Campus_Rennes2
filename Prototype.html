@@ -586,12 +586,6 @@ map.on("load", function() {
 			this.style.backgroundColor = '#286090';
 			this.style.color = 'white';
 			map.setLayoutProperty(clickedLayer,'visibility','visible');
-			function updateURL() {
-      				if (history.pushState) {
-         			var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?para=hello';
-         			window.history.pushState({path:newurl},'',newurl);
-      				}
-    }
 		}
 	};
 	
