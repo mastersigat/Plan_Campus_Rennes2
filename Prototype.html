@@ -320,7 +320,17 @@
 	[-2.668165,48.534886]
 	];
 
-	var DDD = false
+	var DDD = false;
+
+	var bati2DId = 'bati2DId';
+	var bati2DCount = 0;
+	var bati3DId = 'bati3dId';
+	var bati3DCount = 0;
+	var bati2DHId = 'bati2DHId';
+	var bati3DHId = 'bati3dHId';
+	var etiqBati2DId = 'etiqBati2DId';
+	var etiqBati3DId = 'etiqBati3DId';
+
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
@@ -333,7 +343,6 @@
 
 	map.dragRotate.disable();
 	
-
 
 	var searchPOI = (function (){
 			var json = null;
@@ -349,6 +358,7 @@
 					});
 				return json;
 		})();
+
 	// Récupération des propriétés du json
 	var POI = []; 
 	POI = searchPOI.features; 
@@ -356,78 +366,73 @@
 		return el.properties; 
 	});
 	
-	
-// Initialisation de la carte
 
-map.on("load", function() {
-    
-    map.addLayer({
-        id: "grass",
-        type: "fill",
-        source: {
-            type: "geojson",
-            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/grass.geojson"
-        },
-        paint: {
-        	'fill-color': '#A4E463',
-        	'fill-opacity':0.5
-		}
-    });
 
-	
-	map.addLayer({
-        id: "bati_height",
-        type: "fill-extrusion",
-        source: {
-            type: "geojson",
-            data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson"
-        },
-        paint: {
-        	'fill-extrusion-color': '#f2f2f2', 
-        	'fill-extrusion-height':{
-        		'type': 'identity',
-        		'property': 'hauteur'
-        	},
-			'fill-extrusion-base': {
-				'type': 'identity',
-				'property': 'hauteur_mi'},
-			'fill-extrusion-opacity': 0.8
-		}
-    });
-    
-    map.addLayer({
-        id: "bati-hover",
-        type: "fill-extrusion",
-        source: {
-            type: "geojson",
-            data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson"
-        },
-        filter: ["==", "id", ""],
+	function getBati3D(){
+		if (bati3DCount != 0){
+			map.removeLayer(bati2DId);
+			map.removeLayer(bati2DHId);
+			map.removeLayer(etiqBati2DId);		
+		};
 
-        paint: {
-        	'fill-extrusion-color': '#D82B09', 
-        	'fill-extrusion-height':{
-        		'type': 'identity',
-        		'property': 'hauteur'
-        	},
-			'fill-extrusion-base': {
-				'type': 'identity',
-				'property': 'hauteur_mi'},
-			'fill-extrusion-opacity': 0.8
-		}
-    });
-    
-	map.on("mousemove", "bati_height", function(e) {
-	        map.setFilter("bati-hover", ["==", "id", e.features[0].properties.id]);
-	    });
+		bati3DCount += 1;
+		bati3DId = bati3DId+bati3DCount;
+		bati3DHId = bati3DHId+bati3DCount;
+		etiqBati3DId = etiqBati3DId + bati3DCount;
+		map.addLayer({
+			id: bati3DId,
+			type: "fill-extrusion",
+			source: {
+				type: "geojson",
+				data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson"
+			},
+			paint: {
+				'fill-extrusion-color': '#f2f2f2', 
+				'fill-extrusion-height':{
+					'type': 'identity',
+					'property': 'hauteur'
+				},
+				'fill-extrusion-base': {
+					'type': 'identity',
+					'property': 'hauteur_mi'},
+				'fill-extrusion-opacity': 0.8
+			}
+		});
 
-	    // Reset the state-fills-hover layer's filter when the mouse leaves the layer.
-	    map.on("mouseleave", "bati_height", function() {
-	        map.setFilter("bati-hover", ["==", "id", ""]);
-	    });	
+		map.addLayer({
+			id: bati3DHId,
+			type: "fill-extrusion",
+			source: {
+				type: "geojson",
+				data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson"
+			},
+			filter: ["==", "id", ""],
 
-	map.addLayer({
-	        id: "BatiCentroids",
+			paint: {
+				'fill-extrusion-color': '#D82B09', 
+				'fill-extrusion-height':{
+					'type': 'identity',
+					'property': 'hauteur'
+				},
+				'fill-extrusion-base': {
+					'type': 'identity',
+					'property': 'hauteur_mi'},
+				'fill-extrusion-opacity': 0.8
+			}
+		});
+
+		map.on("mousemove", bati3DId, function(e) {
+				map.setFilter(bati3DHId, ["==", "id", e.features[0].properties.id]);
+			});
+
+			// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
+			map.on("mouseleave", bati3DId, function() {
+				map.setFilter(bati3DHId, ["==", "id", ""]);
+			});	
+
+
+		map.addLayer({
+	        id: etiqBati3DId,
 	        type: "symbol",
 	        source: {
 	            type: "geojson",
@@ -440,6 +445,87 @@ map.on("load", function() {
     		},
     		minzoom : 14,
 	    });
+		};
+	function getBati2D(){
+		if (bati3DCount != 0){
+			map.removeLayer(bati3DId);
+			map.removeLayer(bati3DHId);
+			map.removeLayer(etiqBati3DId);		
+		};
+		bati2DCount += 1;
+		bati2DId = bati2DId+bati2DCount;
+		bati2DHId = bati2DHId+bati2DCount;
+		etiqBati2DId=etiqBati2DId + bati2DCount;
+		map.addLayer({
+			id: bati2DId,
+			type: "fill",
+			source: {
+				type: "geojson",
+				data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments.geojson"
+			},
+			paint: {
+				'fill-color': '#DED3BE',
+				'fill-opacity':0.5
+			}
+		});
+		map.addLayer({
+			id: bati2DHId,
+			type: "fill",
+			source: {
+				type: "geojson",
+				data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments.geojson"
+			},
+			filter: ["==", "id", ""],
+			paint: {
+				'fill-color': '#D82B09',
+				'fill-opacity':0.5
+			}
+		});
+		map.on("mousemove", bati2DId, function(e) {
+			map.setFilter(bati2DHId, ["==", "id", e.features[0].properties.id]);
+			});
+
+			// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
+		map.on("mouseleave", bati2DId, function() {
+			map.setFilter(bati2DHId, ["==", "id", ""]);
+			});	
+
+		map.addLayer({
+	        id: etiqBati2DId,
+	        type: "symbol",
+	        source: {
+	            type: "geojson",
+	            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments_centroides.geojson"
+	        },
+			layout: {
+		        "text-field": "{name}",
+		        "text-anchor": "center",
+		        "text-size":8
+    		},
+    		minzoom : 14,
+	    });
+
+		};
+// Initialisation de la carte
+
+map.on("load", function() {
+	
+    map.addLayer({
+        id: "grass",
+        type: "fill",
+        source: {
+            type: "geojson",
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/grass.geojson"
+        },
+        paint: {
+        	'fill-color': '#A4E463',
+        	'fill-opacity':0.5
+		}
+    });
+	
+	
+	getBati2D();	
+
 
 	map.addLayer({
         id: "Campus",
@@ -610,9 +696,8 @@ function getSearchedItem(){
         		});
         	searchX = searchItem.geometry.coordinates[0];
         	searchY = searchItem.geometry.coordinates[1];
-			
-			if (DDD){
-	        	map.flyTo({
+			if (DDD){					
+				map.flyTo({
 	        		center:[searchX,searchY],
 	        		zoom:16.5,
 	        		pitch:45,
@@ -653,17 +738,28 @@ function runScriptClic(e){
 document.getElementById('DDD').addEventListener('click',function(){
 	var X = map.getCenter()["lng"];
 	var Y = map.getCenter()["lat"];
-	var button = document.getElementById('DDDButton')
+	var button = document.getElementById('DDDButton');
+	
 	if (DDD===false){
+
+		getBati3D();
+		map.removeLayer('bati_2D');
+		map.removeLayer('bati_2D-hover');		
+
 		map.flyTo({
 			center:[X,Y],
 			pitch:45,
 			speed:0.1
 		});
 		button.style.backgroundColor = '#286090';
-		DDD=true
+		DDD=true;
 		map.dragRotate.enable();
+
 	} else {
+
+		getBati2D();
+		map.removeLayer('bati_3D');
+		map.removeLayer('bati_3D-hover');
 		map.flyTo({
 			center:[X,Y],
 			pitch:0,
@@ -671,12 +767,25 @@ document.getElementById('DDD').addEventListener('click',function(){
 			speed:0.1
 		});	
 		button.style.backgroundColor = 'grey';
-		DDD=false	
+		DDD=false;	
 		map.dragRotate.disable();
 	}
 })
+
+
+
+
+
 	
-	
+
+
+
+
+
+
+
+
+
 	
 
 var nav = new mapboxgl.NavigationControl();
