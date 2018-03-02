@@ -341,7 +341,7 @@
         container: 'map', // container id
         style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
         center: [-1.7013, 48.119365], // starting position [lng, lat]
-        zoom: 15,
+        zoom: 15.8,
 		minZoom:13,
         pitch : 0,
 		maxBounds: rennesBounds // starting zoom
@@ -427,7 +427,7 @@
 			layout: {
 		        "text-field": "{name}",
 		        "text-anchor": "center",
-		        "text-size":8
+		        "text-size":{'base': 1.4,'stops': [[13, 2], [22, 60]]}
     		},
     		minzoom : 14,
 	    });
@@ -489,7 +489,7 @@
 			layout: {
 		        "text-field": "{name}",
 		        "text-anchor": "center",
-		        "text-size":8
+		        "text-size":{'base': 1.4,'stops': [[13, 2], [22, 60]]}
     		},
     		minzoom : 14,
 	    	});
@@ -567,13 +567,31 @@ map.on("load", function() {
 		        layout: {'visibility': 'visible'}, 
 				paint: {
 			        "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
-			        "circle-color" :'blue',
+			        "circle-color" :'#003399',
 			        "circle-opacity":0.9
 				}
 			});
+			amphisEtiquette = map.addLayer({
+		        id: "AmphithéâtresEtiquettes",
+		        type: "symbol",
+		        source: {
+		            type: "geojson",
+		            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
+		        },
+		        filter : [ '==','Categorie','Amphithéâtre'],
+		        layout: {
+		        "text-field": "{Etiquette}",
+		        "text-anchor": "center",
+		        "text-size":{'base': 1.5,'stops': [[13, 2], [22, 60]]}, 
+				},
+				paint: {
+					"text-color":"white"
+				},
+				minzoom:15.5
+			});
 			this.style.backgroundColor = '#286090';
 			this.style.color = 'white';
-			Layers.push('Amphithéâtres');
+			Layers.push('Amphithéâtres','AmphithéâtresEtiquettes');
 
 			amphisCount +=1;
 		} else {
@@ -586,14 +604,18 @@ map.on("load", function() {
 			
 			if (visibility === 'visible') {
 				map.setLayoutProperty(clickedLayer,'visibility','none');
+				map.setLayoutProperty('AmphithéâtresEtiquettes','visibility','none');
 				this.style.backgroundColor = '#F8F8F8';
 				this.style.color = 'grey';
 				Layers = Layers.filter(item => item != 'Amphithéâtres');
+				Layers = Layers.filter(item => item != 'AmphithéâtresEtiquettes');
 
 			} else {
 				this.style.backgroundColor = '#286090';
 				this.style.color = 'white';
 				map.setLayoutProperty(clickedLayer,'visibility','visible');
+				map.setLayoutProperty('AmphithéâtresEtiquettes','visibility','visible')
+
 				Layers.push('Amphithéâtres');
 
 				}
@@ -623,13 +645,6 @@ map.on("load", function() {
 				});
 			}
 		
-
-	
-
-
-
-
-
 	var sallesInfoLink = document.getElementById('Salles informatique');
 	
 	sallesInfoLink.onclick = function (e) {
