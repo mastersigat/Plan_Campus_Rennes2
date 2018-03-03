@@ -316,52 +316,65 @@
 
 
 <script>
+	
+//////////////////////////////////   Initialisation de variables //////////////////////////////////////
+	
+	
+	//Limites de vue en fonction du campus visité
+	//Villejean / La Harpe
 	var rennesBounds = [
     [-1.787293,48.067191 ], // Southwest coordinates
     [-1.525772,48.169255 ]  // Northeast coordinates
 	];
 	
+	//Mazier
 	var mazierBounds = [
 	[-2.810090, 48.488519],
 	[-2.668165,48.534886]
 	];
-
-	var DDD = false;
-	var searchPopup = null
-	var bati2DId = 'bati2DId';
-	var bati2DCount = 0;
-	var bati3DId = 'bati3dId';
-	var bati3DCount = 0;
-	var bati2DHId = 'bati2DHId';
-	var bati3DHId = 'bati3dHId';
-	var etiqBati2DId = 'etiqBati2DId';
-	var etiqBati3DId = 'etiqBati3DId';
-
+	
+	//Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
+	var DDD = false; // Vue de base en 2D
+	var bati2DId = 'bati2DId'; // Identifiant de la couche de bati 2D
+	var bati2DCount = 0; // Nombre de fois que la couche de bati 2D a été appelée (< nécessité de changer d'identifiant)
+	var bati3DId = 'bati3dId';  // Identifiant de la couche de bati 3D
+	var bati3DCount = 0; // Nombre de fois que la couche de bati 3D a été appelée
+	var bati2DHId = 'bati2DHId'; // idem couche hover
+	var bati3DHId = 'bati3dHId'; // idem couche hover
+	var etiqBati2DId = 'etiqBati2DId'; // idem couche etiquette
+	var etiqBati3DId = 'etiqBati3DId'; // idem couche etiquette
+	
+	// initialisation de la popup liée à la barre de recherche
+	var searchPopup = null 
+	
+	// Initialisation des variables d'overlay
+	var Layers = [];
+	var sallesInfoCount = 0;
+	var amphisCount = 0;
+	var popup = null
+	
+	// initialisation du fond de carte 
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
         center: [-1.7013, 48.119365], // starting position [lng, lat]
         zoom: 15.8,
-		minZoom:13,
-        pitch : 0,
+		minZoom:13, // zoom minimal
+        pitch : 0, // inclinaison de base
 		maxBounds: rennesBounds // starting zoom
     });
 
-	map.dragRotate.disable();
+	map.dragRotate.disable(); // vue 2D de base 
 	
-
-
-
-
-
+//////////////////////////////////   Creation de fonctions //////////////////////////////////////
+	
+	// Fonction pour afficher le référentiel bati 3D
 	function getBati3D(){
 		if (bati3DCount != 0){
-			map.removeLayer(bati2DId);
+			map.removeLayer(bati2DId); 
 			map.removeLayer(bati2DHId);
 			map.removeLayer(etiqBati2DId);		
 		};
-
-
 		bati3DCount += 1;
 		bati3DId = 'bati3DId'+bati3DCount;
 		bati3DHId = 'bati3DHId'+bati3DCount;
@@ -385,7 +398,6 @@
 				'fill-extrusion-opacity': 0.8
 			}
 		},Layers[0]);
-
 		map.addLayer({
 			id: bati3DHId,
 			type: "fill-extrusion",
@@ -407,7 +419,6 @@
 				'fill-extrusion-opacity': 0.8
 			}
 		},Layers[0]);
-
 		map.on("mousemove", bati3DId, function(e) {
 			map.setFilter(bati3DHId, ["==", "id", e.features[0].properties.id]);
 			});
@@ -416,14 +427,6 @@
 			map.on("mouseleave", bati3DId, function() {
 				map.setFilter(bati3DHId, ["==", "id", ""]);
 			});	
-
-
-
-
-
-
-
-
 		map.addLayer({
 	        id: etiqBati3DId,
 	        type: "symbol",
@@ -441,7 +444,7 @@
 
 	};
 
-
+	// Fonction pour afficher le référentiel bati 2D
 	function getBati2D(){
 		if (bati3DCount != 0){
 			map.removeLayer(bati3DId);
@@ -500,18 +503,13 @@
     		},
     		minzoom : 14,
 	    	});
-
 		};
-// Initialisation de la carte
-var Layers = [];
-var sallesInfoCount = 0;
-var amphisCount = 0;
-var popup = null
 
 
-
+//////////////////////////////////   Initialisation de la carte //////////////////////////////////////
+	
 map.on("load", function() {
-
+	// Couche herbe
     map.addLayer({
         id: "grass",
         type: "fill",
@@ -525,9 +523,10 @@ map.on("load", function() {
 			}
     	});
 	
-	
+	// Couche référentiel bati 2D
 	getBati2D();	
-
+	
+	// Couche piste athletisme
 	map.addLayer({
 	    id: "piste_athle",
         type: "fill",
@@ -540,7 +539,8 @@ map.on("load", function() {
         	'fill-opacity':0.85
 		}
 	});
-		
+	
+	//Etiquettes campus
 	map.addLayer({
         id: "Campus",
         type: "symbol",
@@ -559,6 +559,10 @@ map.on("load", function() {
 
 	var amphisLink = document.getElementById('Amphithéâtres');
 	
+	
+//////////////////////////////////   Ajout des couches de base //////////////////////////////////////
+
+	// Couche Amphithéâtres
 	amphisLink.onclick = function (e) {
 		if (amphisCount === 0){
 			amphis = map.addLayer({
@@ -594,59 +598,49 @@ map.on("load", function() {
 				},
 				minzoom:15.5
 			});
-
 			Layers.push('Amphithéâtres','AmphithéâtresEtiquettes');
-
 			amphisCount +=1;
 		} else {
 			var clickedLayer = this.textContent;
 			e.preventDefault();
 			e.stopPropagation();
-			
 			var visibility = map.getLayoutProperty(clickedLayer,'visibility');
-			
 			if (visibility === 'visible') {
 				map.setLayoutProperty(clickedLayer,'visibility','none');
 				map.setLayoutProperty('AmphithéâtresEtiquettes','visibility','none');
 				Layers = Layers.filter(item => item != 'Amphithéâtres');
 				Layers = Layers.filter(item => item != 'AmphithéâtresEtiquettes');
-
 			} else {
-
 				map.setLayoutProperty(clickedLayer,'visibility','visible');
 				map.setLayoutProperty('AmphithéâtresEtiquettes','visibility','visible')
-
 				Layers.push('Amphithéâtres');
-
 				}
 			};
-	
 			map.on('click', function (e) {
 				var features = map.queryRenderedFeatures(e.point, { 
 					layers: ['Amphithéâtres'] 
 				});
-				
 				if (!features.length) {
 					return;
 				}
-				
 				var feature = features[0];
 				popup = new mapboxgl.Popup({ 
 					offset: [0, -15],
 					closeButton: false
- 
 				})
 					.setLngLat(feature.geometry.coordinates)
 					.setHTML('<b>'+feature.properties.Nom+'</b><br>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info)
 						.addTo(map);
 				});
-				
 				map.on('mousemove', function (e) {
 					var features = map.queryRenderedFeatures(e.point, { layers: ['Amphithéâtres'] });
 					map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 				});
 			}
-		
+	
+	
+	
+	// Couche salles informatique
 	var sallesInfoLink = document.getElementById('Salles informatique');
 	
 	sallesInfoLink.onclick = function (e) {
@@ -666,44 +660,33 @@ map.on("load", function() {
 			        "circle-opacity":0.9
 				}
 			});
-
 			Layers.push('Salles informatique');
-
 			sallesInfoCount +=1;
 		} else {
-
 			var clickedLayer = this.textContent;
 			e.preventDefault();
 			e.stopPropagation();
-			
 			var visibility = map.getLayoutProperty(clickedLayer,'visibility');
-			
 			if (visibility === 'visible') {
 				map.setLayoutProperty(clickedLayer,'visibility','none');
 				Layers = Layers.filter(item => item != 'Salles informatique');
-
 			} else {
 				map.setLayoutProperty(clickedLayer,'visibility','visible');
 				Layers.push('Salles informatique');
-
 				}
 			};
-	
 			
 			map.on('click', function (e) {
 				var features = map.queryRenderedFeatures(e.point, { 
 					layers: ['Salles informatique'] 
 				});
-				
 				if (!features.length) {
 					return;
 				}
-				
 				var feature = features[0];
 				var popup = new mapboxgl.Popup({ 
 					offset: [0, -15],
 					closeButton: false,
- 
 				})
 					.setLngLat(feature.geometry.coordinates)
 					.setHTML('<b>'+feature.properties.Nom+'</b><br>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info)
@@ -713,15 +696,13 @@ map.on("load", function() {
 					var features = map.queryRenderedFeatures(e.point, { layers: ['Salles informatique','Amphithéâtres'] });
 					map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 				});
-
 			}
-
-
 		});
 	
 
 	
-// Interactivité menus
+//////////////////////////////////   Interactivité menus //////////////////////////////////////
+
 
 	// ZOOMS sur les campus
 
@@ -747,7 +728,8 @@ map.on("load", function() {
         });
     });
 	
-    // Barre de recherche
+//////////////////////////////////  Barre de recherche //////////////////////////////////////
+
 
 	var searchPOI = (function (){
 			var json = null;
@@ -770,9 +752,6 @@ map.on("load", function() {
 	var jproperties = searchPOI.features.map(function (el) {
 		return el.properties; 
 	});
-	
-
-
 	var searchValue	= null;
 	var searchItem = [];
 	var searchX = null;
@@ -811,9 +790,7 @@ map.on("load", function() {
 				searchPopup.remove();
 				map.removeLayer(searchLayerId)
 				searchLayerId = 'searchResult'+searchLayerCount;
-
 	    	};
-
 
 	        searchValue = document.getElementById("searchfield").value;
 	        console.log(searchValue);
@@ -862,30 +839,25 @@ map.on("load", function() {
 	        	}
 	        }
 		}
-
-
 function runScriptKey(e) {
     if (e.keyCode == 13) {
     	console.log('ok');
     	getSearchedItem();
     }
 }
-
 function runScriptClic(e){
 	getSearchedItem();
 }
+	
 
+//////////////////////////////////   3D   //////////////////////////////////////
 
 document.getElementById('DDD').addEventListener('click',function(){
 	var X = map.getCenter()["lng"];
 	var Y = map.getCenter()["lat"];
 	var button = document.getElementById('DDDButton');
-	
 	if (DDD===false){
-
 		getBati3D();
-		
-
 		map.flyTo({
 			center:[X,Y],
 			pitch:45,
@@ -894,11 +866,8 @@ document.getElementById('DDD').addEventListener('click',function(){
 		button.style.backgroundColor = '#286090';
 		DDD=true;
 		map.dragRotate.enable();
-
 	} else {
-
 		getBati2D();
-
 		map.flyTo({
 			center:[X,Y],
 			pitch:0,
@@ -911,6 +880,7 @@ document.getElementById('DDD').addEventListener('click',function(){
 	}
 })
 
+//////////////////////////////////   Ajout de l'habillage de la carte //////////////////////////////////////
 
 var nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
