@@ -353,6 +353,7 @@
 
 
 
+
 	function getBati3D(){
 		if (bati3DCount != 0){
 			map.removeLayer(bati2DId);
@@ -362,9 +363,9 @@
 
 
 		bati3DCount += 1;
-		bati3DId = bati3DId+bati3DCount;
-		bati3DHId = bati3DHId+bati3DCount;
-		etiqBati3DId = etiqBati3DId + bati3DCount;
+		bati3DId = 'bati3DId'+bati3DCount;
+		bati3DHId = 'bati3DHId'+bati3DCount;
+		etiqBati3DId = 'etiqBati3DId' + bati3DCount;
 		map.addLayer({
 			id: bati3DId,
 			type: "fill-extrusion",
@@ -408,13 +409,19 @@
 		},Layers[0]);
 
 		map.on("mousemove", bati3DId, function(e) {
-				map.setFilter(bati3DHId, ["==", "id", e.features[0].properties.id]);
+			map.setFilter(bati3DHId, ["==", "id", e.features[0].properties.id]);
 			});
 
 			// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
 			map.on("mouseleave", bati3DId, function() {
 				map.setFilter(bati3DHId, ["==", "id", ""]);
 			});	
+
+
+
+
+
+
 
 
 		map.addLayer({
@@ -442,9 +449,9 @@
 			map.removeLayer(etiqBati3DId);		
 		};
 		bati2DCount += 1;
-		bati2DId = bati2DId+bati2DCount;
-		bati2DHId = bati2DHId+bati2DCount;
-		etiqBati2DId=etiqBati2DId + bati2DCount;
+		bati2DId = 'bati2DId'+bati2DCount;
+		bati2DHId = 'bati2DHId'+bati2DCount;
+		etiqBati2DId='etiqBati2DId' + bati2DCount;
 		map.addLayer({
 			id: bati2DId,
 			type: "fill",
@@ -454,7 +461,7 @@
 			},
 			paint: {
 				'fill-color': '#9494b8',
-				'fill-opacity':0.5
+				'fill-opacity':0.8
 			}
 		},Layers[0]);
 		map.addLayer({
@@ -499,10 +506,8 @@
 var Layers = [];
 var sallesInfoCount = 0;
 var amphisCount = 0;
+var popup = null
 
-function addSallesInfo(){
-
-}
 
 
 map.on("load", function() {
@@ -589,13 +594,11 @@ map.on("load", function() {
 				},
 				minzoom:15.5
 			});
-			this.style.backgroundColor = '#286090';
-			this.style.color = 'white';
+
 			Layers.push('Amphithéâtres','AmphithéâtresEtiquettes');
 
 			amphisCount +=1;
 		} else {
-
 			var clickedLayer = this.textContent;
 			e.preventDefault();
 			e.stopPropagation();
@@ -605,14 +608,11 @@ map.on("load", function() {
 			if (visibility === 'visible') {
 				map.setLayoutProperty(clickedLayer,'visibility','none');
 				map.setLayoutProperty('AmphithéâtresEtiquettes','visibility','none');
-				this.style.backgroundColor = '#F8F8F8';
-				this.style.color = 'grey';
 				Layers = Layers.filter(item => item != 'Amphithéâtres');
 				Layers = Layers.filter(item => item != 'AmphithéâtresEtiquettes');
 
 			} else {
-				this.style.backgroundColor = '#286090';
-				this.style.color = 'white';
+
 				map.setLayoutProperty(clickedLayer,'visibility','visible');
 				map.setLayoutProperty('AmphithéâtresEtiquettes','visibility','visible')
 
@@ -631,8 +631,10 @@ map.on("load", function() {
 				}
 				
 				var feature = features[0];
-				var popup = new mapboxgl.Popup({ 
-					offset: [0, -15] 
+				popup = new mapboxgl.Popup({ 
+					offset: [0, -15],
+					closeButton: false
+ 
 				})
 					.setLngLat(feature.geometry.coordinates)
 					.setHTML('<b>'+feature.properties.Nom+'</b><br>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info)
@@ -664,8 +666,7 @@ map.on("load", function() {
 			        "circle-opacity":0.9
 				}
 			});
-			this.style.backgroundColor = '#286090';
-			this.style.color = 'white';
+
 			Layers.push('Salles informatique');
 
 			sallesInfoCount +=1;
@@ -679,19 +680,16 @@ map.on("load", function() {
 			
 			if (visibility === 'visible') {
 				map.setLayoutProperty(clickedLayer,'visibility','none');
-				this.style.backgroundColor = '#F8F8F8';
-				this.style.color = 'grey';
 				Layers = Layers.filter(item => item != 'Salles informatique');
 
 			} else {
-				this.style.backgroundColor = '#286090';
-				this.style.color = 'white';
 				map.setLayoutProperty(clickedLayer,'visibility','visible');
 				Layers.push('Salles informatique');
 
 				}
 			};
 	
+			
 			map.on('click', function (e) {
 				var features = map.queryRenderedFeatures(e.point, { 
 					layers: ['Salles informatique'] 
@@ -703,21 +701,26 @@ map.on("load", function() {
 				
 				var feature = features[0];
 				var popup = new mapboxgl.Popup({ 
-					offset: [0, -15] 
+					offset: [0, -15],
+					closeButton: false,
+ 
 				})
 					.setLngLat(feature.geometry.coordinates)
 					.setHTML('<b>'+feature.properties.Nom+'</b><br>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info)
 						.addTo(map);
 				});
-				
 				map.on('mousemove', function (e) {
-					var features = map.queryRenderedFeatures(e.point, { layers: ['Salles informatique'] });
+					var features = map.queryRenderedFeatures(e.point, { layers: ['Salles informatique','Amphithéâtres'] });
 					map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 				});
+
 			}
+
+
 		});
 	
 
+	
 // Interactivité menus
 
 	// ZOOMS sur les campus
@@ -838,16 +841,16 @@ map.on("load", function() {
 				if (DDD){					
 					map.flyTo({
 		        		center:[searchX,searchY],
-		        		zoom:16.5,
+		        		zoom:17.5,
 		        		pitch:45,
 						speed:0.2
 		        	});
 		        } else {
 		        	map.flyTo({
 		        		center:[searchX,searchY],
-		        		zoom:16.5,
+		        		zoom:17.5,
 		        		pitch:0,
-						speed:0.2
+						speed:0.6
 		        	});	        	
 		        }
 	        	searchPopup = new mapboxgl.Popup({
@@ -881,8 +884,7 @@ document.getElementById('DDD').addEventListener('click',function(){
 	if (DDD===false){
 
 		getBati3D();
-		map.removeLayer('bati_2D');
-		map.removeLayer('bati_2D-hover');		
+		
 
 		map.flyTo({
 			center:[X,Y],
@@ -896,8 +898,7 @@ document.getElementById('DDD').addEventListener('click',function(){
 	} else {
 
 		getBati2D();
-		map.removeLayer('bati_3D');
-		map.removeLayer('bati_3D-hover');
+
 		map.flyTo({
 			center:[X,Y],
 			pitch:0,
