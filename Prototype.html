@@ -89,17 +89,17 @@
 
 				<li>
 				   <a href="#">Zoomer sur un campus<span class="fa arrow"></span></a>
-				<ul class="nav nav-second-level">
-					<li>
-						<a href="#" id = "Villejean">Villejean</a>
-					</li>
-					<li>
-						<a href="#" id = "LaHarpe">La Harpe</a>
-					</li>
-					<li>
-						<a href="#" id = "Mazier">Mazier (St Brieuc)</a>
-					</li>                            
-				</ul>						
+        			<ul class="nav nav-second-level">
+        				<li>
+        					<a href="#" id = "Villejean">Villejean</a>
+        				</li>
+        				<li>
+        					<a href="#" id = "LaHarpe">La Harpe</a>
+        				</li>
+        				<li>
+        					<a href="#" id = "Mazier">Mazier (St Brieuc)</a>
+        				</li>                            
+        			</ul>						
 				</li>                    
 
 
@@ -155,7 +155,7 @@
                             </li>
                             <li>
                                 <a href="#" id = "Lieux culturels">Lieux culturels</a>
-                            </li>*
+                            </li>
                             <!--
                             <li>
                                 <a href="#">Galerie arts et essais</a>
@@ -340,14 +340,18 @@
 	var etiqBati2DId = 'etiqBati2DId'; // idem couche etiquette
 	var etiqBati3DId = 'etiqBati3DId'; // idem couche etiquette
 	
-	// initialisation de la popup liée à la barre de recherche
-	var searchPopup = null 
-	
+	// initialisation des popup
+	var searchPopup = null
+    var popupBati = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+        });
+	var popup = null
+
 	// Initialisation des variables d'overlay
 	var Layers = [];
 	var sallesInfoCount = 0;
 	var amphisCount = 0;
-	var popup = null
 	
 	// initialisation du fond de carte 
     var map = new mapboxgl.Map({
@@ -416,13 +420,29 @@
 			}
 		},Layers[0]);
 		map.on("mousemove", bati3DId, function(e) {
-			map.setFilter(bati3DHId, ["==", "id", e.features[0].properties.id]);
-			});
 
-			// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
-			map.on("mouseleave", bati3DId, function() {
-				map.setFilter(bati3DHId, ["==", "id", ""]);
-			});	
+			map.setFilter(bati3DHId, ["==", "id", e.features[0].properties.id]);
+            if (popupBati!==null){popupBati.remove();}
+            if (popup == null || popup.isOpen()==false){
+                popupBati = new mapboxgl.Popup({ 
+                    offset: [0, -15],
+                    closeButton: false
+                })
+                    .setLngLat(e.lngLat)
+                    .setHTML('<h1>'+e.features[0].properties.id+'</h1>')
+                        .addTo(map);
+                }
+            });
+            
+		
+            
+                          
+		// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
+		map.on("mouseleave", bati3DId, function() {
+			map.setFilter(bati3DHId, ["==", "id", ""]);
+            popupBati.remove();
+		});	
+
 		map.addLayer({
 	        id: etiqBati3DId,
 	        type: "symbol",
@@ -478,11 +498,26 @@
 		},Layers[0]);
 		map.on("mousemove", bati2DId, function(e) {
 			map.setFilter(bati2DHId, ["==", "id", e.features[0].properties.id]);
-			});
+            if (popupBati!==null){
+                popupBati.remove();
+            };
+            if (popup == null || popup.isOpen()==false){
+                popupBati = new mapboxgl.Popup({ 
+                offset: [0, -15],
+                closeButton: false
+            })
+                .setLngLat(e.lngLat)
+                .setHTML('<h1>'+e.features[0].properties.id+'</h1>')
+                    .addTo(map);
+            }
+        });
+			
 
 			// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
 		map.on("mouseleave", bati2DId, function() {
 			map.setFilter(bati2DHId, ["==", "id", ""]);
+            popupBati.remove();
+
 			});	
 
 		map.addLayer({
