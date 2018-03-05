@@ -706,7 +706,8 @@ var velostarCount = 0
 var nomLayer= null
 var velostarLink = document.getElementById('Stations vélostar');
 velostarLink.onclick = function (e) {
-    if (velostarCount === 0){
+    velostarCount +=1 ;
+    if (velostarCount === 1){
         updateData();
         function updateData() {
             //Appel de l'API pour les vélos
@@ -723,7 +724,16 @@ velostarLink.onclick = function (e) {
                     console.log("Données téléchargées");
                     geojsonVelos = geojson;
                     saveBikeData();
-                    showBikeData();
+                    if (nomLayer === null) {
+                        showBikeData()
+                    } else {
+                        var visibility = map.getLayoutProperty(nomLayer,'visibility');
+                        if (visibility === 'visible'){
+                            showBikeData()
+                        } else {
+                            console.log('données masquées')
+                        }
+                    };
                     setTimeout(updateData, 60*1000);
                 },
                 
@@ -784,7 +794,6 @@ velostarLink.onclick = function (e) {
                 }
             });
         }       
-        velostarCount +=1;
 
     } else {
         var clickedLayer = this.textContent;
@@ -833,7 +842,8 @@ var busCount = 0
 var nomLayerBus= null
 var busLink = document.getElementById('Réseau de bus');
 busLink.onclick = function (e) {
-    if (busCount === 0){
+    busCount +=1;
+    if (busCount === 1){
         updateBusData();
         function updateBusData() {
             //Appel de l'API pour les vélos
@@ -850,7 +860,16 @@ busLink.onclick = function (e) {
                     console.log("Données téléchargées");
                     geojsonBus = geojson;
                     saveBusData();
-                    showBusData();
+                    if (nomLayerBus === null) {
+                        showBusData()
+                    } else {
+                        var visibility = map.getLayoutProperty(nomLayerBus,'visibility');
+                        if (visibility === 'visible'){
+                            showBusData()
+                        } else {
+                            console.log('données masquées')
+                        }
+                    };
                     setTimeout(updateBusData, 60*1000);
                 },
                 
@@ -866,22 +885,7 @@ busLink.onclick = function (e) {
             //On change la structure des données pour simplifier l'utilisation
             var stations = {};
             var prevStationData = null;
-            geojsonBus.features.forEach(f => {
-                stations[f.properties.nom] = f.properties;
-                
-                //On compare avec le nombre de vélos précédent
-                if(previousDataVelos.stations.length > 0) {
-                    f.properties.diff = f.properties.nombrevelosdisponibles - previousDataVelos.stations[previousDataVelos.stations.length-1][f.properties.nom].nombrevelosdisponibles;
-                }
-                else {
-                    f.properties.diff = 0;
-                }
-                
-                //On met à jour l'affichage des infos si besoin
-                if(prevInfo && prevInfo === f.properties.nom) {
-                    prevStationData = f;
-                }
-            });
+            
             
             previousDataBus.times.push(Date.now());
             previousDataBus.stations.push(stations);
