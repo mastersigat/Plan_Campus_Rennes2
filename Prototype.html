@@ -570,7 +570,18 @@ map.on("load", function() {
         	'fill-opacity':0.85
 		}
 	});
-	
+	map.addLayer({
+        id: "terrainFootball",
+        type: "line",
+        source: {
+            type: "geojson",
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/terrain_football.geojson"
+        },
+        "paint": {
+            'line-color': '#FFFFFF',
+            'line-width' : {'base': 1.2,'stops': [[13, 0.5], [22, 3]]}
+            }
+        });
 	//Etiquettes campus
 	map.addLayer({
         id: "CampusEtiquette",
