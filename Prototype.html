@@ -9,6 +9,10 @@
 
     <title>Prototype Mapbox GL</title>
 
+    <!-- API MAPBOX GL-->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css' rel='stylesheet' />
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Fonts -->
@@ -35,9 +39,7 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="js/startmin.js"></script>
 
-    <!-- API MAPBOX GL-->
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css' rel='stylesheet' />
+
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -623,7 +625,7 @@ map.on("load", function() {
 					closeButton: false
 				})
 					.setLngLat(feature.geometry.coordinates)
-					.setHTML('<b>'+feature.properties.Nom+'</b><br>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info)
+					.setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info+'</p>')
 						.addTo(map);
 				});
 				map.on('mousemove', function (e) {
@@ -683,7 +685,7 @@ map.on("load", function() {
 					closeButton: false,
 				})
 					.setLngLat(feature.geometry.coordinates)
-					.setHTML('<b>'+feature.properties.Nom+'</b><br>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info)
+					.setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info+'</p>')
 						.addTo(map);
 				});
 				map.on('mousemove', function (e) {
@@ -811,7 +813,7 @@ velostarLink.onclick = function (e) {
             closeButton: false,
         })
             .setLngLat(feature.geometry.coordinates)
-            .setHTML('<b> Station vélostar : '+feature.properties.nom+'</b><br>Nombre de vélos disponibles : '+feature.properties.nombrevelosdisponibles+'<br>Nombre d\'emplacements disponibles : ' +feature.properties.nombreemplacementsdisponibles)
+            .setHTML('<h1> Station vélostar : '+feature.properties.nom+'</h1><p>Nombre de vélos disponibles : '+feature.properties.nombrevelosdisponibles+'<br>Nombre d\'emplacements disponibles : ' +feature.properties.nombreemplacementsdisponibles+'</p>')
                 .addTo(map);
         });
         map.on('mousemove', function (e) {
@@ -939,7 +941,7 @@ busLink.onclick = function (e) {
             closeButton: false,
         })
             .setLngLat(feature.geometry.coordinates)
-            .setHTML('<b> Bus du réseau STAR </b><br>Ligne : '+feature.properties.nomcourtligne+'<br>A destination de : '+feature.properties.destination)
+            .setHTML('<h1> Bus du réseau STAR </h1><p>Ligne : '+feature.properties.nomcourtligne+'<br>A destination de : '+feature.properties.destination+'</p>')
                 .addTo(map);
         });
         map.on('mousemove', function (e) {
@@ -1083,10 +1085,11 @@ busLink.onclick = function (e) {
 		        	});	        	
 		        }
 	        	searchPopup = new mapboxgl.Popup({
-	        		offset:[0,-15]
+	        		offset:[0,-15],
+                    closeButton: false
 	        	})
 	        		.setLngLat(searchItem.geometry.coordinates)
-	        		.setHTML('blablabla')
+	        		.setHTML('<h1>'+searchItem.properties.Nom+'</h1>')
 	        			.addTo(map);
 	        	}
 	        }
