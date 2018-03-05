@@ -885,7 +885,7 @@ busLink.onclick = function (e) {
             
             previousDataBus.times.push(Date.now());
             previousDataBus.stations.push(stations);
-            Layers = Layers.filter(item => item != "bus"+(previousDataVelos.times.length-1));
+            Layers = Layers.filter(item => item != "bus"+(previousDataBus.times.length-1));
 
         }
         function showBusData() {
