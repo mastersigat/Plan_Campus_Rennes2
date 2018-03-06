@@ -423,7 +423,7 @@
 
 			map.setFilter(bati3DHId, ["==", "id", e.features[0].properties.id]);
             if (popupBati!==null){popupBati.remove();}
-            if (popup == null || popup.isOpen()==false){
+            if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false)){
                 popupBati = new mapboxgl.Popup({ 
                     offset: [0, -15],
                     closeButton: false
@@ -501,7 +501,7 @@
             if (popupBati!==null){
                 popupBati.remove();
             };
-            if (popup == null || popup.isOpen()==false){
+            if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false)){
                 popupBati = new mapboxgl.Popup({ 
                 offset: [0, -15],
                 closeButton: false
@@ -1077,7 +1077,16 @@ busLink.onclick = function (e) {
 	    theme: "plate-dark"
 	};
 	$("#searchfield").easyAutocomplete(options);		
-		
+    
+    function getSearchPopup(){
+        searchPopup= new mapboxgl.Popup({
+            offset:[0,-15],
+            closeButton: false
+    })
+        .setLngLat(searchItem.geometry.coordinates)
+        .setHTML('<h1>'+searchItem.properties.Nom+'</h1>')
+            .addTo(map);
+    };	
 
 	function getSearchedItem(){
 		if (searchValue !==null){
@@ -1085,6 +1094,7 @@ busLink.onclick = function (e) {
 				searchItem = [];
 				searchX = null;
 				searchY = null;
+                Layers = Layers.filter(item => item != searchLayerId);
 				searchLayerCount+=1;
 				searchPopup.remove();
 				map.removeLayer(searchLayerId)
@@ -1112,6 +1122,10 @@ busLink.onclick = function (e) {
 	        		});
 	        	Layers.push(searchLayerId);
 
+                map.on('mousemove', function (e) {
+                    var features = map.queryRenderedFeatures(e.point, { layers: Layers });
+                    map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+                });
 	        	searchX = searchItem.geometry.coordinates[0];
 	        	searchY = searchItem.geometry.coordinates[1];
 				if (POI[i].properties.Campus === 'Mazier'){
@@ -1134,16 +1148,17 @@ busLink.onclick = function (e) {
 						speed:0.6
 		        	});	        	
 		        }
-	        	searchPopup = new mapboxgl.Popup({
-	        		offset:[0,-15],
-                    closeButton: false
+
+                getSearchPopup();
+	        	map.on('click',function (e){
+                    if (searchPopup.isOpen() == true){
+                        searchPopup.remove();
+                    
+                    }
 	        	})
-	        		.setLngLat(searchItem.geometry.coordinates)
-	        		.setHTML('<h1>'+searchItem.properties.Nom+'</h1>')
-	        			.addTo(map);
-	        	}
-	        }
-		}
+            }
+        }
+	}
 function runScriptKey(e) {
     if (e.keyCode == 13) {
     	console.log('ok');
