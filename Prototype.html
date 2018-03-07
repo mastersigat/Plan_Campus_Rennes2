@@ -94,22 +94,8 @@
                             </li>
                             <li>
                                 <a href="#" id = 'Salles spécifiques'>Salles spécifiques<span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="#" id= "Salle des conseils">Salle des conseils</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" id = "Salle Pina Bausch">Salle Pina Bausch</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" id = "Salles Kennedy">Salles Kennedy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" id = "Salle des Thèses">Salle des Thèses</a>
-                                    </li>
-                                     <li>
-                                        <a href="#" id = "Salle Bourdon">Salle Bourdon</a>
-                                    </li>                                                                                                                                                
+                                <ul class="nav nav-third-level" id = "insertSallesSpecifiques">
+                                                                                                                                                
                                 </ul>
                             </li>
 
@@ -295,19 +281,35 @@
 
 <script>
 	
-//////////////////////////////////   Initialisation de variables //////////////////////////////////////
-	//Limites de vue en fonction du campus visité
-	//Villejean / La Harpe
-	var rennesBounds = [
-    [-1.787293,48.067191 ], // Southwest coordinates
-    [-1.525772,48.169255 ]  // Northeast coordinates
-	];
 	
-	//Mazier
-	var mazierBounds = [
-	[-2.810090, 48.488519],
-	[-2.668165,48.534886]
-	];
+	///////////////////////////////  initialisation du fond de carte ///////////////////////////
+		value = null
+		//Limites de vue en fonction du campus visité
+		//Villejean / La Harpe
+		var rennesBounds = [
+	    [-1.787293,48.067191 ], // Southwest coordinates
+	    [-1.525772,48.169255 ]  // Northeast coordinates
+		];
+		
+		//Mazier
+		var mazierBounds = [
+		[-2.810090, 48.488519],
+		[-2.668165,48.534886]
+		];
+	
+	    var map = new mapboxgl.Map({
+	        container: 'map', // container id
+	        style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
+	        center: [-1.7013, 48.119365], // starting position [lng, lat]
+	        zoom: 15.8,
+			minZoom:13, // zoom minimal
+	        pitch : 0, // inclinaison de base
+			maxBounds: rennesBounds // starting zoom
+    	});
+
+	map.dragRotate.disable(); // vue 2D de base 
+	
+//////////////////////////////////   Creation de fonctions //////////////////////////////////////
 	
 	//Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
 	var DDD = false; // Vue de base en 2D
@@ -319,36 +321,12 @@
 	var bati3DHId = 'bati3dHId'; // idem couche hover
 	var etiqBati2DId = 'etiqBati2DId'; // idem couche etiquette
 	var etiqBati3DId = 'etiqBati3DId'; // idem couche etiquette
-	
-	// initialisation des popup
-	var searchPopup = null
-    var popupBati = new mapboxgl.Popup({
+
+    var popupBati = new mapboxgl.Popup({ // Popup Hover Bati
         closeButton: false,
         closeOnClick: false
         });
-	var popup = null
-    var json = null; //
-	// Initialisation des variables d'overlay
-	var Layers = [];
-	var sallesInfoCount = 0;
-    var sallesSpeCount = 0;
-	var amphisCount = 0;
-	
-	// initialisation du fond de carte 
-    var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
-        center: [-1.7013, 48.119365], // starting position [lng, lat]
-        zoom: 15.8,
-		minZoom:13, // zoom minimal
-        pitch : 0, // inclinaison de base
-		maxBounds: rennesBounds // starting zoom
-    });
 
-	map.dragRotate.disable(); // vue 2D de base 
-	
-//////////////////////////////////   Creation de fonctions //////////////////////////////////////
-	
 	// Fonction pour afficher le référentiel bati 3D
 	function getBati3D(){
 		if (bati3DCount != 0){
@@ -490,9 +468,7 @@
                     .addTo(map);
             }
         });
-			
-
-			// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
+		// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
 		map.on("mouseleave", bati2DId, function() {
 			map.setFilter(bati2DHId, ["==", "id", ""]);
             popupBati.remove();
@@ -516,13 +492,105 @@
 		};
 
 
-
 //////////////////////////////////   Initialisation de la carte //////////////////////////////////////
+
+// Initialisation des variables d'overlay
+var popup = null
+var popupList = null
+
+var salleRecherchee = null
+var listeLink = [];	
+
+var Layers = [];
+var listeElementA = [];
+var listeElementLi = [];
+var POIBrut = (function (){
+var json = null;
+
+$.ajax({
+	'async':false,
+	'global':false,
+	'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson",
+	'dataType' : "json",
+	'success' : function(data){
+		json = data;
+	}
+		});
+	return json;
+})();
+
+var POI = []; 
+POI = POIBrut.features; 
+	
+var fproperties = POIBrut.features.map(function (el) {
+	return el.properties; 
+});		
+
+// Fonctions pour zoomer sur l'item sélectionné dans la liste
+
+
+
+function getSwitchPopup(){
+    popupList = new mapboxgl.Popup({
+        offset:[0,-15],
+        closeButton: false
+})
+    .setLngLat(salleRecherchee.geometry.coordinates)
+    .setHTML('<h1>'+salleRecherchee.properties.Nom+'</h1>')
+        .addTo(map);
+};
+
+
+function switchPOI(value){
+	console.log(value);
+	salleRecherchee = null;
+	salleRX = null;
+	salleRY = null;
+
+	if (popup){
+		popup.remove();
+	}
+	if (popupList){
+		popupList.remove();
+	}
+
+	for(var i = 0; i < POI.length; i++){
+		
+		if (POI[i].properties.Nom === value){
+		    salleRecherchee = POI[i];
+		    }}
+	salleRX = salleRecherchee.geometry.coordinates[0];
+	salleRY = salleRecherchee.geometry.coordinates[1];
+
+	if (salleRecherchee.properties.Campus === 'Mazier'){
+		map.setMaxBounds(mazierBounds);
+	} else {
+		map.setMaxBounds(rennesBounds);
+	};
+	if (DDD){					
+		map.flyTo({
+    		center:[salleRX,salleRY],
+    		zoom:16.5,
+    		pitch:45,
+			speed:0.6
+    	});
+    } else {
+    	map.flyTo({
+    		center:[salleRX,salleRY],
+    		zoom:16.5,
+    		pitch:0,
+			speed:0.6
+    	});	        	
+    }
+	getSwitchPopup();
+
+	} 
+
 
 map.on("load", function() {
 	// Couche herbe
     map.addLayer({
-        id: "grass",
+        id: "Herbe",
         type: "fill",
         source: {
             type: "geojson",
@@ -539,7 +607,7 @@ map.on("load", function() {
 	
 	// Couche piste athletisme
 	map.addLayer({
-	    id: "piste_athle",
+	    id: "Piste d'athlétisme Villejean",
         type: "fill",
         source: {
             type: "geojson",
@@ -551,7 +619,7 @@ map.on("load", function() {
 		}
 	});
 	map.addLayer({
-        id: "terrainFootball",
+        id: "Terrain de football Villejean",
         type: "line",
         source: {
             type: "geojson",
@@ -564,7 +632,7 @@ map.on("load", function() {
         });
 	//Etiquettes campus
 	map.addLayer({
-        id: "CampusEtiquette",
+        id: "Etiquette Campus",
         type: "symbol",
         source: {
             type: "geojson",
@@ -580,13 +648,13 @@ map.on("load", function() {
  
 
 	
-//////////////////////////////////   Ajout des couches de base //////////////////////////////////////
-
-    
+//////////////////////////////////   OVERLAYS //////////////////////////////////////
+ 	
 
 
 	// Couche Amphithéâtres
     var amphisLink = document.getElementById('Amphithéâtres');
+	var amphisCount = 0;
 
 	amphisLink.onclick = function (e) {
 		if (amphisCount === 0){
@@ -667,6 +735,7 @@ map.on("load", function() {
 	
 	// Couche salles informatique
 	var sallesInfoLink = document.getElementById('Salles informatique');
+	var sallesInfoCount = 0;
 	
 	sallesInfoLink.onclick = function (e) {
 		if (sallesInfoCount === 0){
@@ -725,10 +794,38 @@ map.on("load", function() {
 			}
 
     // Couche salles spécifiques
+    var sallesSpeCount = 0;
+	var salleRX = null;
+	var salleRY = null;
+	var listeSallesSpecifiques = [];
     var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
-    var listeSallesSpecifiques = ['Salle des Thèses','Salle Bourdon','Salle Pina Bausch','Salle des conseils','Salles Kennedy']
+    var insertSallesSpecifiques = document.getElementById('insertSallesSpecifiques')
     sallesSpecifiquesLink.onclick = function (e) {
-        if (sallesSpeCount === 0){
+    	elLink = null
+    	elList = null
+    	if (sallesSpeCount === 0){
+	    	var sallesSpecifiques = fproperties.filter(function(e){
+			return e.Categorie === 'Salles spécifiques';
+			})
+			for (i = 0; i < sallesSpecifiques.length; i++) {
+				listeSallesSpecifiques.push(sallesSpecifiques[i]['Nom']);
+			}
+
+			for (i = 0; i < listeSallesSpecifiques.length; i++){
+				elList = document.createElement('li');
+				insertSallesSpecifiques.appendChild(elList);
+				elLink = document.createElement('a');
+				elLink.innerHTML = listeSallesSpecifiques[i];
+				elLink.setAttribute('id',listeSallesSpecifiques[i]);
+				elLink.setAttribute('href','#');
+				var theFunction = 'switchPOI('+'\''+listeSallesSpecifiques[i]+'\')'
+				elLink.setAttribute('onclick',theFunction);
+				elList.appendChild(elLink);
+			}
+			for (i = 0; i < listeSallesSpecifiques.length; i++){
+			    listeLink.push(document.getElementById(listeSallesSpecifiques[i]))
+				}
+        
             sallesSpecifiques = map.addLayer({
                 id: 'Salles spécifiques',
                 type: "circle",
@@ -758,42 +855,36 @@ map.on("load", function() {
                 map.setLayoutProperty(clickedLayer,'visibility','visible');
                 Layers.push('Salles spécifiques');
                 }
-            };
+        };
             
-            map.on('click', function (e) {
-                var features = map.queryRenderedFeatures(e.point, { 
-                    layers: ['Salles spécifiques'] 
-                });
-                if (!features.length) {
-                    return;
-                }
-
-                var feature = features[0];
-                popup = new mapboxgl.Popup({ 
-                    offset: [0, -15],
-                    closeButton: false,
-                })
-                    .setLngLat(feature.geometry.coordinates)
-                    .setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau)
-                        .addTo(map);
-                });
-            map.on('mousemove', function (e) {
-                var features = map.queryRenderedFeatures(e.point, { layers: Layers });
-                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+        map.on('click', function (e) {
+            var features = map.queryRenderedFeatures(e.point, { 
+                layers: ['Salles spécifiques'] 
             });
+            if (!features.length) {
+                return;
+            }
+
+            var feature = features[0];
+            popup = new mapboxgl.Popup({ 
+                offset: [0, -15],
+                closeButton: false,
+            })
+                .setLngLat(feature.geometry.coordinates)
+                .setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau)
+                    .addTo(map);
+        });
+		    
+	    map.on('mousemove', function (e) {
+	        var features = map.queryRenderedFeatures(e.point, { layers: Layers });
+	        map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+	    });
+	}
 
 
-        }
-            
+				
 
-
-
-
-
-
-
-
-
+	
 
 
 //insérer ici les couches suivantes...
@@ -1067,32 +1158,15 @@ busLink.onclick = function (e) {
 	
 
 //////////////////////////////////  Barre de recherche //////////////////////////////////////
+	
+	// initialisation des popup
+	var searchPopup = null
 
-
-	var searchPOI = (function (){
-		var json = null;
-
-		$.ajax({
-			'async':false,
-			'global':false,
-			'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson",
-			'dataType' : "json",
-			'success' : function(data){
-				json = data;
-			}
-				});
-			return json;
-		})();
-
-	// Récupération des propriétés du json
-	var POI = []; 
-	POI = searchPOI.features; 
-	var jproperties = searchPOI.features.map(function (el) {
-		return el.properties; 
-	});
-	jproperties = jproperties.filter(function(e){
+	var jproperties = fproperties.filter(function(e){
 		return e.Nom !== null;
 	})
+	// Récupération des propriétés du json
+
 	var searchValue	= null;
 	var searchItem = [];
 	var searchX = null;
@@ -1121,7 +1195,7 @@ busLink.onclick = function (e) {
 	$("#searchfield").easyAutocomplete(options);		
     
     function getSearchPopup(){
-        searchPopup= new mapboxgl.Popup({
+        searchPopup = new mapboxgl.Popup({
             offset:[0,-15],
             closeButton: false
     })
