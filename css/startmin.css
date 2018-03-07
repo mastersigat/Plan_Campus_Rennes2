@@ -252,6 +252,28 @@ a {
 #DDD button {
     background-color : grey;
     border:none;
+    padding:4px;
+    padding-left : 10px;
+    padding-right: 10px;
+    opacity : 0.85;
+
+}
+
+#campus {
+    position : absolute;
+    width : 250px;
+    left:50%;
+    margin-left : -125px;
+    top:5px;
+    z-index:9999;
+    opacity : 0.85;
+}
+#campus button {
+    background-color : grey;
+    border:none;
+    padding:4px;
+    padding-left : 10px;
+    padding-right: 10px;
 }
 
 .mapboxgl-popup {
