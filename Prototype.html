@@ -818,8 +818,8 @@ map.on("load", function() {
 				elLink.innerHTML = listeSallesSpecifiques[i];
 				elLink.setAttribute('id',listeSallesSpecifiques[i]);
 				elLink.setAttribute('href','#');
-				var theFunction = 'switchPOI('+'\''+listeSallesSpecifiques[i]+'\')'
-				elLink.setAttribute('onclick',theFunction);
+				var theFunction = 'javascript:switchPOI('+'\''+listeSallesSpecifiques[i]+'\')'
+				elLink.setAttribute('href',theFunction);
 				elList.appendChild(elLink);
 			}
 			for (i = 0; i < listeSallesSpecifiques.length; i++){
