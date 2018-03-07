@@ -47,6 +47,8 @@
 
 </head>
 <body>
+<!-- jQuery -->
+
 
 <div id="wrapper">
 
@@ -80,23 +82,7 @@
 				</li>
 
         		<!-- Gestion des couches -->
-
-				<li>
-				   <a href="#">Zoomer sur un campus<span class="fa arrow"></span></a>
-        			<ul class="nav nav-second-level">
-        				<li>
-        					<a href="#" id = "Villejean">Villejean</a>
-        				</li>
-        				<li>
-        					<a href="#" id = "LaHarpe">La Harpe</a>
-        				</li>
-        				<li>
-        					<a href="#" id = "Mazier">Mazier (St Brieuc)</a>
-        				</li>                            
-        			</ul>						
-				</li>                    
-
-
+                    
 		    	<li>
                 	<a href="#">Amphis et salles spécifiques<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -104,28 +90,29 @@
                                 <a href="#" id = "Amphithéâtres">Amphithéâtres</a>
                             </li>
                             <li>
-                                <a href="#" id = "Salles spécifiques">Salles spécifiques</a>
-                            </li>
-                            <li>
                                 <a href="#" id = "Salles informatique">Salles informatique</a>
                             </li>
-                            <!--
                             <li>
-                                <a href="#">Salles des conseils</a>
-                            </li>                            
-                            <li>
-                                <a href="#">Salle Jacques Léonard</a>
+                                <a href="#" id = 'Salles spécifiques'>Salles spécifiques<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="#" id= "Salle des conseils">Salle des conseils</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id = "Salle Pina Bausch">Salle Pina Bausch</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id = "Salles Kennedy">Salles Kennedy</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id = "Salle des Thèses">Salle des Thèses</a>
+                                    </li>
+                                     <li>
+                                        <a href="#" id = "Salle Bourdon">Salle Bourdon</a>
+                                    </li>                                                                                                                                                
+                                </ul>
                             </li>
-                            <li>
-                                <a href="#">Salle Pina Bausch</a>
-                            </li>
-                            <li>
-                                <a href="#">Salles Kennedy</a>
-                            </li>
-                            <li>
-                                <a href="#">...</a>
-                            </li>
-                            -->
+
                         </ul>
                     </li>
 					<li>
@@ -139,8 +126,6 @@
                             </li>
                         </ul>
                     </li>
-
-
 		    		<li>
                         <a href="#">Bibliothèques et Culture<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -157,8 +142,6 @@
                             -->                            
                         </ul>
                     </li>
-
-
 				 	<li>
                         <a href="#">Restauration et logement<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -297,6 +280,11 @@
 			     height:90vh">
 				<div id="DDD" class="btn-group">
 					<button  class="btn btn-primary" id="DDDButton">3D</button>
+ 				</div>
+ 				<div id="campus" class="btn-group">
+					<button  class="btn btn-primary" id="Villejean">Villejean</button>
+					<button  class="btn btn-primary" id="LaHarpe">La Harpe</button>
+					<button  class="btn btn-primary" id="Mazier">Mazier</button>
  				</div>	 
 			</div>
     	</div>
@@ -308,8 +296,6 @@
 <script>
 	
 //////////////////////////////////   Initialisation de variables //////////////////////////////////////
-	
-	
 	//Limites de vue en fonction du campus visité
 	//Villejean / La Harpe
 	var rennesBounds = [
@@ -341,10 +327,11 @@
         closeOnClick: false
         });
 	var popup = null
-
+    var json = null; //
 	// Initialisation des variables d'overlay
 	var Layers = [];
 	var sallesInfoCount = 0;
+    var sallesSpeCount = 0;
 	var amphisCount = 0;
 	
 	// initialisation du fond de carte 
@@ -427,10 +414,8 @@
                         .addTo(map);
                 }
             });
-            
-		
-            
-                          
+       
+                                  
 		// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
 		map.on("mouseleave", bati3DId, function() {
 			map.setFilter(bati3DHId, ["==", "id", ""]);
@@ -505,6 +490,8 @@
                     .addTo(map);
             }
         });
+			
+
 			// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
 		map.on("mouseleave", bati2DId, function() {
 			map.setFilter(bati2DHId, ["==", "id", ""]);
@@ -528,8 +515,10 @@
 	    	});
 		};
 
+
+
 //////////////////////////////////   Initialisation de la carte //////////////////////////////////////
-	
+
 map.on("load", function() {
 	// Couche herbe
     map.addLayer({
@@ -590,12 +579,15 @@ map.on("load", function() {
     });
  
 
-	var amphisLink = document.getElementById('Amphithéâtres');
-	
 	
 //////////////////////////////////   Ajout des couches de base //////////////////////////////////////
 
+    
+
+
 	// Couche Amphithéâtres
+    var amphisLink = document.getElementById('Amphithéâtres');
+
 	amphisLink.onclick = function (e) {
 		if (amphisCount === 0){
 			amphis = map.addLayer({
@@ -700,6 +692,7 @@ map.on("load", function() {
 			e.preventDefault();
 			e.stopPropagation();
 			var visibility = map.getLayoutProperty(clickedLayer,'visibility');
+
 			if (visibility === 'visible') {
 				map.setLayoutProperty(clickedLayer,'visibility','none');
 				Layers = Layers.filter(item => item != 'Salles informatique');
@@ -730,8 +723,89 @@ map.on("load", function() {
 					map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 				});
 			}
-		});
 
+    // Couche salles spécifiques
+    var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
+    var listeSallesSpecifiques = ['Salle des Thèses','Salle Bourdon','Salle Pina Bausch','Salle des conseils','Salles Kennedy']
+    sallesSpecifiquesLink.onclick = function (e) {
+        if (sallesSpeCount === 0){
+            sallesSpecifiques = map.addLayer({
+                id: 'Salles spécifiques',
+                type: "circle",
+                source: {
+                    type: "geojson",
+                    data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
+                },
+                filter : [ '==','Categorie','Salles spécifiques'],
+                layout: {'visibility': 'visible'}, 
+                paint: {
+                    "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
+                    "circle-color" :'blue',
+                    "circle-opacity":0.9
+                }
+            });
+            Layers.push('Salles spécifiques');
+            sallesSpeCount +=1;
+        } else {
+            var clickedLayer = this.textContent;
+            e.preventDefault();
+            e.stopPropagation();
+            var visibility = map.getLayoutProperty(clickedLayer,'visibility');
+            if (visibility === 'visible') {
+                map.setLayoutProperty(clickedLayer,'visibility','none');
+                Layers = Layers.filter(item => item != 'Salles spécifiques');
+            } else {
+                map.setLayoutProperty(clickedLayer,'visibility','visible');
+                Layers.push('Salles spécifiques');
+                }
+            };
+            
+            map.on('click', function (e) {
+                var features = map.queryRenderedFeatures(e.point, { 
+                    layers: ['Salles spécifiques'] 
+                });
+                if (!features.length) {
+                    return;
+                }
+
+                var feature = features[0];
+                popup = new mapboxgl.Popup({ 
+                    offset: [0, -15],
+                    closeButton: false,
+                })
+                    .setLngLat(feature.geometry.coordinates)
+                    .setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau)
+                        .addTo(map);
+                });
+            map.on('mousemove', function (e) {
+                var features = map.queryRenderedFeatures(e.point, { layers: Layers });
+                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+            });
+
+
+        }
+            
+
+
+
+
+
+
+
+
+
+
+
+//insérer ici les couches suivantes...
+
+
+
+
+
+
+
+
+    });
 
 // Velostar 
 
@@ -991,49 +1065,23 @@ busLink.onclick = function (e) {
         });    
     }
 	
-//////////////////////////////////   Interactivité menus //////////////////////////////////////
 
-
-	// ZOOMS sur les campus
-
-    document.getElementById("LaHarpe").addEventListener('click', function(){
-        map.setMaxBounds(rennesBounds);
-		map.flyTo({
-            zoom:16,
-            center:[-1.7091, 48.1254]
-        });
-    });
-    document.getElementById("Villejean").addEventListener('click', function(){
-        map.setMaxBounds(rennesBounds);
-		map.flyTo({
-            zoom:16,
-            center:[-1.7013, 48.119365]
-        });
-    });
-    document.getElementById("Mazier").addEventListener('click',function(){
-        map.setMaxBounds(mazierBounds);
-		map.flyTo({
-            zoom:16,
-            center:[-2.7410000,48.513033]
-        });
-    });
-	
 //////////////////////////////////  Barre de recherche //////////////////////////////////////
 
 
 	var searchPOI = (function (){
-			var json = null;
+		var json = null;
 
-			$.ajax({
-				'async':false,
-				'global':false,
-				'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson",
-				'dataType' : "json",
-				'success' : function(data){
-					json = data;
-				}
-					});
-				return json;
+		$.ajax({
+			'async':false,
+			'global':false,
+			'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson",
+			'dataType' : "json",
+			'success' : function(data){
+				json = data;
+			}
+				});
+			return json;
 		})();
 
 	// Récupération des propriétés du json
@@ -1160,7 +1208,50 @@ function runScriptClic(e){
 	getSearchedItem();
 }
 	
+//////////////////////////////////   Interactivité menus //////////////////////////////////////
 
+
+
+	// ZOOMS sur les campus
+ 	var zoomLaHarpe = document.getElementById("LaHarpe")
+    zoomLaHarpe.addEventListener('click', function(){
+        map.setMaxBounds(rennesBounds);
+		map.flyTo({
+            zoom:16,
+            center:[-1.7091, 48.1254]
+        });
+        zoomLaHarpe.style.backgroundColor = '#286090';
+        zoomVillejean.style.backgroundColor = 'grey';
+        zoomMazier.style.backgroundColor = 'grey'
+
+    });
+
+    var zoomVillejean = document.getElementById("Villejean")
+    zoomVillejean.style.backgroundColor = '#286090';
+
+    zoomVillejean.addEventListener('click', function(){
+        map.setMaxBounds(rennesBounds);
+		map.flyTo({
+            zoom:16,
+            center:[-1.7013, 48.119365]
+        });
+        zoomVillejean.style.backgroundColor = '#286090';
+        zoomMazier.style.backgroundColor = 'grey'
+        zoomLaHarpe.style.backgroundColor = 'grey'
+    });
+
+    var zoomMazier = document.getElementById("Mazier")
+    zoomMazier.addEventListener('click',function(){
+        map.setMaxBounds(mazierBounds);
+		map.flyTo({
+            zoom:16,
+            center:[-2.7410000,48.513033]
+        });
+        zoomMazier.style.backgroundColor = '#286090';
+        zoomVillejean.style.backgroundColor = 'grey';
+        zoomLaHarpe.style.backgroundColor = 'grey';
+    });
+	
 //////////////////////////////////   3D   //////////////////////////////////////
 
 document.getElementById('DDD').addEventListener('click',function(){
