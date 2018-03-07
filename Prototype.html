@@ -1090,6 +1090,9 @@ busLink.onclick = function (e) {
 	var jproperties = searchPOI.features.map(function (el) {
 		return el.properties; 
 	});
+	jproperties = jproperties.filter(function(e){
+		return e.Nom !== null;
+	})
 	var searchValue	= null;
 	var searchItem = [];
 	var searchX = null;
