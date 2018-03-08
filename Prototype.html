@@ -335,13 +335,14 @@
 	var amphiColor = '#003399';
 	Etiquette.push('Amphithéâtre');
 	var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite'];
-
+	var amphiIconSize = [1.5,13,2,22,60]
 
 	// Couche salles informatique
 	var sallesInfoCount = 0; // initialisation du compteur de clics
 	var sallesInfoLink = document.getElementById('Salles informatique');
 	var sallesInfoColor = '#ff4000'
 	var sallesInfoInfoPopup = ['Nom','Batiment','Niveau','Capacite','Info'];
+	var sallesInfoIconSize = [1.5,13,2,22,60]
 
 	// Couche salles spécifiques
 	var sallesSpeCount = 0;
@@ -352,24 +353,28 @@
 	var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
 	var insertSallesSpecifiques = document.getElementById('insertSallesSpecifiques');
 	var sallesSpeInfoPopup = ['Nom','Batiment','Niveau'];
-	
+	var sallesSpeIconSize = [1.5,13,2,22,60]
+
 	// Couche toilettes
 	var toilettesCount = 0; // initialisation du compteur de clics
 	var toilettesLink = document.getElementById('Toilettes');
 	var toilettesColor = 'green';
 	var toilettesInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+	var toilettesIconSize = [1.5,13,2,22,60]
 
 	// Couche copieurs
 	var copieurCount = 0; // initialisation du compteur de clics
 	var copieurLink = document.getElementById('Copieurs');
 	var copieurColor = 'purple';
 	var copieursInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+	var copieursIconSize = [1.5,13,2,22,60]
 
 	// Couche équipements sportifs
 	var equipementSportifCount = 0; // initialisation du compteur de clics
 	var equipementSportifLink = document.getElementById('Equipements sportifs');
 	var equipementSportifColor = 'purple';
 	var equipementSportifInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info'];
+	var equipementSportifIconSize = [1.5,13,2,22,60]
 
 	// Couche Lieu culturel
 	var lieuCulturelCount = 0; // initialisation du compteur de clics
@@ -378,6 +383,7 @@
 	var lieuCulturelColor = 'purple';
 	var lieuCulturelInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Capacite','Mail','Tel','Lien'];
 	var insertLieuCulturel = document.getElementById('insertLieuCulturel');
+	var lieuCulturelIconSize = [1.5,13,2,22,60]
 
 
 	// Couche espace détente
@@ -385,6 +391,7 @@
 	var espaceDetenteLink = document.getElementById('Espace détente');
 	var espaceDetenteColor = 'purple';
 	var espaceDetenteInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+	var espaceDetenteIconSize = [1.5,13,2,22,60]
 
 
 	// Couche cafeterias
@@ -392,36 +399,42 @@
 	var cafeteriasLink = document.getElementById('Caféterias');
 	var cafeteriasColor = 'purple';
 	var cafeteriasInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+	var cafeteriasIconSize = [1.5,13,2,22,60]
 	
 	// Couche associations
 	var associationsCount = 0; // initialisation du compteur de clics
 	var associationsLink = document.getElementById('Associations');
 	var associationsColor = 'purple';
 	var associationsInfoPopup = ['Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
+	var associationsIconSize = [1.5,13,2,22,60]
 
 	// Couche ascenseur
 	var ascenseurCount = 0; // initialisation du compteur de clics
 	var ascenseurLink = document.getElementById('Ascenseurs');
 	var ascenseurColor = 'purple';
 	var ascenseurInfoPopup = ['Categorie'];
+	var ascenseurIconSize = [1.5,13,2,22,60]
 
 	// Couche parking
 	var parkingCount = 0; // initialisation du compteur de clics
 	var parkingLink = document.getElementById('Parkings');
 	var parkingColor = 'purple';
 	var parkingInfoPopup = ['Categorie'];
+	var parkingIconSize = [1.5,13,2,22,60]
 
 	// Couche parking PMR
 	var parkingPMRCount = 0; // initialisation du compteur de clics
 	var parkingPMRLink = document.getElementById('Places handicapés');
 	var parkingPMRColor = 'purple';
 	var parkingPMRInfoPopup = ['Categorie'];
+	var parkingPMRIconSize = [1.5,13,2,22,60]
 
 	// Couche parking vélo
 	var parkingVeloCount = 0; // initialisation du compteur de clics
 	var parkingVeloLink = document.getElementById("Parkings vélo");
 	var parkingVeloColor = 'purple';
 	var parkingVeloInfoPopup = ['Categorie'];
+	var parkingVeloIconSize = [1.5,13,2,22,60]
 
 
 //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
@@ -653,7 +666,7 @@ var popupContent = null
 
 
 	
-	function addCategoryOverlay(nomDeLaCouche,overlayCount,color,infoPopup){
+	function addCategoryOverlay(nomDeLaCouche,overlayCount,color,infoPopup,iconSize){
 		var etiquette = false;
 		var contenuPopup = infoPopup;
 		for(var i = 0; i < Etiquette.length; i++){
@@ -673,7 +686,7 @@ var popupContent = null
 		        filter : [ '==','Categorie',nomDeLaCouche],
 		        layout: {'visibility': 'visible'}, 
 				paint: {
-			        "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
+			        "circle-radius": {'base': iconSize[0],'stops': [[iconSize[1],iconSize[2]], [iconSize[3], iconSize[4]]]},
 			        "circle-color" : color,
 			        "circle-opacity":0.9
 					}
@@ -809,13 +822,14 @@ function getPopup(infoPopup,couche){
 		});	
 }
 
-function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
-	var salleRecherchee = null
+var salleRecherchee = null
 
+function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
+	salleRecherchee = null
 	var listeLink = [];	
 	elLink = null
 	elList = null
-
+	console.log(overlayCount)
 	if (overlayCount == 0){
 		var data = fproperties.filter(function(e){
 			return e.Categorie === categorie;
@@ -1024,27 +1038,27 @@ map.on("load", function() {
 
 
 	amphitheatresLink.onclick = function(e){
-		addCategoryOverlay('Amphithéâtre',amphiCount,amphiColor,amphiInfoPopup);
+		addCategoryOverlay('Amphithéâtre',amphiCount,amphiColor,amphiInfoPopup,amphiIconSize);
 		amphiCount += 1;
 	}
 	
 	sallesInfoLink.onclick = function(e){
-		addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup);
+		addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup,sallesInfoIconSize);
 		sallesInfoCount += 1;
 	}
 
 	toilettesLink.onclick = function(e){
-		addCategoryOverlay('Toilettes',toilettesCount,toilettesColor,toilettesInfoPopup);
+		addCategoryOverlay('Toilettes',toilettesCount,toilettesColor,toilettesInfoPopup,toilettesIconSize);
 		toilettesCount += 1;
 	}
 
 	copieurLink.onclick = function(e){
-		addCategoryOverlay('Copieur',copieurCount,copieurColor,copieursInfoPopup);
+		addCategoryOverlay('Copieur',copieurCount,copieurColor,copieursInfoPopup,copieursIconSize);
 		copieurCount += 1;
 	}
 
 	sallesSpecifiquesLink.onclick = function(e){
-		addCategoryOverlay('Salles spécifiques',sallesSpeCount,sallesSpeColor,sallesSpeInfoPopup);
+		addCategoryOverlay('Salles spécifiques',sallesSpeCount,sallesSpeColor,sallesSpeInfoPopup,sallesSpeIconSize);
 		if (sallesSpeCount==0){
 			createHTMLList('Salles spécifiques',listeSallesSpecifiques,insertSallesSpecifiques,sallesSpeCount);
 		}
@@ -1052,46 +1066,46 @@ map.on("load", function() {
 	}
 
 	lieuCulturelLink.onclick = function(e){
-		addCategoryOverlay('Lieu culturel',lieuCulturelCount,lieuCulturelColor,lieuCulturelInfoPopup);
-		if (sallesSpeCount==0){
+		addCategoryOverlay('Lieu culturel',lieuCulturelCount,lieuCulturelColor,lieuCulturelInfoPopup,lieuCulturelIconSize);
+		if (lieuCulturelCount==0){
 			createHTMLList('Lieu culturel',listelieuCulturel,insertLieuCulturel,lieuCulturelCount);
 		}
 		lieuCulturelCount += 1;
 	}
 	equipementSportifLink.onclick = function(e){
-		addCategoryOverlay('Equipement sportif',equipementSportifCount,equipementSportifColor,equipementSportifInfoPopup);
+		addCategoryOverlay('Equipement sportif',equipementSportifCount,equipementSportifColor,equipementSportifInfoPopup,equipementSportifIconSize);
 		equipementSportifCount += 1;
 	}
 	espaceDetenteLink.onclick = function(e){
-		addCategoryOverlay('Espace détente',espaceDetenteCount,espaceDetenteColor,espaceDetenteInfoPopup);
+		addCategoryOverlay('Espace détente',espaceDetenteCount,espaceDetenteColor,espaceDetenteInfoPopupespaceDetenteIconSize);
 		espaceDetenteCount += 1;
 	}
 
 	cafeteriasLink.onclick = function(e){
-		addCategoryOverlay('Cafétéria',cafeteriasCount,cafeteriasColor,cafeteriasInfoPopup);
+		addCategoryOverlay('Cafétéria',cafeteriasCount,cafeteriasColor,cafeteriasInfoPopup,cafeteriasIconSize);
 		cafeteriasCount += 1;
 	}
 
 	associationsLink.onclick = function(e){
-		addCategoryOverlay('Associations',associationsCount,associationsColor,associationsInfoPopup);
+		addCategoryOverlay('Associations',associationsCount,associationsColor,associationsInfoPopup,associationsIconSize);
 		associationsCount += 1;
 	}
 
 	ascenseurLink.onclick = function(e){
-		addCategoryOverlay('Ascenseur',ascenseurCount,ascenseurColor,ascenseurInfoPopup);
+		addCategoryOverlay('Ascenseur',ascenseurCount,ascenseurColor,ascenseurInfoPopup,ascenseurIconSize);
 		ascenseurCount += 1;
 	}
 
 	parkingLink.onclick = function(e){
-		addCategoryOverlay('Parking',parkingCount,parkingColor,parkingInfoPopup);
+		addCategoryOverlay('Parking',parkingCount,parkingColor,parkingInfoPopup,parkingIconSize);
 		parkingCount += 1;
 	}
 	parkingPMRLink.onclick = function(e){
-		addCategoryOverlay('Parking PMR',parkingPMRCount,parkingPMRColor,parkingPMRInfoPopup);
+		addCategoryOverlay('Parking PMR',parkingPMRCount,parkingPMRColor,parkingPMRInfoPopup,parkingPMRIconSize);
 		parkingPMRCount += 1;
 	}
 	parkingVeloLink.onclick = function(e){
-		addCategoryOverlay('Parking vélo',parkingVeloCount,parkingVeloColor,parkingVeloInfoPopup);
+		addCategoryOverlay('Parking vélo',parkingVeloCount,parkingVeloColor,parkingVeloInfoPopupparkingVeloIconSize);
 		parkingVeloCount += 1;
 	}
 });
