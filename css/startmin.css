@@ -256,7 +256,6 @@ a {
     padding-left : 10px;
     padding-right: 10px;
     opacity : 0.85;
-
 }
 
 #campus {
@@ -276,8 +275,10 @@ a {
     padding-right: 10px;
 }
 
+
 .mapboxgl-popup {
     opacity: 0.95;
+    max-width: 350px;
 }
 
 .mapboxgl-popup-close-button {
@@ -313,6 +314,20 @@ a {
     margin-left : 5px;
     margin-top : 10px;
     margin-right : 5px;
+    font-size : 12px;
+    margin-top:5px;
+    margin-bottom:2px;
+    line-height: normal
+
+}
+.mapboxgl-popup-content a {
+    margin-left : 5px;
+    margin-top : 10px;
+    margin-right : 5px;
+    font-size : 12px;
+    margin-top:5px;
+    margin-bottom:5px;
+
 }
 .mapboxgl-container .leaflet-marker-icon {
   cursor:pointer;
