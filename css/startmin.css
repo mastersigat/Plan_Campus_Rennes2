@@ -278,7 +278,8 @@ a {
 
 .mapboxgl-popup {
     opacity: 0.95;
-    max-width: 350px;
+    max-width: 450px;
+    max-height : 200px;
 }
 
 .mapboxgl-popup-close-button {
@@ -320,6 +321,10 @@ a {
     line-height: normal
 
 }
+.mapboxgl-popup-content img{
+height : 125px;
+}
+
 .mapboxgl-popup-content a {
     margin-left : 5px;
     margin-top : 10px;
