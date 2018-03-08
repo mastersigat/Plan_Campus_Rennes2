@@ -119,7 +119,10 @@
                                 <a href="#" id = "Bibliothèques">Bibliothèques</a>
                             </li>
                             <li>
-                                <a href="#" id = "Lieux culturels">Lieux culturels</a>
+                                <a href="#" id = 'Lieu culturel'>Lieu culturel<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertLieuCulturel">
+                                                                                                                                            
+                                </ul>                               
                             </li>
                             <!--
                             <li>
@@ -187,6 +190,9 @@
                             <li>
                                 <a href="#" id = "Copieurs">Copieurs</a>
                             </li>
+                            <li>
+                                <a href="#" id = "Espace détente">Espace détente</a>
+                            </li>                            
                         </ul>
                     </li>
 
@@ -198,7 +204,7 @@
                                 <a href="#">Se déplacer sur le campus <span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level">
                                     <li>
-                                    	<a href="#" id= "Ascenceurs">Ascenceurs</a>
+                                    	<a href="#" id= "Ascenseurs">Ascenseurs</a>
                                     </li>
                                     <li>
                                         <a href="#" id = "Escaliers">Escaliers</a>
@@ -221,6 +227,9 @@
                                     <li>
                                         <a href="#" id = "Métro">Métro</a>
                                     </li>
+                                    <li>
+                                        <a href="#" id = "Parkings vélo">Parkings vélo</a>
+                                    </li>                                   
                                     <li>
                                         <a href="#" id = "Stations vélostar">Stations vélostar</a>
                                     </li>
@@ -315,29 +324,104 @@
 	var Etiquette = []; // Insérer les couches ayant des étiquettes (exemple amphithéâtres)
 	var Layers = [];
 
-	value = null 
-
+	// Initialisation des variables d'overlay
+	var popup = null
+	var popupList = null
 	// Couche amphithéâtres
 		var amphiCount = 0; // initialisation du compteur de clics
 	var amphitheatresLink = document.getElementById('Amphithéâtres');
 	var amphiColor = '#003399'
 	Etiquette.push('Amphithéâtre')
+	var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite']
+
 
 	// Couche salles informatique
-		var sallesInfoCount = 0; // initialisation du compteur de clics
+	var sallesInfoCount = 0; // initialisation du compteur de clics
 	var sallesInfoLink = document.getElementById('Salles informatique');
 	var sallesInfoColor = '#ff4000'
-	Etiquette.push('Amphithéâtre')
+	var sallesInfoInfoPopup = ['Nom','Batiment','Niveau','Capacite','Info'];
 
 	// Couche salles spécifiques
 	var sallesSpeCount = 0;
 	var salleRX = null; // Coordonnées de la salle sélectionnée
 	var salleRY = null;
-	var sallesSpeColor = 'yellow'
+	var sallesSpeColor = 'blue';
 	var listeSallesSpecifiques = []; // Création dynamique de la liste des salles à partir du jeu de données
 	var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
 	var insertSallesSpecifiques = document.getElementById('insertSallesSpecifiques');
+	var sallesSpeInfoPopup = ['Nom','Batiment','Niveau'];
 	
+	// Couche toilettes
+	var toilettesCount = 0; // initialisation du compteur de clics
+	var toilettesLink = document.getElementById('Toilettes');
+	var toilettesColor = 'green';
+	var toilettesInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+
+	// Couche copieurs
+	var copieurCount = 0; // initialisation du compteur de clics
+	var copieurLink = document.getElementById('Copieurs');
+	var copieurColor = 'purple';
+	var copieurInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+
+	// Couche équipements sportifs
+	var equipementSportifCount = 0; // initialisation du compteur de clics
+	var equipementSportifLink = document.getElementById('Equipements sportifs');
+	var equipementSportifColor = 'purple';
+	var equipementSportifInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info'];
+
+	// Couche Lieu culturel
+	var lieuCulturelCount = 0; // initialisation du compteur de clics
+	var lieuCulturelLink = document.getElementById('Lieu culturel');
+	var listelieuCulturel = []; // Création dynamique de la liste des salles à partir du jeu de données
+	var lieuCulturelColor = 'purple';
+	var lieuCulturelInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Capacite','Mail','Tel','Lien'];
+	var insertLieuCulturel = document.getElementById('insertLieuCulturel');
+
+
+	// Couche espace détente
+	var espaceDetenteCount = 0; // initialisation du compteur de clics
+	var espaceDetenteLink = document.getElementById('Espace détente');
+	var espaceDetenteColor = 'purple';
+	var espaceDetenteInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+
+
+	// Couche cafeterias
+	var cafeteriasCount = 0; // initialisation du compteur de clics
+	var cafeteriasLink = document.getElementById('Caféterias');
+	var cafeteriasColor = 'purple';
+	var cafeteriasInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+	
+	// Couche associations
+	var associationsCount = 0; // initialisation du compteur de clics
+	var associationsLink = document.getElementById('Associations');
+	var associationsColor = 'purple';
+	var associationsInfoPopup = ['Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
+
+	// Couche ascenseur
+	var ascenseurCount = 0; // initialisation du compteur de clics
+	var ascenseurLink = document.getElementById('Ascenseurs');
+	var ascenseurColor = 'purple';
+	var ascenseurInfoPopup = ['Categorie'];
+
+	// Couche parking
+	var parkingCount = 0; // initialisation du compteur de clics
+	var parkingLink = document.getElementById('Parkings');
+	var parkingColor = 'purple';
+	var parkingInfoPopup = ['Categorie'];
+
+	// Couche parking PMR
+	var parkingPMRCount = 0; // initialisation du compteur de clics
+	var parkingPMRLink = document.getElementById('Places handicapés');
+	var parkingPMRColor = 'purple';
+	var parkingPMRInfoPopup = ['Categorie'];
+
+	// Couche parking vélo
+	var parkingVeloCount = 0; // initialisation du compteur de clics
+	var parkingVeloLink = document.getElementById("Parkings vélo");
+	var parkingVeloColor = 'purple';
+	var parkingVeloInfoPopup = ['Categorie'];
+
+
 //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
 	
 	//Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
@@ -373,7 +457,7 @@
 			type: "fill-extrusion",
 			source: {
 				type: "geojson",
-				data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson"
+				data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/Bati_3D.geojson"
 			},
 			paint: {
 				'fill-extrusion-color': '#d1d1e0', 
@@ -392,9 +476,9 @@
 			type: "fill-extrusion",
 			source: {
 				type: "geojson",
-				data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/villejean_bati_height.geojson"
+				data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/Bati_3D.geojson"
 			},
-			filter: ["==", "id", ""],
+			filter: ["==", "Nom", ""],
 
 			paint: {
 				'fill-extrusion-color': '#D82B09', 
@@ -410,7 +494,7 @@
 		},Layers[0]);
 		map.on("mousemove", bati3DId, function(e) {
 
-			map.setFilter(bati3DHId, ["==", "id", e.features[0].properties.id]);
+			map.setFilter(bati3DHId, ["==", "Nom", e.features[0].properties.Nom]);
             if (popupBati!==null){popupBati.remove();}
             if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false)){
                 popupBati = new mapboxgl.Popup({ 
@@ -418,7 +502,7 @@
                     closeButton: false
                 })
                     .setLngLat(e.lngLat)
-                    .setHTML('<h1>'+e.features[0].properties.id+'</h1>')
+                    .setHTML('<h1>'+e.features[0].properties.Nom+'</h1>')
                         .addTo(map);
                 }
             });
@@ -426,7 +510,7 @@
                                   
 		// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
 		map.on("mouseleave", bati3DId, function() {
-			map.setFilter(bati3DHId, ["==", "id", ""]);
+			map.setFilter(bati3DHId, ["==", "Nom", ""]);
             popupBati.remove();
 		});	
 
@@ -523,8 +607,9 @@
 
 
 	
-	function addCategoryOverlay(nomDeLaCouche,overlayCount,color){
+	function addCategoryOverlay(nomDeLaCouche,overlayCount,color,infoPopup){
 		var etiquette = false;
+		var contenuPopup = infoPopup;
 		for(var i = 0; i < Etiquette.length; i++){
 			if (Etiquette[i]==nomDeLaCouche){
 				etiquette = true;
@@ -582,28 +667,101 @@
 				}
 			};
 
-			map.on('click', function (e) {
-				var features = map.queryRenderedFeatures(e.point, { 
-					layers: [nomDeLaCouche] 
-				});
-				if (!features.length) {
-					return;
-				}
-				var feature = features[0];
-				popup = new mapboxgl.Popup({ 
-					offset: [0, -15],
-					closeButton: false
-				})
-					.setLngLat(feature.geometry.coordinates)
-					.setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info+'</p>')
-						.addTo(map);
-				});			
-				map.on('mousemove', function (e) {
-					var features = map.queryRenderedFeatures(e.point, { layers: Layers });
-					map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
-				});
-			}
+			getPopup(contenuPopup,nomDeLaCouche);
 
+			map.on('mousemove', function (e) {
+				var features = map.queryRenderedFeatures(e.point, { layers: Layers });
+				map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+			});
+		}
+
+
+function getPopup(infoPopup,couche){
+	map.on('click', function (e) {
+		var features = map.queryRenderedFeatures(e.point, { 
+			layers: [couche] 
+		});
+		console.log(infoPopup)
+		var popupTitle = null;
+		var popupContent = [];
+
+		if (!features.length) {
+			return;
+		}
+		var feature = features[0];
+		
+		//Titre de la popup
+		for(var i = 0; i < infoPopup.length; i++){ 
+			if (infoPopup[i]=='Categorie'){
+				popupTitle = feature.properties.Categorie;
+
+			} 
+		}
+		for(var i = 0; i < infoPopup.length; i++){ 
+			if (infoPopup[i]=='Nom'){
+				popupTitle = feature.properties.Nom;
+			} 
+		}
+		// Contenu de la popup
+		for(var i = 0; i < infoPopup.length; i++){ 
+			if (infoPopup[i]=='Batiment'){
+				if (feature.properties.Batiment!== "null"){
+					popupContent += '<p>Batiment '+feature.properties.Batiment;
+				}
+			} 
+		}		
+		for(var i = 0; i < infoPopup.length; i++){ 
+			if (infoPopup[i]=='Niveau'){
+				if (feature.properties.Niveau !== "null"){
+					popupContent += ' '+feature.properties.Niveau;
+				}
+			} 
+		}
+		for(var i = 0; i < infoPopup.length; i++){ 
+			if (infoPopup[i]=='Capacite'){
+				if (feature.properties.Capacite !== "null"){
+					popupContent += '<p>'+feature.properties.Capacite+'<p>';
+				}
+			} 
+		}			
+		for(var i = 0; i < infoPopup.length; i++){ 
+			if (infoPopup[i]=='Info'){
+				if (feature.properties.Info !== "null"){
+					popupContent += '<p>'+feature.properties.Info+'<p>';
+					console.log(feature.properties.Info);
+				}
+			} 
+		}	
+		for(var i = 0; i < infoPopup.length; i++){
+			if (infoPopup[i]=='Lien'){
+				if (feature.properties.Lien !== "null"){
+					popupContent += '<p><a href = '+feature.properties.Lien+'>Site internet<a></p>';
+				}
+			} 
+		}
+		for(var i = 0; i < infoPopup.length; i++){
+			if (infoPopup[i]=='Mail'){
+				if (feature.properties.Mail !== "null"){
+					popupContent += '<p>Contacter par mail : '+feature.properties.Mail+'</p>';
+				}
+			} 
+		}
+		for(var i = 0; i < infoPopup.length; i++){
+			if (infoPopup[i]=='Tel'){
+				if (feature.properties.Tel !== "null"){
+					popupContent += '<p>Contacter par téléphone'+feature.properties.Tel+'</p>';
+				}
+			} 
+		}		
+		popup = new mapboxgl.Popup({ 
+			offset: [0, -15],
+			closeButton: false
+		})
+			.setLngLat(feature.geometry.coordinates)
+			.setHTML('<h1>'+popupTitle+'</h1><p>'+popupContent+'</p>')
+				.addTo(map);
+		});	
+}
 
 function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
 	var salleRecherchee = null
@@ -627,7 +785,7 @@ function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
 			elLink.innerHTML = listeDeNoms[i];
 			elLink.setAttribute('id',listeDeNoms[i]);
 			elLink.setAttribute('href','#');
-			var theFunction = 'javascript:switchPOI('+'\''+listeDeNoms[i]+'\')'
+			var theFunction = 'javascript:switchPOI('+'\''+listeDeNoms[i].replace("'","!")+'\')'
 			elLink.setAttribute('href',theFunction);
 			elList.appendChild(elLink);
 		}
@@ -637,20 +795,52 @@ function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
 	}
 }
 
+// Fonctions pour zoomer sur l'item sélectionné dans la liste
 
 function getSwitchPopup(){
+
+	var popupTitle = null;
+	var popupContent = '';
+	
+	if (salleRecherchee.properties.Categorie !== null){
+		popupTitle = salleRecherchee.properties.Categorie;
+	}	
+	if (salleRecherchee.properties.Nom !== null){
+		popupTitle = salleRecherchee.properties.Nom;
+	}
+	if (salleRecherchee.properties.Batiment !== null){
+		popupContent += '<p>Batiment '+salleRecherchee.properties.Batiment;
+	}	
+	if (salleRecherchee.properties.Niveau !== null){
+		popupContent += ' '+salleRecherchee.properties.Niveau;
+	}	
+	if (salleRecherchee.properties.Capacite !== null){
+		popupContent += '<p>'+salleRecherchee.properties.Capacite+'<p>';
+	}
+	if (salleRecherchee.properties.Info !== null){
+		popupContent += '<p>'+salleRecherchee.properties.Info+'<p>';
+	}
+	if (salleRecherchee.properties.Lien !== null){
+		popupContent += '<p><a href = '+salleRecherchee.properties.Lien+'>Site internet<a></p>';
+	}
+	if (salleRecherchee.properties.Mail !== null){
+		popupContent += '<p>Contacter par mail : '+salleRecherchee.properties.Mail+'</p>';
+	}
+	if (salleRecherchee.properties.Tel !== null){
+		popupContent += '<p>Contacter par téléphone'+salleRecherchee.properties.Tel+'</p>';
+	}
     popupList = new mapboxgl.Popup({
         offset:[0,-15],
         closeButton: false
-})
+	})
     .setLngLat(salleRecherchee.geometry.coordinates)
-    .setHTML('<h1>'+salleRecherchee.properties.Nom+'</h1>')
+    .setHTML('<h1>'+popupTitle+'</h1><p>'+popupContent+'</p>')
         .addTo(map);
 };
 
-
 function switchPOI(value){
 	console.log(value);
+	value = value.replace("!","'");
 	salleRecherchee = null;
 	salleRX = null;
 	salleRY = null;
@@ -694,13 +884,9 @@ function switchPOI(value){
 	} 
 
 
+//////////////////////////////////   Initialisation des données carte //////////////////////////////////////
 
 
-//////////////////////////////////   Initialisation de la carte //////////////////////////////////////
-
-// Initialisation des variables d'overlay
-var popup = null
-var popupList = null
 
 
 var POIBrut = (function (){
@@ -724,14 +910,6 @@ POI = POIBrut.features;
 var fproperties = POIBrut.features.map(function (el) {
 	return el.properties; 
 });		
-
-// Fonctions pour zoomer sur l'item sélectionné dans la liste
-
-
-
-
-
-
 
 
 map.on("load", function() {
@@ -798,29 +976,77 @@ map.on("load", function() {
 //////////////////////////////////   OVERLAYS //////////////////////////////////////
 
 
-
-
 	amphitheatresLink.onclick = function(e){
-		addCategoryOverlay('Amphithéâtre',amphiCount,amphiColor);
+		addCategoryOverlay('Amphithéâtre',amphiCount,amphiColor,amphiInfoPopup);
 		amphiCount += 1;
 	}
 	
 	sallesInfoLink.onclick = function(e){
-		addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor);
+		addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup);
 		sallesInfoCount += 1;
 	}
 
+	toilettesLink.onclick = function(e){
+		addCategoryOverlay('Toilettes',toilettesCount,toilettesColor,toilettesInfoPopup);
+		toilettesCount += 1;
+	}
+
+	copieurLink.onclick = function(e){
+		addCategoryOverlay('Copieur',copieurCount,copieurColor,copieursInfoPopup);
+		copieurCount += 1;
+	}
+
 	sallesSpecifiquesLink.onclick = function(e){
-		addCategoryOverlay('Salles spécifiques',sallesSpeCount,sallesSpeColor);
+		addCategoryOverlay('Salles spécifiques',sallesSpeCount,sallesSpeColor,sallesSpeInfoPopup);
 		if (sallesSpeCount==0){
 			createHTMLList('Salles spécifiques',listeSallesSpecifiques,insertSallesSpecifiques,sallesSpeCount);
 		}
 		sallesSpeCount +=1;
 	}
-	
-	
 
+	lieuCulturelLink.onclick = function(e){
+		addCategoryOverlay('Lieu culturel',lieuCulturelCount,lieuCulturelColor,lieuCulturelInfoPopup);
+		if (sallesSpeCount==0){
+			createHTMLList('Lieu culturel',listelieuCulturel,insertLieuCulturel,lieuCulturelCount);
+		}
+		lieuCulturelCount += 1;
+	}
+	equipementSportifLink.onclick = function(e){
+		addCategoryOverlay('Equipement sportif',equipementSportifCount,equipementSportifColor,equipementSportifInfoPopup);
+		equipementSportifCount += 1;
+	}
+	espaceDetenteLink.onclick = function(e){
+		addCategoryOverlay('Espace détente',espaceDetenteCount,espaceDetenteColor,espaceDetenteInfoPopup);
+		espaceDetenteCount += 1;
+	}
 
+	cafeteriasLink.onclick = function(e){
+		addCategoryOverlay('Cafétéria',cafeteriasCount,cafeteriasColor,cafeteriasInfoPopup);
+		cafeteriasCount += 1;
+	}
+
+	associationsLink.onclick = function(e){
+		addCategoryOverlay('Associations',associationsCount,associationsColor,associationsInfoPopup);
+		associationsCount += 1;
+	}
+
+	ascenseurLink.onclick = function(e){
+		addCategoryOverlay('Ascenseur',ascenseurCount,ascenseurColor,ascenseurInfoPopup);
+		ascenseurCount += 1;
+	}
+
+	parkingLink.onclick = function(e){
+		addCategoryOverlay('Parking',parkingCount,parkingColor,parkingInfoPopup);
+		parkingCount += 1;
+	}
+	parkingPMRLink.onclick = function(e){
+		addCategoryOverlay('Parking PMR',parkingPMRCount,parkingPMRColor,parkingPMRInfoPopup);
+		parkingPMRCount += 1;
+	}
+	parkingVeloLink.onclick = function(e){
+		addCategoryOverlay('Parking vélo',parkingVeloCount,parkingVeloColor,parkingVeloInfoPopup);
+		parkingVeloCount += 1;
+	}
 });
 
 //////////////////////////////////// couches temps réel //////////////////////////////////////////////
@@ -1213,8 +1439,6 @@ function runScriptClic(e){
 }
 	
 //////////////////////////////////   Interactivité menus //////////////////////////////////////
-
-
 
 	// ZOOMS sur les campus
  	var zoomLaHarpe = document.getElementById("LaHarpe")
