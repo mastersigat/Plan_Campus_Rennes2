@@ -282,8 +282,8 @@
 <script>
 	
 	
-	///////////////////////////////  initialisation du fond de carte ///////////////////////////
-		value = null
+	///////////////////////////////////////  initialisation du fond de carte //////////////////////////////////
+
 		//Limites de vue en fonction du campus visité
 		//Villejean / La Harpe
 		var rennesBounds = [
@@ -297,6 +297,7 @@
 		[-2.668165,48.534886]
 		];
 	
+
 	    var map = new mapboxgl.Map({
 	        container: 'map', // container id
 	        style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
@@ -306,10 +307,38 @@
 	        pitch : 0, // inclinaison de base
 			maxBounds: rennesBounds // starting zoom
     	});
+		map.dragRotate.disable(); // vue 2D de base 
 
-	map.dragRotate.disable(); // vue 2D de base 
+
+	///////////////////////////////////////  initialisation des variables overlay //////////////////////////////////
+
+	var Etiquette = []; // Insérer les couches ayant des étiquettes (exemple amphithéâtres)
+	var Layers = [];
+
+	value = null 
+
+	// Couche amphithéâtres
+		var amphiCount = 0; // initialisation du compteur de clics
+	var amphitheatresLink = document.getElementById('Amphithéâtres');
+	var amphiColor = '#003399'
+	Etiquette.push('Amphithéâtre')
+
+	// Couche salles informatique
+		var sallesInfoCount = 0; // initialisation du compteur de clics
+	var sallesInfoLink = document.getElementById('Salles informatique');
+	var sallesInfoColor = '#ff4000'
+	Etiquette.push('Amphithéâtre')
+
+	// Couche salles spécifiques
+	var sallesSpeCount = 0;
+	var salleRX = null; // Coordonnées de la salle sélectionnée
+	var salleRY = null;
+	var sallesSpeColor = 'blue'
+	var listeSallesSpecifiques = []; // Création dynamique de la liste des salles à partir du jeu de données
+	var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
+	var insertSallesSpecifiques = document.getElementById('insertSallesSpecifiques');
 	
-//////////////////////////////////   Creation de fonctions //////////////////////////////////////
+//////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
 	
 	//Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
 	var DDD = false; // Vue de base en 2D
@@ -326,6 +355,7 @@
         closeButton: false,
         closeOnClick: false
         });
+
 
 	// Fonction pour afficher le référentiel bati 3D
 	function getBati3D(){
@@ -492,42 +522,120 @@
 		};
 
 
-//////////////////////////////////   Initialisation de la carte //////////////////////////////////////
-
-// Initialisation des variables d'overlay
-var popup = null
-var popupList = null
-
-var salleRecherchee = null
-var listeLink = [];	
-
-var Layers = [];
-var listeElementA = [];
-var listeElementLi = [];
-var POIBrut = (function (){
-var json = null;
-
-$.ajax({
-	'async':false,
-	'global':false,
-	'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson",
-	'dataType' : "json",
-	'success' : function(data){
-		json = data;
-	}
-		});
-	return json;
-})();
-
-var POI = []; 
-POI = POIBrut.features; 
 	
-var fproperties = POIBrut.features.map(function (el) {
-	return el.properties; 
-});		
+	function addCategoryOverlay(nomDeLaCouche,overlayCount,color){
+		var etiquette = false;
+		for(var i = 0; i < Etiquette.length; i++){
+			if (Etiquette[i]==nomDeLaCouche){
+				etiquette = true;
+				var nomDeLaCoucheEtiquette = nomDeLaCouche+'etiquette' 
+			}
+		}
+		if (overlayCount === 0){
+			map.addLayer({
+		        id: nomDeLaCouche,
+		        type: "circle",
+		        source: {
+		            type: "geojson",
+		            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
+		        },
+		        filter : [ '==','Categorie',nomDeLaCouche],
+		        layout: {'visibility': 'visible'}, 
+				paint: {
+			        "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
+			        "circle-color" : color,
+			        "circle-opacity":0.9
+					}
+				});				
+				Layers.push(nomDeLaCouche); 
+			if (etiquette){
+				overlayEtiquette = map.addLayer({
+			        id: nomDeLaCoucheEtiquette,
+			        type: "symbol",
+			        source: {
+			            type: "geojson",
+			            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
+			        },
+			        filter : [ '==','Categorie',nomDeLaCouche],
+			        layout: {
+				        "text-field": "{Etiquette}",
+				        "text-anchor": "center",
+				        "text-size":{'base': 1.5,'stops': [[13, 2], [22, 60]]}, 
+					},
+					paint: {
+						"text-color":"white"
+						},
+					minzoom:15.5
+					});
+				
+				Layers.push(nomDeLaCoucheEtiquette); 
+			}	
+		} else {
+			console.log(nomDeLaCoucheEtiquette);
+			var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
+			if (visibility === 'visible') {
+				map.setLayoutProperty(nomDeLaCouche,'visibility','none');
+				if (etiquette){map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','none');}
+			} else {
+				map.setLayoutProperty(nomDeLaCouche,'visibility','visible');
+				map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','visible')
+				}
+			};
 
-// Fonctions pour zoomer sur l'item sélectionné dans la liste
+			map.on('click', function (e) {
+				var features = map.queryRenderedFeatures(e.point, { 
+					layers: [nomDeLaCouche] 
+				});
+				if (!features.length) {
+					return;
+				}
+				var feature = features[0];
+				popup = new mapboxgl.Popup({ 
+					offset: [0, -15],
+					closeButton: false
+				})
+					.setLngLat(feature.geometry.coordinates)
+					.setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info+'</p>')
+						.addTo(map);
+				});			
+				map.on('mousemove', function (e) {
+					var features = map.queryRenderedFeatures(e.point, { layers: Layers });
+					map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+				});
+			}
 
+
+function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
+	var salleRecherchee = null
+
+	var listeLink = [];	
+	elLink = null
+	elList = null
+
+	if (overlayCount == 0){
+		var data = fproperties.filter(function(e){
+			return e.Categorie === categorie;
+		})
+		for (i = 0; i < data.length; i++) {
+			listeDeNoms.push(data[i]['Nom']);
+		}			
+	
+		for (i = 0; i < listeDeNoms.length; i++){
+			elList = document.createElement('li');
+			elementCible.appendChild(elList);
+			elLink = document.createElement('a');
+			elLink.innerHTML = listeDeNoms[i];
+			elLink.setAttribute('id',listeDeNoms[i]);
+			elLink.setAttribute('href','#');
+			var theFunction = 'javascript:switchPOI('+'\''+listeDeNoms[i]+'\')'
+			elLink.setAttribute('href',theFunction);
+			elList.appendChild(elLink);
+		}
+		for (i = 0; i < listeDeNoms.length; i++){
+		    listeLink.push(document.getElementById(listeDeNoms[i]))
+		}
+	}
+}
 
 
 function getSwitchPopup(){
@@ -583,8 +691,47 @@ function switchPOI(value){
     	});	        	
     }
 	getSwitchPopup();
-
 	} 
+
+
+
+
+//////////////////////////////////   Initialisation de la carte //////////////////////////////////////
+
+// Initialisation des variables d'overlay
+var popup = null
+var popupList = null
+
+
+var POIBrut = (function (){
+var json = null;
+
+$.ajax({
+	'async':false,
+	'global':false,
+	'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson",
+	'dataType' : "json",
+	'success' : function(data){
+		json = data;
+	}
+		});
+	return json;
+})();
+
+var POI = []; 
+POI = POIBrut.features; 
+	
+var fproperties = POIBrut.features.map(function (el) {
+	return el.properties; 
+});		
+
+// Fonctions pour zoomer sur l'item sélectionné dans la liste
+
+
+
+
+
+
 
 
 map.on("load", function() {
@@ -649,254 +796,34 @@ map.on("load", function() {
 
 	
 //////////////////////////////////   OVERLAYS //////////////////////////////////////
- 	
 
 
-	// Couche Amphithéâtres
-    var amphisLink = document.getElementById('Amphithéâtres');
-	var amphisCount = 0;
 
-	amphisLink.onclick = function (e) {
-		if (amphisCount === 0){
-			amphis = map.addLayer({
-		        id: "Amphithéâtres",
-		        type: "circle",
-		        source: {
-		            type: "geojson",
-		            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
-		        },
-		        filter : [ '==','Categorie','Amphithéâtre'],
-		        layout: {'visibility': 'visible'}, 
-				paint: {
-			        "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
-			        "circle-color" :'#003399',
-			        "circle-opacity":0.9
-				}
-			});
-			amphisEtiquette = map.addLayer({
-		        id: "AmphithéâtresEtiquettes",
-		        type: "symbol",
-		        source: {
-		            type: "geojson",
-		            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
-		        },
-		        filter : [ '==','Categorie','Amphithéâtre'],
-		        layout: {
-		        "text-field": "{Etiquette}",
-		        "text-anchor": "center",
-		        "text-size":{'base': 1.5,'stops': [[13, 2], [22, 60]]}, 
-				},
-				paint: {
-					"text-color":"white"
-				},
-				minzoom:15.5
-			});
-			Layers.push('Amphithéâtres','AmphithéâtresEtiquettes');
-			amphisCount +=1;
-		} else {
-			var clickedLayer = this.textContent;
-			e.preventDefault();
-			e.stopPropagation();
-			var visibility = map.getLayoutProperty(clickedLayer,'visibility');
-			if (visibility === 'visible') {
-				map.setLayoutProperty(clickedLayer,'visibility','none');
-				map.setLayoutProperty('AmphithéâtresEtiquettes','visibility','none');
-				Layers = Layers.filter(item => item != 'Amphithéâtres');
-				Layers = Layers.filter(item => item != 'AmphithéâtresEtiquettes');
-			} else {
-				map.setLayoutProperty(clickedLayer,'visibility','visible');
-				map.setLayoutProperty('AmphithéâtresEtiquettes','visibility','visible')
-				Layers.push('Amphithéâtres');
-				}
-			};
-			map.on('click', function (e) {
-				var features = map.queryRenderedFeatures(e.point, { 
-					layers: ['Amphithéâtres'] 
-				});
-				if (!features.length) {
-					return;
-				}
-				var feature = features[0];
-				popup = new mapboxgl.Popup({ 
-					offset: [0, -15],
-					closeButton: false
-				})
-					.setLngLat(feature.geometry.coordinates)
-					.setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info+'</p>')
-						.addTo(map);
-				});
-				map.on('mousemove', function (e) {
-					var features = map.queryRenderedFeatures(e.point, { layers: Layers });
-					map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
-				});
-			}
+
+	amphitheatresLink.onclick = function(e){
+		addCategoryOverlay('Amphithéâtre',amphiCount,amphiColor);
+		amphiCount += 1;
+	}
 	
-	
-	
-	// Couche salles informatique
-	var sallesInfoLink = document.getElementById('Salles informatique');
-	var sallesInfoCount = 0;
-	
-	sallesInfoLink.onclick = function (e) {
-		if (sallesInfoCount === 0){
-			sallesInfo = map.addLayer({
-		        id: "Salles informatique",
-		        type: "circle",
-		        source: {
-		            type: "geojson",
-		            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
-		        },
-		        filter : [ '==','Categorie','Salle informatique'],
-		        layout: {'visibility': 'visible'}, 
-				paint: {
-			        "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
-			        "circle-color" :'#ff4000',
-			        "circle-opacity":0.9
-				}
-			});
-			Layers.push('Salles informatique');
-			sallesInfoCount +=1;
-		} else {
-			var clickedLayer = this.textContent;
-			e.preventDefault();
-			e.stopPropagation();
-			var visibility = map.getLayoutProperty(clickedLayer,'visibility');
-
-			if (visibility === 'visible') {
-				map.setLayoutProperty(clickedLayer,'visibility','none');
-				Layers = Layers.filter(item => item != 'Salles informatique');
-			} else {
-				map.setLayoutProperty(clickedLayer,'visibility','visible');
-				Layers.push('Salles informatique');
-				}
-			};
-			
-			map.on('click', function (e) {
-				var features = map.queryRenderedFeatures(e.point, { 
-					layers: ['Salles informatique'] 
-				});
-				if (!features.length) {
-					return;
-				}
-				var feature = features[0];
-				popup = new mapboxgl.Popup({ 
-					offset: [0, -15],
-					closeButton: false,
-				})
-					.setLngLat(feature.geometry.coordinates)
-					.setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau+'<br>'+feature.properties.Capacite+'<br>'+feature.properties.Info+'</p>')
-						.addTo(map);
-				});
-				map.on('mousemove', function (e) {
-					var features = map.queryRenderedFeatures(e.point, { layers: Layers });
-					map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
-				});
-			}
-
-    // Couche salles spécifiques
-    var sallesSpeCount = 0;
-	var salleRX = null;
-	var salleRY = null;
-	var listeSallesSpecifiques = [];
-    var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
-    var insertSallesSpecifiques = document.getElementById('insertSallesSpecifiques')
-    sallesSpecifiquesLink.onclick = function (e) {
-    	elLink = null
-    	elList = null
-    	if (sallesSpeCount === 0){
-	    	var sallesSpecifiques = fproperties.filter(function(e){
-			return e.Categorie === 'Salles spécifiques';
-			})
-			for (i = 0; i < sallesSpecifiques.length; i++) {
-				listeSallesSpecifiques.push(sallesSpecifiques[i]['Nom']);
-			}
-
-			for (i = 0; i < listeSallesSpecifiques.length; i++){
-				elList = document.createElement('li');
-				insertSallesSpecifiques.appendChild(elList);
-				elLink = document.createElement('a');
-				elLink.innerHTML = listeSallesSpecifiques[i];
-				elLink.setAttribute('id',listeSallesSpecifiques[i]);
-				elLink.setAttribute('href','#');
-				var theFunction = 'javascript:switchPOI('+'\''+listeSallesSpecifiques[i]+'\')'
-				elLink.setAttribute('href',theFunction);
-				elList.appendChild(elLink);
-			}
-			for (i = 0; i < listeSallesSpecifiques.length; i++){
-			    listeLink.push(document.getElementById(listeSallesSpecifiques[i]))
-				}
-        
-            sallesSpecifiques = map.addLayer({
-                id: 'Salles spécifiques',
-                type: "circle",
-                source: {
-                    type: "geojson",
-                    data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
-                },
-                filter : [ '==','Categorie','Salles spécifiques'],
-                layout: {'visibility': 'visible'}, 
-                paint: {
-                    "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
-                    "circle-color" :'blue',
-                    "circle-opacity":0.9
-                }
-            });
-            Layers.push('Salles spécifiques');
-            sallesSpeCount +=1;
-        } else {
-            var clickedLayer = this.textContent;
-            e.preventDefault();
-            e.stopPropagation();
-            var visibility = map.getLayoutProperty(clickedLayer,'visibility');
-            if (visibility === 'visible') {
-                map.setLayoutProperty(clickedLayer,'visibility','none');
-                Layers = Layers.filter(item => item != 'Salles spécifiques');
-            } else {
-                map.setLayoutProperty(clickedLayer,'visibility','visible');
-                Layers.push('Salles spécifiques');
-                }
-        };
-            
-        map.on('click', function (e) {
-            var features = map.queryRenderedFeatures(e.point, { 
-                layers: ['Salles spécifiques'] 
-            });
-            if (!features.length) {
-                return;
-            }
-
-            var feature = features[0];
-            popup = new mapboxgl.Popup({ 
-                offset: [0, -15],
-                closeButton: false,
-            })
-                .setLngLat(feature.geometry.coordinates)
-                .setHTML('<h1>'+feature.properties.Nom+'</h1><p>'+'Batiment '+feature.properties.Batiment+' '+feature.properties.Niveau)
-                    .addTo(map);
-        });
-		    
-	    map.on('mousemove', function (e) {
-	        var features = map.queryRenderedFeatures(e.point, { layers: Layers });
-	        map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
-	    });
+	sallesInfoLink.onclick = function(e){
+		addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor);
+		sallesInfoCount += 1;
 	}
 
-
-				
-
+	sallesSpecifiquesLink.onclick = function(e){
+		addCategoryOverlay('Salles spécifiques',sallesSpeCount,sallesSpeColor);
+		if (sallesSpeCount==0){
+			createHTMLList('Salles spécifiques',listeSallesSpecifiques,insertSallesSpecifiques,sallesSpeCount);
+		}
+		sallesSpeCount +=1;
+	}
+	
 	
 
 
-//insérer ici les couches suivantes...
+});
 
-
-
-
-
-
-
-
-    });
+//////////////////////////////////// couches temps réel //////////////////////////////////////////////
 
 // Velostar 
 
