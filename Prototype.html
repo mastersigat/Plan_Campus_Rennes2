@@ -327,12 +327,14 @@
 	// Initialisation des variables d'overlay
 	var popup = null
 	var popupList = null
+	
+
 	// Couche amphithéâtres
-		var amphiCount = 0; // initialisation du compteur de clics
+	var amphiCount = 0; // initialisation du compteur de clics
 	var amphitheatresLink = document.getElementById('Amphithéâtres');
-	var amphiColor = '#003399'
-	Etiquette.push('Amphithéâtre')
-	var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite']
+	var amphiColor = '#003399';
+	Etiquette.push('Amphithéâtre');
+	var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite'];
 
 
 	// Couche salles informatique
@@ -361,7 +363,7 @@
 	var copieurCount = 0; // initialisation du compteur de clics
 	var copieurLink = document.getElementById('Copieurs');
 	var copieurColor = 'purple';
-	var copieurInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+	var copieursInfoPopup = ['Categorie','Batiment','Niveau','Info'];
 
 	// Couche équipements sportifs
 	var equipementSportifCount = 0; // initialisation du compteur de clics
@@ -440,7 +442,7 @@
         closeOnClick: false
         });
 
-
+ var popupContent = null
 	// Fonction pour afficher le référentiel bati 3D
 	function getBati3D(){
 		if (bati3DCount != 0){
@@ -494,23 +496,46 @@
 		},Layers[0]);
 		map.on("mousemove", bati3DId, function(e) {
 
-			map.setFilter(bati3DHId, ["==", "Nom", e.features[0].properties.Nom]);
-            if (popupBati!==null){popupBati.remove();}
-            if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false)){
-                popupBati = new mapboxgl.Popup({ 
-                    offset: [0, -15],
-                    closeButton: false
-                })
-                    .setLngLat(e.lngLat)
-                    .setHTML('<h1>'+e.features[0].properties.Nom+'</h1>')
-                        .addTo(map);
-                }
+			map.setFilter(bati3DHId, ["==", "Id", e.features[0].properties.Id]);
+            var popupTitle = '';
+            popupContent = '';
+
+
+			if (e.features[0].properties.Nom !== "null"){
+				popupTitle = e.features[0].properties.Nom;
+			}
+
+			if (e.features[0].properties.Photos !== "null"){
+				popupContent += '<img src = \''+ e.features[0].properties.Photos+'\'/>'
+			}
+						console.log(e.features[0].properties.Infos);
+
+			if (e.features[0].properties.Infos !== "null"){
+				popupContent += '<p>'+e.features[0].properties.Infos+'<p>';
+			}
+            if (popupBati!==null){
+                popupBati.remove();
+                };
+            if (e.features[0].properties.Nom !== "null"){
+	            if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false) && (popupList == null || popupList.isOpen() ===false)){
+
+	            	
+	                popupBati = new mapboxgl.Popup({ 
+	                offset: [0, -15],
+	                closeButton: false
+	            })
+	                .setLngLat(e.lngLat)
+	                .setHTML('<h1>'+popupTitle+'</h1>'+popupContent)
+	                    .addTo(map);
+	            }
+
+            }   
             });
        
                                   
 		// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
 		map.on("mouseleave", bati3DId, function() {
-			map.setFilter(bati3DHId, ["==", "Nom", ""]);
+			map.setFilter(bati3DHId, ["==", "Id", ""]);
             popupBati.remove();
 		});	
 
@@ -530,7 +555,7 @@
 	    });
 
 	};
-
+var popupContent = null
 	// Fonction pour afficher le référentiel bati 2D
 	function getBati2D(){
 		if (bati3DCount != 0){
@@ -547,7 +572,7 @@
 			type: "fill",
 			source: {
 				type: "geojson",
-				data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments.geojson"
+				data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/Bati_2D.geojson"
 			},
 			paint: {
 				'fill-color': '#9494b8',
@@ -559,32 +584,53 @@
 			type: "fill",
 			source: {
 				type: "geojson",
-				data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments.geojson"
+				data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/Bati_2D.geojson"
 			},
-			filter: ["==", "id", ""],
+			filter: ["==", "Id", ""],
 			paint: {
 				'fill-color': '#D82B09',
 				'fill-opacity':0.5
 			}
 		},Layers[0]);
 		map.on("mousemove", bati2DId, function(e) {
-			map.setFilter(bati2DHId, ["==", "id", e.features[0].properties.id]);
+			map.setFilter(bati2DHId, ["==", "Id", e.features[0].properties.Id]);
+            var popupTitle = '';
+            popupContent = '';
+
+
+			if (e.features[0].properties.Nom !== "null"){
+				popupTitle = e.features[0].properties.Nom;
+			}
+
+			if (e.features[0].properties.Photo !== "null"){
+				popupContent += '<img src = \''+ e.features[0].properties.Photo+'\'/>'
+			}
+
+			if (e.features[0].properties.Info !== "null"){
+				popupContent += '<p>'+e.features[0].properties.Info+'<p>';
+			}
             if (popupBati!==null){
                 popupBati.remove();
-            };
-            if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false)){
-                popupBati = new mapboxgl.Popup({ 
-                offset: [0, -15],
-                closeButton: false
-            })
-                .setLngLat(e.lngLat)
-                .setHTML('<h1>'+e.features[0].properties.id+'</h1>')
-                    .addTo(map);
-            }
+                };
+            if (e.features[0].properties.Nom !== "null"){
+	            if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false) && (popupList == null || popupList.isOpen() ===false)){
+
+	            	
+	                popupBati = new mapboxgl.Popup({ 
+	                offset: [0, -15],
+	                closeButton: false
+	            })
+	                .setLngLat(e.lngLat)
+	                .setHTML('<h1>'+popupTitle+'</h1>'+popupContent)
+	                    .addTo(map);
+	            }
+
+            }         
+
         });
 		// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
 		map.on("mouseleave", bati2DId, function() {
-			map.setFilter(bati2DHId, ["==", "id", ""]);
+			map.setFilter(bati2DHId, ["==", "Id", ""]);
             popupBati.remove();
 
 			});	
@@ -961,10 +1007,11 @@ map.on("load", function() {
         type: "symbol",
         source: {
             type: "geojson",
-            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/campus.geojson"
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
         },
+        filter : [ '==','Categorie','Bâtiments'],
 		layout: {
-	        "text-field": "{campus}",
+	        "text-field": "{Etiquette}",
 	        "text-anchor": "center",
 	        "text-size":11
 		},
@@ -1348,14 +1395,49 @@ busLink.onclick = function (e) {
 	$("#searchfield").easyAutocomplete(options);		
     
     function getSearchPopup(){
+        var popupTitle = searchItem.properties.Nom;
+        var popupContent = '';
+        if (searchItem.properties.Image != null  ){
+			popupContent += '<img src = \''+ searchItem.properties.Photo+'\'/>';
+        };
+
+        if (searchItem.properties.Batiment != null ){
+			popupContent += '<p>Batiment '+searchItem.properties.Batiment;
+        };
+        if (searchItem.properties.Niveau != null){
+			popupContent += ' '+searchItem.properties.Niveau;
+        };
+        if (searchItem.properties.Info != null ){
+			popupContent += '<p>'+searchItem.properties.Info+'<p>';
+        };
+        if (searchItem.properties.Capacite != null){
+			popupContent += '<p>'+searchItem.properties.Capacite+'<p>';
+        };
+        if (searchItem.properties.Lien != null ){
+			popupContent += '<p><a href = '+searchItem.properties.Lien+'>Site internet<a></p>';
+        };
+        if (searchItem.properties.Mail != null ){
+			popupContent += '<p>Contacter par mail : '+searchItem.properties.Mail+'</p>';
+        };
+        if (searchItem.properties.Tel != null ){
+			popupContent += '<p>Contacter par téléphone : '+searchItem.properties.Tel+'</p>';
+        };
+
+
+
+
+
         searchPopup = new mapboxgl.Popup({
             offset:[0,-15],
             closeButton: false
     })
         .setLngLat(searchItem.geometry.coordinates)
-        .setHTML('<h1>'+searchItem.properties.Nom+'</h1>')
+        .setHTML('<h1>'+popupTitle+'</h1><p>'+popupContent+'</p>')
             .addTo(map);
     };	
+
+
+
 
 	function getSearchedItem(){
 		if (searchValue !==null){
@@ -1371,7 +1453,6 @@ busLink.onclick = function (e) {
 	    	};
 
 	        searchValue = document.getElementById("searchfield").value;
-	        console.log(searchValue);
 			for(var i = 0; i < POI.length; i++){
 	        	if (POI[i].properties.Nom === searchValue){
 	        		searchItem = POI[i];
