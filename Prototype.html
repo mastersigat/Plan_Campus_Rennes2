@@ -719,7 +719,12 @@ var popupContent = null
 			var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
 			if (visibility === 'visible') {
 				map.setLayoutProperty(nomDeLaCouche,'visibility','none');
-				if (etiquette){map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','none');}
+				popup.remove();
+				if (etiquette){
+					map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','none');
+					popup.remove();
+	
+				}
 			} else {
 				map.setLayoutProperty(nomDeLaCouche,'visibility','visible');
 				map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','visible')
@@ -943,7 +948,47 @@ function switchPOI(value){
 	getSwitchPopup();
 	} 
 
+//////////////////////////////////   Interactivité menus //////////////////////////////////////
 
+	// ZOOMS sur les campus
+ 	var zoomLaHarpe = document.getElementById("LaHarpe")
+    zoomLaHarpe.addEventListener('click', function(){
+        map.setMaxBounds(rennesBounds);
+		map.flyTo({
+            zoom:16,
+            center:[-1.7091, 48.1254]
+        });
+        zoomLaHarpe.style.backgroundColor = '#286090';
+        zoomVillejean.style.backgroundColor = 'grey';
+        zoomMazier.style.backgroundColor = 'grey'
+
+    });
+
+    var zoomVillejean = document.getElementById("Villejean")
+    zoomVillejean.style.backgroundColor = '#286090';
+
+    zoomVillejean.addEventListener('click', function(){
+        map.setMaxBounds(rennesBounds);
+		map.flyTo({
+            zoom:16,
+            center:[-1.7013, 48.119365]
+        });
+        zoomVillejean.style.backgroundColor = '#286090';
+        zoomMazier.style.backgroundColor = 'grey';
+        zoomLaHarpe.style.backgroundColor = 'grey';
+    });
+
+    var zoomMazier = document.getElementById("Mazier")
+    zoomMazier.addEventListener('click',function(){
+        map.setMaxBounds(mazierBounds);
+		map.flyTo({
+            zoom:16,
+            center:[-2.7410000,48.513033]
+        });
+        zoomMazier.style.backgroundColor = '#286090';
+        zoomVillejean.style.backgroundColor = 'grey';
+        zoomLaHarpe.style.backgroundColor = 'grey';
+    });
 //////////////////////////////////   Initialisation des données carte //////////////////////////////////////
 
 
@@ -1494,20 +1539,35 @@ busLink.onclick = function (e) {
 	        	searchY = searchItem.geometry.coordinates[1];
 				if (POI[i].properties.Campus === 'Mazier'){
 					map.setMaxBounds(mazierBounds);
-				} else {
+					zoomVillejean.style.backgroundColor = 'grey';
+			        zoomMazier.style.backgroundColor = '#286090';
+			        zoomLaHarpe.style.backgroundColor = 'grey';
+				} 
+				if (POI[i].properties.Campus === 'Villejean'){
 					map.setMaxBounds(rennesBounds);
-				};
+					zoomVillejean.style.backgroundColor = '#286090';
+			        zoomMazier.style.backgroundColor = 'grey';
+			        zoomLaHarpe.style.backgroundColor = 'grey';
+				} 
+				if (POI[i].properties.Campus === 'La Harpe'){
+					map.setMaxBounds(rennesBounds);
+					zoomVillejean.style.backgroundColor = 'grey';
+			        zoomMazier.style.backgroundColor = 'grey';
+			        zoomLaHarpe.style.backgroundColor = '#286090';
+				} 
+
+
 				if (DDD){					
 					map.flyTo({
 		        		center:[searchX,searchY],
-		        		zoom:17.5,
+		        		zoom:16.5,
 		        		pitch:45,
 						speed:0.6
 		        	});
 		        } else {
 		        	map.flyTo({
 		        		center:[searchX,searchY],
-		        		zoom:17.5,
+		        		zoom:16.5,
 		        		pitch:0,
 						speed:0.6
 		        	});	        	
@@ -1533,47 +1593,7 @@ function runScriptClic(e){
 	getSearchedItem();
 }
 	
-//////////////////////////////////   Interactivité menus //////////////////////////////////////
 
-	// ZOOMS sur les campus
- 	var zoomLaHarpe = document.getElementById("LaHarpe")
-    zoomLaHarpe.addEventListener('click', function(){
-        map.setMaxBounds(rennesBounds);
-		map.flyTo({
-            zoom:16,
-            center:[-1.7091, 48.1254]
-        });
-        zoomLaHarpe.style.backgroundColor = '#286090';
-        zoomVillejean.style.backgroundColor = 'grey';
-        zoomMazier.style.backgroundColor = 'grey'
-
-    });
-
-    var zoomVillejean = document.getElementById("Villejean")
-    zoomVillejean.style.backgroundColor = '#286090';
-
-    zoomVillejean.addEventListener('click', function(){
-        map.setMaxBounds(rennesBounds);
-		map.flyTo({
-            zoom:16,
-            center:[-1.7013, 48.119365]
-        });
-        zoomVillejean.style.backgroundColor = '#286090';
-        zoomMazier.style.backgroundColor = 'grey'
-        zoomLaHarpe.style.backgroundColor = 'grey'
-    });
-
-    var zoomMazier = document.getElementById("Mazier")
-    zoomMazier.addEventListener('click',function(){
-        map.setMaxBounds(mazierBounds);
-		map.flyTo({
-            zoom:16,
-            center:[-2.7410000,48.513033]
-        });
-        zoomMazier.style.backgroundColor = '#286090';
-        zoomVillejean.style.backgroundColor = 'grey';
-        zoomLaHarpe.style.backgroundColor = 'grey';
-    });
 	
 //////////////////////////////////   3D   //////////////////////////////////////
 
