@@ -719,11 +719,10 @@ var popupContent = null
 			var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
 			if (visibility === 'visible') {
 				map.setLayoutProperty(nomDeLaCouche,'visibility','none');
-				popup.remove();
+				if (popup) {popup.remove();}
 				if (etiquette){
 					map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','none');
-					popup.remove();
-	
+					if (popup) {popup.remove();}	
 				}
 			} else {
 				map.setLayoutProperty(nomDeLaCouche,'visibility','visible');
@@ -892,7 +891,7 @@ function getSwitchPopup(){
 		popupContent += '<p>Contacter par mail : '+salleRecherchee.properties.Mail+'</p>';
 	}
 	if (salleRecherchee.properties.Tel !== null){
-		popupContent += '<p>Contacter par téléphone'+salleRecherchee.properties.Tel+'</p>';
+		popupContent += '<p>Contacter par téléphone :'+salleRecherchee.properties.Tel+'</p>';
 	}
     popupList = new mapboxgl.Popup({
         offset:[0,-15],
