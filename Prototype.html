@@ -514,37 +514,38 @@ jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });
 			map.setFilter(bati3DHId, ["==", "Id", e.features[0].properties.Id]);
             var popupTitle = '';
             popupContent = '';
+            if (Layers.length == 0){
+                if (e.features[0].properties.Nom !== "null"){
+                    popupTitle = e.features[0].properties.Nom;
+                }
 
+                if (e.features[0].properties.Photos !== "null"){
+                    popupContent += '<img src = \''+ e.features[0].properties.Photos+'\'/>'
+                }
+                            console.log(e.features[0].properties.Infos);
 
-			if (e.features[0].properties.Nom !== "null"){
-				popupTitle = e.features[0].properties.Nom;
-			}
+                if (e.features[0].properties.Infos !== "null"){
+                    popupContent += '<p>'+e.features[0].properties.Infos+'<p>';
+                }
+                if (popupBati!==null){
+                    popupBati.remove();
+                    };
+                if (e.features[0].properties.Nom !== "null"){
+                    if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false) && (popupList == null || popupList.isOpen() ===false)){
 
-			if (e.features[0].properties.Photos !== "null"){
-				popupContent += '<img src = \''+ e.features[0].properties.Photos+'\'/>'
-			}
-						console.log(e.features[0].properties.Infos);
+                        
+                        popupBati = new mapboxgl.Popup({ 
+                        offset: [0, -15],
+                        closeButton: false
+                    })
+                        .setLngLat(e.lngLat)
+                        .setHTML('<h1>'+popupTitle+'</h1>'+popupContent)
+                            .addTo(map);
+                    }                 
+                }               
+            }
 
-			if (e.features[0].properties.Infos !== "null"){
-				popupContent += '<p>'+e.features[0].properties.Infos+'<p>';
-			}
-            if (popupBati!==null){
-                popupBati.remove();
-                };
-            if (e.features[0].properties.Nom !== "null"){
-	            if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false) && (popupList == null || popupList.isOpen() ===false)){
-
-	            	
-	                popupBati = new mapboxgl.Popup({ 
-	                offset: [0, -15],
-	                closeButton: false
-	            })
-	                .setLngLat(e.lngLat)
-	                .setHTML('<h1>'+popupTitle+'</h1>'+popupContent)
-	                    .addTo(map);
-	            }
-
-            }   
+  
             });
        
                                   
@@ -612,35 +613,37 @@ var popupContent = null
             var popupTitle = '';
             popupContent = '';
 
+            if (Layers.length == 0){
+                if (e.features[0].properties.Nom !== "null"){
+                    popupTitle = e.features[0].properties.Nom;
+                }
 
-			if (e.features[0].properties.Nom !== "null"){
-				popupTitle = e.features[0].properties.Nom;
-			}
+                if (e.features[0].properties.Photo !== "null"){
+                    popupContent += '<img src = \''+ e.features[0].properties.Photo+'\'/>'
+                }
 
-			if (e.features[0].properties.Photo !== "null"){
-				popupContent += '<img src = \''+ e.features[0].properties.Photo+'\'/>'
-			}
+                if (e.features[0].properties.Info !== "null"){
+                    popupContent += '<p>'+e.features[0].properties.Info+'<p>';
+                }
+                if (popupBati!==null){
+                    popupBati.remove();
+                    };
+                if (e.features[0].properties.Nom !== "null"){
+                    if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false) && (popupList == null || popupList.isOpen() ===false)){
 
-			if (e.features[0].properties.Info !== "null"){
-				popupContent += '<p>'+e.features[0].properties.Info+'<p>';
-			}
-            if (popupBati!==null){
-                popupBati.remove();
-                };
-            if (e.features[0].properties.Nom !== "null"){
-	            if ((popup == null || popup.isOpen()==false)  && (searchPopup == null || searchPopup.isOpen() ===false) && (popupList == null || popupList.isOpen() ===false)){
+                        
+                        popupBati = new mapboxgl.Popup({ 
+                        offset: [0, -15],
+                        closeButton: false
+                    })
+                        .setLngLat(e.lngLat)
+                        .setHTML('<h1>'+popupTitle+'</h1>'+popupContent)
+                            .addTo(map);
+                    }
 
-	            	
-	                popupBati = new mapboxgl.Popup({ 
-	                offset: [0, -15],
-	                closeButton: false
-	            })
-	                .setLngLat(e.lngLat)
-	                .setHTML('<h1>'+popupTitle+'</h1>'+popupContent)
-	                    .addTo(map);
-	            }
-
-            }         
+                }               
+            }
+        
 
         });
 		// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
@@ -721,16 +724,24 @@ var popupContent = null
 			var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
 			if (visibility === 'visible') {
 				map.setLayoutProperty(nomDeLaCouche,'visibility','none');
+                Layers = Layers.filter(item => item != nomDeLaCouche);
+
 				if (popup) {popup.remove();}
 				if (etiquette){
 					map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','none');
+                    Layers = Layers.filter(item => item != nomDeLaCoucheEtiquette);
+
 					if (popup) {popup.remove();}	
 				}
 			} else {
 				map.setLayoutProperty(nomDeLaCouche,'visibility','visible');
-				map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','visible')
-				}
-			};
+                Layers.push(nomDeLaCouche); 
+				if (etiquette){
+                    map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','visible')
+                    Layers.push(nomDeLaCoucheEtiquette); 
+                }
+			}
+		};
 
 			getPopup(contenuPopup,nomDeLaCouche);
 
