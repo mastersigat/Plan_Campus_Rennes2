@@ -8,6 +8,31 @@ body {
     background-color: white;
 }
 
+.loader{
+    background: url('ajax-loader.gif') 50% 50% no-repeat rgba(255, 255, 255, 0.8);
+    cursor: wait;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+    .loader h1{
+        background: none;
+        border: none;
+        color: #458976;
+        font-size: 22px;
+        font-family: "Open Sans",sans-serif;
+        font-variant: small-caps;
+        font-weight: 700;
+        height: 700px;
+        line-height: 700px;
+        margin: 0 0 10px;
+        padding: 0;
+        text-align: center;
+    }
+
 #wrapper {
     width: 100%;
 }
@@ -246,34 +271,37 @@ a {
 #DDD {
     position : absolute;
     right : 5px;
-    top:5px;
+    top:7px;
     z-index:9999;
 }
 #DDD button {
     background-color : grey;
     border:none;
-    padding:4px;
+    padding:2px;
     padding-left : 10px;
     padding-right: 10px;
     opacity : 0.85;
+    font-size: 15px;
+
 }
 
 #campus {
     position : absolute;
-    width : 250px;
+    width : 210px;
     left:50%;
-    margin-left : -125px;
-    top:5px;
+    margin-left : -105px;
+    top:7px;
     z-index:9999;
     opacity : 0.85;
 }
 #campus button {
     background-color : grey;
+    width : 70px;
     border:none;
-    padding:4px;
-    padding-left : 10px;
-  	padding-right: 10px;
-	font-size : 12px
+    padding:2px;
+    padding-left : 8px;
+    padding-right: 8px;
+    font-size: 12px;
 }
 
 
