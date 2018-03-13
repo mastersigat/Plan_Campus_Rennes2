@@ -47,8 +47,9 @@
 
 </head>
 <body>
-<!-- jQuery -->
 
+<!-- jQuery -->
+<div class = "loader"></div>
 
 <div id="wrapper">
 
@@ -292,7 +293,7 @@
 	
 	
 	///////////////////////////////////////  initialisation du fond de carte //////////////////////////////////
-
+jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });
 		//Limites de vue en fonction du campus visité
 		//Villejean / La Harpe
 		var rennesBounds = [
@@ -336,13 +337,13 @@
 	Etiquette.push('Amphithéâtre');
 	var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite'];
 	var amphiIconSize = [1.5,13,2,22,60]
-
 	// Couche salles informatique
 	var sallesInfoCount = 0; // initialisation du compteur de clics
 	var sallesInfoLink = document.getElementById('Salles informatique');
 	var sallesInfoColor = '#ff4000'
 	var sallesInfoInfoPopup = ['Nom','Batiment','Niveau','Capacite','Info'];
 	var sallesInfoIconSize = [1.5,13,2,22,60]
+	var sallesInfoPicto = 'icons/sallesInfo.png'
 
 	// Couche salles spécifiques
 	var sallesSpeCount = 0;
@@ -762,7 +763,9 @@ function getPopup(infoPopup,couche){
 		}
 		for(var i = 0; i < infoPopup.length; i++){ 
 			if (infoPopup[i]=='Nom'){
-				popupTitle = feature.properties.Nom;
+				if (feature.properties.Nom!== "null"){
+					popupTitle = feature.properties.Nom;
+				}	
 			} 
 		}
 		// Contenu de la popup
