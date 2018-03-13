@@ -293,31 +293,35 @@
 	
 	
 	///////////////////////////////////////  initialisation du fond de carte //////////////////////////////////
-jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });
-		//Limites de vue en fonction du campus visité
-		//Villejean / La Harpe
-		var rennesBounds = [
-	    [-1.787293,48.067191 ], // Southwest coordinates
-	    [-1.525772,48.169255 ]  // Northeast coordinates
-		];
-		
-		//Mazier
-		var mazierBounds = [
-		[-2.810090, 48.488519],
-		[-2.668165,48.534886]
-		];
-	
+    jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });
 
-	    var map = new mapboxgl.Map({
-	        container: 'map', // container id
-	        style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
-	        center: [-1.7013, 48.119365], // starting position [lng, lat]
-	        zoom: 15.8,
-			minZoom:13, // zoom minimal
-	        pitch : 0, // inclinaison de base
-			maxBounds: rennesBounds // starting zoom
-    	});
-		map.dragRotate.disable(); // vue 2D de base 
+    zoomBase = 15.8;
+    if (screen.width < 500){zoomBase = 15.1;}
+    if (screen.width > 1500){zoomBase = 16.1;}
+
+	//Limites de vue en fonction du campus visité
+	//Villejean / La Harpe
+	var rennesBounds = [
+    [-1.787293,48.067191 ], // Southwest coordinates
+    [-1.525772,48.169255 ]  // Northeast coordinates
+	];
+	
+	//Mazier
+	var mazierBounds = [
+	[-2.810090, 48.488519],
+	[-2.668165,48.534886]
+	];
+
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
+        center:  [ -1.7015402487767233, 48.11941846173602], // starting position [lng, lat]
+        zoom: zoomBase,
+		minZoom:13, // zoom minimal
+        pitch : 0, // inclinaison de base
+		maxBounds: rennesBounds // starting zoom
+	});
+	map.dragRotate.disable(); // vue 2D de base 
 
 
 	///////////////////////////////////////  initialisation des variables overlay //////////////////////////////////
@@ -522,7 +526,6 @@ jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });
                 if (e.features[0].properties.Photos !== "null"){
                     popupContent += '<img src = \''+ e.features[0].properties.Photos+'\'/>'
                 }
-                            console.log(e.features[0].properties.Infos);
 
                 if (e.features[0].properties.Infos !== "null"){
                     popupContent += '<p>'+e.features[0].properties.Infos+'<p>';
@@ -720,7 +723,6 @@ var popupContent = null
 				Layers.push(nomDeLaCoucheEtiquette); 
 			}	
 		} else {
-			console.log(nomDeLaCoucheEtiquette);
 			var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
 			if (visibility === 'visible') {
 				map.setLayoutProperty(nomDeLaCouche,'visibility','none');
@@ -757,7 +759,6 @@ function getPopup(infoPopup,couche){
 		var features = map.queryRenderedFeatures(e.point, { 
 			layers: [couche] 
 		});
-		console.log(infoPopup)
 		var popupTitle = null;
 		var popupContent = [];
 
@@ -806,7 +807,6 @@ function getPopup(infoPopup,couche){
 			if (infoPopup[i]=='Info'){
 				if (feature.properties.Info !== "null"){
 					popupContent += '<p>'+feature.properties.Info+'<p>';
-					console.log(feature.properties.Info);
 				}
 			} 
 		}	
@@ -848,7 +848,6 @@ function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
 	var listeLink = [];	
 	elLink = null
 	elList = null
-	console.log(overlayCount)
 	if (overlayCount == 0){
 		var data = fproperties.filter(function(e){
 			return e.Categorie === categorie;
@@ -918,7 +917,6 @@ function getSwitchPopup(){
 };
 
 function switchPOI(value){
-	console.log(value);
 	value = value.replace("!","'");
 	salleRecherchee = null;
 	salleRX = null;
@@ -1599,7 +1597,6 @@ busLink.onclick = function (e) {
 	}
 function runScriptKey(e) {
     if (e.keyCode == 13) {
-    	console.log('ok');
     	getSearchedItem();
     }
 }
