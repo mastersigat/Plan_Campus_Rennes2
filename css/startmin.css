@@ -18,20 +18,20 @@ body {
     width: 100%;
     z-index: 9999;
 }
-    .loader h1{
-        background: none;
-        border: none;
-        color: #458976;
-        font-size: 22px;
-        font-family: "Open Sans",sans-serif;
-        font-variant: small-caps;
-        font-weight: 700;
-        height: 700px;
-        line-height: 700px;
-        margin: 0 0 10px;
-        padding: 0;
-        text-align: center;
-    }
+.loader h1{
+    background: none;
+    border: none;
+    color: #458976;
+    font-size: 22px;
+    font-family: "Open Sans",sans-serif;
+    font-variant: small-caps;
+    font-weight: 700;
+    height: 700px;
+    line-height: 700px;
+    margin: 0 0 10px;
+    padding: 0;
+    text-align: center;
+}
 
 #wrapper {
     width: 100%;
@@ -261,7 +261,7 @@ a {
 
 
 .sidebar .sidebar-search {
-	max-width:175px;
+	max-width:225px;
 }
 
 #searchButton {
@@ -372,3 +372,15 @@ height : 125px;
 
 }
 
+
+li img {
+    height : 15px; 
+    position : absolute;
+    left : 15px;
+    top : 5px;
+    z-index: 99999
+}
+
+li:hover {
+   background-color: #f2f2f2
+}
