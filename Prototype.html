@@ -921,6 +921,15 @@ function switchPOI(value){
     salleRecherchee = null;
     salleRX = null;
     salleRY = null;
+    if (document.getElementById('fleche')){document.getElementById('fleche').remove();}
+    var htmlPOI = document.getElementById(value);
+    var htmlPOIParent = htmlPOI.parentNode;
+    var fleche = document.createElement('img');
+    fleche.setAttribute('src','https://upload.wikimedia.org/wikipedia/commons/0/0d/Pfeil.png');
+    fleche.setAttribute('id','fleche');
+    fleche.style.width = '20px';
+    fleche.style.position = 'absolute';
+    htmlPOIParent.insertBefore(fleche,htmlPOI);
     if (popup){
         popup.remove();
     }
