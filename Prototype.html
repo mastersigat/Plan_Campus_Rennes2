@@ -8,16 +8,17 @@
     <meta name="author" content="">
     <title>Prototype Mapbox GL</title>
     <!-- API MAPBOX GL-->
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css' rel='stylesheet' />
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
-    <link href="css/startmin.css" rel="stylesheet">   
+    <link href="css/startmin.css" rel="stylesheet"> 
+    <!-- Custom Fonts -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">  
     <!-- Stylesheet for search box -->
     <link rel="stylesheet" href="EasyAutocomplete-1.3.5/easy-autocomplete.min.css"> 
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,6 +28,7 @@
     <![endif]-->
 </head>
 <body>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
 <!-- JQUERY  -->
 <script src="https://code.jquery.com/jquery-1.11.2.js" integrity="sha256-WMJwNbei5YnfOX5dfgVCS5C4waqvc+/0fV7W2uy3DyU=" crossorigin="anonymous"></script>
 <!-- library for search box -->
@@ -282,11 +284,11 @@
     if (largeurEcran < 500){zoomBase = 14.8;}
     if (largeurEcran > 1500){zoomBase = 16.1;}
     if (largeurEcran > 1000) {
-        document.getElementById('campus').style.width = '400px';
-        document.getElementById('Villejean').style.width= '130px';
-        document.getElementById('LaHarpe').style.width= '130px';
-        document.getElementById('Mazier').style.width= '130px';
-        document.getElementById('campus').style.marginLeft= '-200px';
+        document.getElementById('campus').style.width = '40%';
+        document.getElementById('Villejean').style.width= '33%';
+        document.getElementById('LaHarpe').style.width= '33%';
+        document.getElementById('Mazier').style.width= '33%';
+        document.getElementById('campus').style.marginLeft= '-20%';
     }
     //Limites de vue en fonction du campus visité
     //Villejean / La Harpe
