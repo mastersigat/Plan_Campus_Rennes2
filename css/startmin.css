@@ -9,6 +9,7 @@ body {
 }
 
 .loader{
+    opacity : 1;
     background: url('ajax-loader.gif') 50% 50% no-repeat rgba(255, 255, 255, 0.8);
     cursor: wait;
     height: 100%;
@@ -16,7 +17,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 9999;
+    z-index: 999999;
 }
 .loader h1{
     background: none;
