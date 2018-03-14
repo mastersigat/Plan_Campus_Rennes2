@@ -110,11 +110,9 @@
                         <a href="#">Scolarité et Administration<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#" id = "Scolarités">Scolarités</a>
+                                <a href="#" id = "UFR">UFR</a>
                             </li>
-                            <li>
-                                <a href="#" id ="Secrétariats">Secrétariat</a>
-                            </li>
+
                         </ul>
                     </li>
 		    		<li>
@@ -297,11 +295,20 @@
 	
 	
 	///////////////////////////////////////  initialisation du fond de carte //////////////////////////////////
+	var largeurEcran = screen.width
 
     zoomBase = 15.8;
-    if (screen.width < 500){zoomBase = 14.8;}
-    if (screen.width > 1500){zoomBase = 16.1;}
+    if (largeurEcran < 500){zoomBase = 14.8;}
+    if (largeurEcran > 1500){zoomBase = 16.1;}
 
+    if (largeurEcran > 1000) {
+    	document.getElementById('campus').style.width = '400px';
+    	document.getElementById('Villejean').style.width= '130px';
+       	document.getElementById('LaHarpe').style.width= '130px';
+    	document.getElementById('Mazier').style.width= '130px';
+    	document.getElementById('campus').style.marginLeft= '-200px';
+
+    }
 	//Limites de vue en fonction du campus visité
 	//Villejean / La Harpe
 	var rennesBounds = [
@@ -389,7 +396,7 @@
 	var lieuCulturelCount = 0; // initialisation du compteur de clics
 	var lieuCulturelLink = document.getElementById('Lieu culturel');
 	var listelieuCulturel = []; // Création dynamique de la liste des salles à partir du jeu de données
-	var lieuCulturelColor = 'white';
+	var lieuCulturelColor = 'black';
 	var lieuCulturelInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Capacite','Mail','Tel','Lien'];
 	var insertLieuCulturel = document.getElementById('insertLieuCulturel');
 	var lieuCulturelIconSize = [1.5,13,2,22,60]
@@ -443,7 +450,30 @@
 	var parkingVeloLink = document.getElementById("Parkings vélo");
 	var parkingVeloColor = 'purple';
 	var parkingVeloInfoPopup = ['Categorie'];
-	var parkingVeloIconSize = [1.5,13,2,22,60]
+	var parkingVeloIconSize = [1.5,13,2,22,60];
+
+		// Couche bibliothèques
+	var bibliothequesCount = 0; // initialisation du compteur de clics
+	var bibliothequesLink = document.getElementById("Bibliothèques");
+	var bibliothequesColor = 'purple';
+	var bibliothequesInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
+	var bibliothequesIconSize = [1.5,13,2,22,60];
+
+		// Couche Résidences universitaires
+	var resUnivCount = 0; // initialisation du compteur de clics
+	var resUnivLink = document.getElementById("Résidences universitaires");
+	var resUnivColor = 'purple';
+	var resUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
+	var resUnivIconSize = [1.5,13,2,22,60];
+
+
+		// Couche Restaurants universitaires
+	var restoUnivCount = 0; // initialisation du compteur de clics
+	var restoUnivLink = document.getElementById("Restaurants universitaires");
+	var restoUnivColor = 'purple';
+	var restoUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
+	var restoUnivIconSize = [1.5,13,2,22,60];
+
 
 
 //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
@@ -822,7 +852,7 @@ function getPopup(infoPopup,couche){
 		}
 		for(var i = 0; i < infoPopup.length; i++){
 			if (infoPopup[i]=='Mail'){
-				if (feature.properties.Mail !== "null"){
+				if (feature.properties.Mail !== "null"  ){
 					popupContent += '<p>Contacter par mail : '+feature.properties.Mail+'</p>';
 				}
 			} 
@@ -1167,6 +1197,20 @@ map.on("load", function() {
 	parkingVeloLink.onclick = function(e){
 		addCategoryOverlay('Parking vélo',parkingVeloCount,parkingVeloColor,parkingVeloInfoPopupparkingVeloIconSize);
 		parkingVeloCount += 1;
+	}
+
+	bibliothequesLink.onclick = function(e){
+		addCategoryOverlay('Bibliothèques',bibliothequesCount,bibliothequesColor,bibliothequesInfoPopup,bibliothequesIconSize);
+		bibliothequesCount += 1;
+	}
+
+	resUnivLink.onclick = function(e){
+		addCategoryOverlay('Résidence Universitaire',resUnivCount,resUnivColor,resUnivInfoPopup,resUnivIconSize);
+		resUnivCount += 1;
+	}
+	restoUnivLink.onclick = function(e){
+		addCategoryOverlay('Restaurant Universitaire',restoUnivCount,restoUnivColor,restoUnivInfoPopup,restoUnivIconSize);
+		restoUnivCount += 1;
 	}
 });
 
