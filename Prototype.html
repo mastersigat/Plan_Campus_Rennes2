@@ -94,11 +94,12 @@
                             <li id = "Amphithéâtres">
                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">Amphithéâtres</a>
                             </li>
-                            <li>
-                                <a href="#" id = "Salles informatique">Salles informatique</a>
+                            <li id = "Salles informatique">
+                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">Salles informatique</a>
                             </li>
-                            <li>
-                                <a href="#" id = 'Salles spécifiques'>Salles spécifiques<span class="fa arrow"></span></a>
+                            <li id = 'Salles spécifiques' >
+                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
+                                <a href="#">Salles spécifiques<span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level" id = "insertSallesSpecifiques">
                                                                                                                                                 
                                 </ul>
@@ -1071,11 +1072,11 @@ map.on("load", function() {
     }
     
     sallesInfoLink.onclick = function(e){
-        addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup,sallesInfoIconSize);
+        addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup,sallesInfoIconSize,sallesInfoLink);
         sallesInfoCount += 1;
     }
     toilettesLink.onclick = function(e){
-        addCategoryOverlay('Toilettes',toilettesCount,toilettesColor,toilettesInfoPopup,toilettesIconSize);
+        addCategoryOverlay('Toilettes',toilettesCount,toilettesColor,toilettesInfoPopup,toilettesIconSize,toilettesLink);
         toilettesCount += 1;
     }
     copieurLink.onclick = function(e){
@@ -1083,7 +1084,7 @@ map.on("load", function() {
         copieurCount += 1;
     }
     sallesSpecifiquesLink.onclick = function(e){
-        addCategoryOverlay('Salles spécifiques',sallesSpeCount,sallesSpeColor,sallesSpeInfoPopup,sallesSpeIconSize);
+        addCategoryOverlay('Salles spécifiques',sallesSpeCount,sallesSpeColor,sallesSpeInfoPopup,sallesSpeIconSize,sallesSpecifiquesLink);
         if (sallesSpeCount==0){
             createHTMLList('Salles spécifiques',listeSallesSpecifiques,insertSallesSpecifiques,sallesSpeCount);
         }
