@@ -97,12 +97,10 @@
                             <li id = "Salles informatique">
                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">Salles informatique</a>
                             </li>
-                            <li id = 'Salles spécifiques' >
-                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
-                                <a href="#">Salles spécifiques<span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level" id = "insertSallesSpecifiques">
-                                                                                                                                                
-                                </ul>
+                            <li >
+                                <img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
+                                <a  id = "Salles spécifiques" href="#">Salles spécifiques<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertSallesSpecifiques"></ul>
                             </li>
 
                         </ul>
@@ -685,13 +683,18 @@ var popupContent = null
                     }
                 });             
                 Layers.push(nomDeLaCouche); 
-                for (var i = 0; i < htmllink.childNodes.length; i++) {
-                    if (htmllink.childNodes[i].className == "case") {
-                        notes = htmllink.childNodes[i];
-                        notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
-                        break;
-                    }        
+                if (htmllink.nodeName == 'LI'){
+                    for (var i = 0; i < htmllink.childNodes.length; i++) {
+                        if (htmllink.childNodes[i].className == "case") {
+                            notes = htmllink.childNodes[i];
+                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
+                            break;
+                        }        
+                    }
                 }
+                if (htmllink.nodeName == 'A'){htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');}
+
+
             if (etiquette){
                 overlayEtiquette = map.addLayer({
                     id: nomDeLaCoucheEtiquette,
@@ -717,13 +720,17 @@ var popupContent = null
         } else {
             var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
             if (visibility === 'visible') {
-                for (var i = 0; i < htmllink.childNodes.length; i++) {
-                    if (htmllink.childNodes[i].className == "case") {
-                        notes = htmllink.childNodes[i];
-                        notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png')
-                        break;
-                    }        
+                if (htmllink.nodeName == 'LI'){
+                    for (var i = 0; i < htmllink.childNodes.length; i++) {
+                        if (htmllink.childNodes[i].className == "case") {
+                            notes = htmllink.childNodes[i];
+                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png')
+                            break;
+                        }        
+                    }
                 }
+                if (htmllink.nodeName == 'A'){htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png');}
+
                 map.setLayoutProperty(nomDeLaCouche,'visibility','none');
                 Layers = Layers.filter(item => item != nomDeLaCouche);
                 if (popup) {popup.remove();}
@@ -735,13 +742,17 @@ var popupContent = null
             } else {
                 map.setLayoutProperty(nomDeLaCouche,'visibility','visible');
                 Layers.push(nomDeLaCouche);
-                for (var i = 0; i < htmllink.childNodes.length; i++) {
-                    if (htmllink.childNodes[i].className == "case") {
-                        notes = htmllink.childNodes[i];
-                        notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
-                        break;
-                    }        
-                } 
+                if (htmllink.nodeName == 'LI'){
+                    for (var i = 0; i < htmllink.childNodes.length; i++) {
+                        if (htmllink.childNodes[i].className == "case") {
+                            notes = htmllink.childNodes[i];
+                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
+                            break;
+                        }        
+                    }
+                }
+                if (htmllink.nodeName == 'A'){htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');}
+
                 if (etiquette){
                     map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','visible')
                     Layers.push(nomDeLaCoucheEtiquette); 
