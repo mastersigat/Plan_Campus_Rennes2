@@ -14,7 +14,6 @@
   integrity="sha256-WMJwNbei5YnfOX5dfgVCS5C4waqvc+/0fV7W2uy3DyU="
   crossorigin="anonymous"></script>
 
-    <script>jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });</script>
 
     <!-- API MAPBOX GL-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
@@ -53,7 +52,7 @@
 <body>
 
 
-<div class = "loader"></div>
+<div class = "loader"><h1>Chargement de la page</h1></div>
 
 <div id="wrapper">
 
@@ -121,10 +120,9 @@
                                 <a href="#" id = "Bibliothèques">Bibliothèques</a>
                             </li>
                             <li>
-                                <a href="#" id = 'Lieu culturel'>Lieu culturel<span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level" id = "insertLieuCulturel">
-                                                                                                                                            
-                                </ul>                               
+                                <img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
+                                <a  id = "Lieu culturel" href="#">Lieu culturel<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertLieuCulturel"></ul>                             
                             </li>
                             <!--
                             <li>
@@ -730,7 +728,6 @@ var popupContent = null
                     }
                 }
                 if (htmllink.nodeName == 'A'){htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png');}
-
                 map.setLayoutProperty(nomDeLaCouche,'visibility','none');
                 Layers = Layers.filter(item => item != nomDeLaCouche);
                 if (popup) {popup.remove();}
@@ -1091,7 +1088,7 @@ map.on("load", function() {
         toilettesCount += 1;
     }
     copieurLink.onclick = function(e){
-        addCategoryOverlay('Copieur',copieurCount,copieurColor,copieursInfoPopup,copieursIconSize);
+        addCategoryOverlay('Copieur',copieurCount,copieurColor,copieursInfoPopup,copieursIconSize,copieurLink);
         copieurCount += 1;
     }
     sallesSpecifiquesLink.onclick = function(e){
@@ -1102,54 +1099,54 @@ map.on("load", function() {
         sallesSpeCount +=1;
     }
     lieuCulturelLink.onclick = function(e){
-        addCategoryOverlay('Lieu culturel',lieuCulturelCount,lieuCulturelColor,lieuCulturelInfoPopup,lieuCulturelIconSize);
+        addCategoryOverlay('Lieu culturel',lieuCulturelCount,lieuCulturelColor,lieuCulturelInfoPopup,lieuCulturelIconSize,lieuCulturelLink);
         if (lieuCulturelCount==0){
             createHTMLList('Lieu culturel',listelieuCulturel,insertLieuCulturel,lieuCulturelCount);
         }
         lieuCulturelCount += 1;
     }
     equipementSportifLink.onclick = function(e){
-        addCategoryOverlay('Equipement sportif',equipementSportifCount,equipementSportifColor,equipementSportifInfoPopup,equipementSportifIconSize);
+        addCategoryOverlay('Equipement sportif',equipementSportifCount,equipementSportifColor,equipementSportifInfoPopup,equipementSportifIconSize,equipementSportifLink);
         equipementSportifCount += 1;
     }
     espaceDetenteLink.onclick = function(e){
-        addCategoryOverlay('Espace détente',espaceDetenteCount,espaceDetenteColor,espaceDetenteInfoPopupespaceDetenteIconSize);
+        addCategoryOverlay('Espace détente',espaceDetenteCount,espaceDetenteColor,espaceDetenteInfoPopupespaceDetenteIconSize,espaceDetenteLink);
         espaceDetenteCount += 1;
     }
     cafeteriasLink.onclick = function(e){
-        addCategoryOverlay('Cafétéria',cafeteriasCount,cafeteriasColor,cafeteriasInfoPopup,cafeteriasIconSize);
+        addCategoryOverlay('Cafétéria',cafeteriasCount,cafeteriasColor,cafeteriasInfoPopup,cafeteriasIconSize,cafeteriasLink);
         cafeteriasCount += 1;
     }
     associationsLink.onclick = function(e){
-        addCategoryOverlay('Associations',associationsCount,associationsColor,associationsInfoPopup,associationsIconSize);
+        addCategoryOverlay('Associations',associationsCount,associationsColor,associationsInfoPopup,associationsIconSize,associationsLink);
         associationsCount += 1;
     }
     ascenseurLink.onclick = function(e){
-        addCategoryOverlay('Ascenseur',ascenseurCount,ascenseurColor,ascenseurInfoPopup,ascenseurIconSize);
+        addCategoryOverlay('Ascenseur',ascenseurCount,ascenseurColor,ascenseurInfoPopup,ascenseurIconSize,ascenseurLink);
         ascenseurCount += 1;
     }
     parkingLink.onclick = function(e){
-        addCategoryOverlay('Parking',parkingCount,parkingColor,parkingInfoPopup,parkingIconSize);
+        addCategoryOverlay('Parking',parkingCount,parkingColor,parkingInfoPopup,parkingIconSize,parkingLink);
         parkingCount += 1;
     }
     parkingPMRLink.onclick = function(e){
-        addCategoryOverlay('Parking PMR',parkingPMRCount,parkingPMRColor,parkingPMRInfoPopup,parkingPMRIconSize);
+        addCategoryOverlay('Parking PMR',parkingPMRCount,parkingPMRColor,parkingPMRInfoPopup,parkingPMRIconSize,parkingPMRLink);
         parkingPMRCount += 1;
     }
     parkingVeloLink.onclick = function(e){
-        addCategoryOverlay('Parking vélo',parkingVeloCount,parkingVeloColor,parkingVeloInfoPopupparkingVeloIconSize);
+        addCategoryOverlay('Parking vélo',parkingVeloCount,parkingVeloColor,parkingVeloInfoPopupparkingVeloIconSize,parkingVeloLink);
         parkingVeloCount += 1;
     }
     bibliothequesLink.onclick = function(e){
-        addCategoryOverlay('Bibliothèques',bibliothequesCount,bibliothequesColor,bibliothequesInfoPopup,bibliothequesIconSize);
+        addCategoryOverlay('Bibliothèques',bibliothequesCount,bibliothequesColor,bibliothequesInfoPopup,bibliothequesIconSize,bibliothequesLink);
         bibliothequesCount += 1;
     }
     resUnivLink.onclick = function(e){
-        addCategoryOverlay('Résidence Universitaire',resUnivCount,resUnivColor,resUnivInfoPopup,resUnivIconSize);
+        addCategoryOverlay('Résidence Universitaire',resUnivCount,resUnivColor,resUnivInfoPopup,resUnivIconSize,resUnivLink);
         resUnivCount += 1;
     }
     restoUnivLink.onclick = function(e){
-        addCategoryOverlay('Restaurant Universitaire',restoUnivCount,restoUnivColor,restoUnivInfoPopup,restoUnivIconSize);
+        addCategoryOverlay('Restaurant Universitaire',restoUnivCount,restoUnivColor,restoUnivInfoPopup,restoUnivIconSize,restoUnivLink);
         restoUnivCount += 1;
     }
 });
@@ -1590,6 +1587,9 @@ map.addControl(nav, 'top-left');
 map.addControl(new mapboxgl.ScaleControl({
 maxWidth: 120,
 unit: 'metric'}));
+
 </script>
+<script>jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });</script>
+
 </body>
 </html>
