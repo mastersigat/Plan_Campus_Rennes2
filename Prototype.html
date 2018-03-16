@@ -9,17 +9,11 @@
     <title>Prototype Mapbox GL</title>
     <!-- API MAPBOX GL-->
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css' rel='stylesheet' />
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/startmin.css" rel="stylesheet"> 
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">  
-    <!-- Stylesheet for search box -->
-    <link rel="stylesheet" href="EasyAutocomplete-1.3.5/easy-autocomplete.min.css"> 
-
-
+    <!-- CHARGEMENT DES FEUILLES DE STYLE CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">  <!-- TEMPLATE -->
+    <link href="css/startmin.css" rel="stylesheet"> <!-- FEUILLE DE STYLE PERSO -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">  <!-- AJOUT DES FLECHES MENU -->
+    <link rel="stylesheet" href="EasyAutocomplete-1.3.5/easy-autocomplete.min.css"> <!-- BARRE DE RECHERCHE -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -28,6 +22,7 @@
     <![endif]-->
 </head>
 <body>
+<!-- MAPBOX GL -->
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
 <!-- JQUERY  -->
 <script src="https://code.jquery.com/jquery-1.11.2.js" integrity="sha256-WMJwNbei5YnfOX5dfgVCS5C4waqvc+/0fV7W2uy3DyU=" crossorigin="anonymous"></script>
@@ -39,10 +34,9 @@
 <script src="js/metisMenu.min.js"></script>
 <!-- Custom Theme JavaScript -->
 <script src="js/startmin.js"></script>
+<!-- LOADER -->
 <div class = "loader"><h1>Chargement de la page</h1></div>
-
 <div id="wrapper">
-
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
     <!-- Gestion du menu de couches -->
@@ -52,15 +46,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-
         <!-- Sidebar -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
-
-    <!-- Search bar -->
-            
+            <!-- Search bar -->  
             <ul class="nav" id="side-menu">
-
                 <li class="sidebar-search">
                     <div class="input-group custom-search-form">
                         <input id= "searchfield" type="text" placeholder="Rechercher..." onkeypress="return runScriptKey(event)">
@@ -71,9 +61,7 @@
                             </span>                 
                     </div>
                 </li>
-
-                <!-- Gestion des couches -->
-                    
+                <!-- Gestion des couches -->                    
                 <li>
                     <a href="#">Amphis et salles spécifiques<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -88,7 +76,6 @@
                                 <a  id = "Salles spécifiques" href="#">Salles spécifiques<span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level" id = "insertSallesSpecifiques"></ul>
                             </li>
-
                         </ul>
                     </li>
                     <li>
@@ -97,7 +84,6 @@
                             <li id = "UFR">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">UFR</a>
                             </li>
-
                         </ul>
                     </li>
                     <li>
@@ -110,12 +96,7 @@
                                 <img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
                                 <a  id = "Lieu culturel" href="#">Lieu culturel<span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level" id = "insertLieuCulturel"></ul>                             
-                            </li>
-                            <!--
-                            <li>
-                                <a href="#">Galerie arts et essais</a>
-                            </li>
-                            -->                            
+                            </li>                         
                         </ul>
                     </li>
                     <li>
@@ -135,8 +116,6 @@
                             </li>                            
                         </ul>
                     </li>
-
-
                     <li>
                         <a href="#">Sport et santé<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -148,32 +127,20 @@
                             </li>
                         </ul>
                     </li>
-
-
                     <li>
                         <a href="#">Vie associative<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li  id = "Associations">
                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">Associations</a>
                             </li>
-                            <li id = "Ressourcerie">
-                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Ressourcerie</a>
-                            </li>
-                            <li id = "Le potager">
-                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Le potager</a>
-                            </li>
-
                         </ul>
                     </li>
-
-
                     <li>
                         <a href="#">Services divers<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level" >
                             <li id = "Toilettes">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Toilettes</a>
                             </li>
-
                             <li id = "Copieurs">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Copieurs</a>
                             </li>
@@ -182,8 +149,6 @@
                             </li>                            
                         </ul>
                     </li>
-
-
                     <li>
                         <a href="#">Mobilités et accessibilité<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -204,7 +169,6 @@
                                     </li>                                                                                                             
                                 </ul>
                             </li>
-
                             <li>
                                 <a href="#">Accéder au campus <span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level">
@@ -234,32 +198,12 @@
             </div>
         </div>
     </nav>
-
      <div id="page-wrapper" style = "padding:0">
-        <div class="container-fluid" style = "padding-left:0;
-                          padding-right:0;
-                          padding-top : 0;
-                          padding-bottom : 0;
-                          margin-right: 0;
-                          margin-top : 0;
-                          margin-left: :0;
-                          margin-bottom : 0">
-
+        <div class="container-fluid" style = "padding-left:0;padding-right:0;padding-top : 0;padding-bottom : 0;margin-right: 0;margin-top : 0;margin-left: :0;margin-bottom : 0">
             <div class="row">
                 <div class="col-lg-12"></div>
             </div>
-
-            <div id="map" style="position:relative;
-                 margin-top:50px;
-                 margin-right:0;
-                 margin-left:0;
-                 margin-bottom:0;
-                 padding-right : 0;
-                 padding-left : 0; 
-                 padding-top:0;
-                 padding-bottom:0;
-                 z-index:1;
-                 height:90vh">
+            <div id="map" style="position:relative;margin-top:50px;margin-right:0;margin-left:0;margin-bottom:0;padding-right : 0;padding-left : 0; padding-top:0;padding-bottom:0;z-index:1;height:90vh">
                 <div id="DDD" class="btn-group">
                     <button  class="btn btn-primary" id="DDDButton">3D</button>
                 </div>
@@ -272,13 +216,9 @@
         </div>
     </div>
 </div>
-
-
-
-<script>
-    
-    
-    ///////////////////////////////////////  initialisation du fond de carte //////////////////////////////////
+<script>    
+    ///////////////////////////////////////  Initialisation du fond de carte //////////////////////////////////
+    // Adapter la largeur des raccourcis spatiaux en fonction de l'écran
     var largeurEcran = screen.width
     zoomBase = 15.8;
     if (largeurEcran < 500){zoomBase = 14.8;}
@@ -295,13 +235,13 @@
     var rennesBounds = [
     [-1.787293,48.067191 ], // Southwest coordinates
     [-1.525772,48.169255 ]  // Northeast coordinates
-    ];
-    
+    ];    
     //Mazier
     var mazierBounds = [
     [-2.810090, 48.488519],
     [-2.668165,48.534886]
     ];
+  // Appel du fond de carte 
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'https://free.tilehosting.com/styles/basic/style.json?key=nWBK7ixdxgsIG534xdet', // stylesheet location
@@ -312,31 +252,35 @@
         maxBounds: rennesBounds // starting zoom
     });
     map.dragRotate.disable(); // vue 2D de base 
+   
     ///////////////////////////////////////  initialisation des variables overlay //////////////////////////////////
+    
     var Etiquette = []; // Insérer les couches ayant des étiquettes (exemple amphithéâtres)
     var Layers = [];
     // Initialisation des variables d'overlay
-    var popup = null
-    var popupList = null
+    var popup = null;
+    var popupList = null;
+    // Coordonnées de la salle sélectionnée
+    var salleRX = null;
+    var salleRY = null;
+    
+    // AJOUT DES VARIABLES OVERLAY
     
     // Couche amphithéâtres
-    var amphiCount = 0; // initialisation du compteur de clics
-    var amphitheatresLink = document.getElementById('Amphithéâtres');
-    var amphiColor = '#003399';
-    Etiquette.push('Amphithéâtre');
-    var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite'];
+    var amphiCount = 0; // initialisation du compteur 
+    var amphitheatresLink = document.getElementById('Amphithéâtres'); // Recherche de la balise html liée à la couche
+    var amphiColor = '#003399'; // couleur de la couche
+    Etiquette.push('Amphithéâtre'); // Ajout des etiquettes
+    var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite']; // Données ajoutées dans la popup
     var amphiIconSize = [1.5,13,2,22,60]    
     // Couche salles informatique
-    var sallesInfoCount = 0; // initialisation du compteur de clics
+    var sallesInfoCount = 0; 
     var sallesInfoLink = document.getElementById('Salles informatique');
     var sallesInfoColor = '#ff4000'
     var sallesInfoInfoPopup = ['Nom','Batiment','Niveau','Capacite','Info'];
     var sallesInfoIconSize = [1.5,13,2,22,60]
-    var sallesInfoPicto = 'icons/sallesInfo.png'
     // Couche salles spécifiques
     var sallesSpeCount = 0;
-    var salleRX = null; // Coordonnées de la salle sélectionnée
-    var salleRY = null;
     var sallesSpeColor = 'blue';
     var listeSallesSpecifiques = []; // Création dynamique de la liste des salles à partir du jeu de données
     var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
@@ -429,7 +373,8 @@
     var restoUnivColor = 'purple';
     var restoUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var restoUnivIconSize = [1.5,13,2,22,60];
-//////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
+
+    //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
     
     //Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
     var DDD = false; // Vue de base en 2D
@@ -526,10 +471,7 @@
                     }                 
                 }               
             }
-  
-            });
-       
-                                  
+        });                           
         // Reset the state-fills-hover layer's filter when the mouse leaves the layer.
         map.on("mouseleave", bati3DId, function() {
             map.setFilter(bati3DHId, ["==", "Id", ""]);
@@ -744,7 +686,6 @@ var popupContent = null
                         }        
                     }
                     htmllink.style.backgroundColor = '#EEEEEE';
-
                 }
                 if (htmllink.nodeName == 'A'){
                     htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');
@@ -773,8 +714,7 @@ function getPopup(infoPopup,couche){
         if (!features.length) {
             return;
         }
-        var feature = features[0];
-        
+        var feature = features[0];        
         //Titre de la popup
         for(var i = 0; i < infoPopup.length; i++){ 
             if (infoPopup[i]=='Categorie'){
@@ -859,8 +799,7 @@ function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
         })
         for (i = 0; i < data.length; i++) {
             listeDeNoms.push(data[i]['Nom']);
-        }           
-    
+        }              
         for (i = 0; i < listeDeNoms.length; i++){
             elList = document.createElement('li');
             elementCible.appendChild(elList);
