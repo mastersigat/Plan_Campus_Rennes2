@@ -407,7 +407,7 @@
             type: "fill-extrusion",
             source: {
                 type: "geojson",
-                data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/Bati_3D.geojson"
+                data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/bati/Bati_3D.geojson"
             },
             paint: {
                 'fill-extrusion-color': '#d1d1e0', 
@@ -426,7 +426,7 @@
             type: "fill-extrusion",
             source: {
                 type: "geojson",
-                data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/Bati_3D.geojson"
+                data:  "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/bati/Bati_3D.geojson"
             },
             filter: ["==", "Nom", ""],
             paint: {
@@ -482,7 +482,7 @@
             type: "symbol",
             source: {
                 type: "geojson",
-                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments_centroides.geojson"
+                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data//habillage/batiments_centroides.geojson"
             },
             layout: {
                 "text-field": "{name}",
@@ -509,7 +509,7 @@ var popupContent = null
             type: "fill",
             source: {
                 type: "geojson",
-                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/Bati_2D.geojson"
+                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/bati/Bati_2D.geojson"
             },
             paint: {
                 'fill-color': '#9494b8',
@@ -521,7 +521,7 @@ var popupContent = null
             type: "fill",
             source: {
                 type: "geojson",
-                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/Bati_2D.geojson"
+                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/bati/Bati_2D.geojson"
             },
             filter: ["==", "Id", ""],
             paint: {
@@ -571,7 +571,7 @@ var popupContent = null
             type: "symbol",
             source: {
                 type: "geojson",
-                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/batiments_centroides.geojson"
+                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/habillage/batiments_centroides.geojson"
             },
             layout: {
                 "text-field": "{name}",
@@ -968,7 +968,7 @@ map.on("load", function() {
         type: "fill",
         source: {
             type: "geojson",
-            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/grass.geojson"
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/habillage/grass.geojson"
         },
         paint: {
             'fill-color': '#A4E463',
@@ -985,7 +985,7 @@ map.on("load", function() {
         type: "fill",
         source: {
             type: "geojson",
-            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/piste_athle.geojson"
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/habillage/piste_athle.geojson"
         },
         paint: {
             'fill-color': '#C09C83',
@@ -997,7 +997,7 @@ map.on("load", function() {
         type: "line",
         source: {
             type: "geojson",
-            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/terrain_football.geojson"
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/habillage/terrain_football.geojson"
         },
         "paint": {
             'line-color': '#FFFFFF',
