@@ -373,6 +373,13 @@
     var restoUnivColor = 'purple';
     var restoUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var restoUnivIconSize = [1.5,13,2,22,60];
+       // Lineaire PMR
+    var lineairePMRCount = 0; // initialisation du compteur de clics
+    var lineairePMRLink = document.getElementById("Accès PMR");
+    var lineairePMRColor = 'purple';
+    var lineairePMRInfoPopup = null;
+    var lineairePMRIconSize = [1.5,13,2,22,60];
+    var lineairePMRType = 'line'    
 
     //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
     
@@ -582,128 +589,196 @@ var popupContent = null
             });
         };
     
-    function addCategoryOverlay(nomDeLaCouche,overlayCount,color,infoPopup,iconSize,htmllink){
-        var etiquette = false;
-        var contenuPopup = infoPopup;
-        for(var i = 0; i < Etiquette.length; i++){
-            if (Etiquette[i]==nomDeLaCouche){
-                etiquette = true;
-                var nomDeLaCoucheEtiquette = nomDeLaCouche+'etiquette' 
+   function addCategoryOverlay(nomDeLaCouche,overlayCount,color,infoPopup,iconSize,htmllink,type){
+        if (type=='line'){
+        	console.log('yeah');
+	        if (overlayCount === 0){
+	            map.addLayer({
+	                id: nomDeLaCouche,
+	                type: "line",
+	                source: {
+	                    type: "geojson",
+	                    data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/lineaire_PMR.geojson"
+	                },
+			        layout: {
+			            "line-join": "round",
+			            "line-cap": "round"
+			        },
+			        paint: {
+			            "line-color": "red",
+			            "line-width": 2
+			        }
+	                });   
+	        
+	        Layers.push(nomDeLaCouche); 
+            for (var i = 0; i < htmllink.childNodes.length; i++) {
+                if (htmllink.childNodes[i].className == "case") {
+                    notes = htmllink.childNodes[i];
+                    notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
+                    break;
+                }        
             }
-        }
-        if (overlayCount === 0){
-            map.addLayer({
-                id: nomDeLaCouche,
-                type: "circle",
-                source: {
-                    type: "geojson",
-                    data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
-                },
-                filter : [ '==','Categorie',nomDeLaCouche],
-                layout: {'visibility': 'visible'}, 
-                paint: {
-                    "circle-radius": {'base': iconSize[0],'stops': [[iconSize[1],iconSize[2]], [iconSize[3], iconSize[4]]]},
-                    "circle-color" : color,
-                    "circle-opacity":0.9
-                    }
-                });             
-                Layers.push(nomDeLaCouche); 
-                if (htmllink.nodeName == 'LI'){
-                    for (var i = 0; i < htmllink.childNodes.length; i++) {
-                        if (htmllink.childNodes[i].className == "case") {
-                            notes = htmllink.childNodes[i];
-                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
-                            break;
-                        }        
-                    }
-                    htmllink.style.backgroundColor = '#EEEEEE';
-                }
+            htmllink.style.backgroundColor = '#EEEEEE';
 
-                if (htmllink.nodeName == 'A'){
-                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');
-                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
-                }
-
-
-            if (etiquette){
-                overlayEtiquette = map.addLayer({
-                    id: nomDeLaCoucheEtiquette,
-                    type: "symbol",
-                    source: {
-                        type: "geojson",
-                        data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
-                    },
-                    filter : [ '==','Categorie',nomDeLaCouche],
-                    layout: {
-                        "text-field": "{Etiquette}",
-                        "text-anchor": "center",
-                        "text-size":{'base': 1.5,'stops': [[13, 2], [22, 60]]}, 
-                    },
-                    paint: {
-                        "text-color":"white"
-                        },
-                    minzoom:15.5
-                    });
-                
-                Layers.push(nomDeLaCoucheEtiquette); 
-            }   
         } else {
             var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
             if (visibility === 'visible') {
-                if (htmllink.nodeName == 'LI'){
-                    for (var i = 0; i < htmllink.childNodes.length; i++) {
-                        if (htmllink.childNodes[i].className == "case") {
-                            notes = htmllink.childNodes[i];
-                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png')
-                            break;
-                        }        
-                    }
-                    htmllink.style.removeProperty('background-color');
 
+                for (var i = 0; i < htmllink.childNodes.length; i++) {
+                    if (htmllink.childNodes[i].className == "case") {
+                        notes = htmllink.childNodes[i];
+                        notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png')
+                        break;
+                    }        
                 }
-                if (htmllink.nodeName == 'A'){
-                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png');
-                    htmllink.parentElement.style.removeProperty('background-color');
+                htmllink.style.removeProperty('background-color');
 
-                }
                 map.setLayoutProperty(nomDeLaCouche,'visibility','none');
                 Layers = Layers.filter(item => item != nomDeLaCouche);
-                if (popup) {popup.remove();}
                 if (etiquette){
                     map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','none');
-                    Layers = Layers.filter(item => item != nomDeLaCoucheEtiquette);
-                    if (popup) {popup.remove();}    
+                    Layers = Layers.filter(item => item != nomDeLaCoucheEtiquette);   
                 }
             } else {
                 map.setLayoutProperty(nomDeLaCouche,'visibility','visible');
                 Layers.push(nomDeLaCouche);
-                if (htmllink.nodeName == 'LI'){
-                    for (var i = 0; i < htmllink.childNodes.length; i++) {
-                        if (htmllink.childNodes[i].className == "case") {
-                            notes = htmllink.childNodes[i];
-                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
-                            break;
-                        }        
-                    }
-                    htmllink.style.backgroundColor = '#EEEEEE';
-                }
-                if (htmllink.nodeName == 'A'){
-                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');
-                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
-                }
 
-                if (etiquette){
-                    map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','visible')
-                    Layers.push(nomDeLaCoucheEtiquette); 
+                for (var i = 0; i < htmllink.childNodes.length; i++) {
+                    if (htmllink.childNodes[i].className == "case") {
+                        notes = htmllink.childNodes[i];
+                        notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
+                        break;
+                    }        
                 }
+                htmllink.style.backgroundColor = '#EEEEEE';
             }
         };
-            getPopup(contenuPopup,nomDeLaCouche);
-            map.on('mousemove', function (e) {
-                var features = map.queryRenderedFeatures(e.point, { layers: Layers });
-                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
-            });
-        }
+
+        } else {
+
+	        var etiquette = false;
+	        var contenuPopup = infoPopup;
+	        for(var i = 0; i < Etiquette.length; i++){
+	            if (Etiquette[i]==nomDeLaCouche){
+	                etiquette = true;
+	                var nomDeLaCoucheEtiquette = nomDeLaCouche+'etiquette' 
+	            }
+	        }
+	        if (overlayCount === 0){
+	            map.addLayer({
+	                id: nomDeLaCouche,
+	                type: "circle",
+	                source: {
+	                    type: "geojson",
+	                    data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
+	                },
+	                filter : [ '==','Categorie',nomDeLaCouche],
+	                layout: {'visibility': 'visible'}, 
+	                paint: {
+	                    "circle-radius": {'base': iconSize[0],'stops': [[iconSize[1],iconSize[2]], [iconSize[3], iconSize[4]]]},
+	                    "circle-color" : color,
+	                    "circle-opacity":0.9
+	                    }
+	                });             
+	                Layers.push(nomDeLaCouche); 
+	                if (htmllink.nodeName == 'LI'){
+	                    for (var i = 0; i < htmllink.childNodes.length; i++) {
+	                        if (htmllink.childNodes[i].className == "case") {
+	                            notes = htmllink.childNodes[i];
+	                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
+	                            break;
+	                        }        
+	                    }
+	                    htmllink.style.backgroundColor = '#EEEEEE';
+	                }
+
+	                if (htmllink.nodeName == 'A'){
+	                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');
+	                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
+	                }
+
+
+	            if (etiquette){
+	                overlayEtiquette = map.addLayer({
+	                    id: nomDeLaCoucheEtiquette,
+	                    type: "symbol",
+	                    source: {
+	                        type: "geojson",
+	                        data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
+	                    },
+	                    filter : [ '==','Categorie',nomDeLaCouche],
+	                    layout: {
+	                        "text-field": "{Etiquette}",
+	                        "text-anchor": "center",
+	                        "text-size":{'base': 1.5,'stops': [[13, 2], [22, 60]]}, 
+	                    },
+	                    paint: {
+	                        "text-color":"white"
+	                        },
+	                    minzoom:15.5
+	                    });
+	                
+	                Layers.push(nomDeLaCoucheEtiquette); 
+	            }   
+	        } else {
+	            var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
+	            if (visibility === 'visible') {
+	                if (htmllink.nodeName == 'LI'){
+	                    for (var i = 0; i < htmllink.childNodes.length; i++) {
+	                        if (htmllink.childNodes[i].className == "case") {
+	                            notes = htmllink.childNodes[i];
+	                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png')
+	                            break;
+	                        }        
+	                    }
+	                    htmllink.style.removeProperty('background-color');
+
+	                }
+	                if (htmllink.nodeName == 'A'){
+	                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png');
+	                    htmllink.parentElement.style.removeProperty('background-color');
+
+	                }
+	                map.setLayoutProperty(nomDeLaCouche,'visibility','none');
+	                Layers = Layers.filter(item => item != nomDeLaCouche);
+	                if (popup) {popup.remove();}
+	                if (etiquette){
+	                    map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','none');
+	                    Layers = Layers.filter(item => item != nomDeLaCoucheEtiquette);
+	                    if (popup) {popup.remove();}    
+	                }
+	            } else {
+	                map.setLayoutProperty(nomDeLaCouche,'visibility','visible');
+	                Layers.push(nomDeLaCouche);
+	                if (htmllink.nodeName == 'LI'){
+	                    for (var i = 0; i < htmllink.childNodes.length; i++) {
+	                        if (htmllink.childNodes[i].className == "case") {
+	                            notes = htmllink.childNodes[i];
+	                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
+	                            break;
+	                        }        
+	                    }
+	                    htmllink.style.backgroundColor = '#EEEEEE';
+
+	                }
+	                if (htmllink.nodeName == 'A'){
+	                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');
+	                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
+	                }
+
+	                if (etiquette){
+	                    map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','visible')
+	                    Layers.push(nomDeLaCoucheEtiquette); 
+	                }
+	            }
+	        };
+	            getPopup(contenuPopup,nomDeLaCouche);
+	            map.on('mousemove', function (e) {
+	                var features = map.queryRenderedFeatures(e.point, { layers: Layers });
+	                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+	            });
+	        }
+    }
 function getPopup(infoPopup,couche){
     map.on('click', function (e) {
         var features = map.queryRenderedFeatures(e.point, { 
@@ -1097,6 +1172,11 @@ map.on("load", function() {
     restoUnivLink.onclick = function(e){
         addCategoryOverlay('Restaurant Universitaire',restoUnivCount,restoUnivColor,restoUnivInfoPopup,restoUnivIconSize,restoUnivLink);
         restoUnivCount += 1;
+    }
+    lineairePMRLink.onclick = function(e){
+        addCategoryOverlay('lineairePMR',lineairePMRCount,lineairePMRColor,lineairePMRInfoPopup,lineairePMRIconSize,lineairePMRLink,lineairePMRType);
+        lineairePMRCount += 1;
+
     }
 });
 //////////////////////////////////// couches temps réel //////////////////////////////////////////////
