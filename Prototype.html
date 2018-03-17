@@ -7,7 +7,34 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Prototype Mapbox GL</title>
-    <!-- API MAPBOX GL-->
+    <style> 
+    .loader{
+	    opacity : 1;
+	    background: url('ajax-loader.gif') 50% 50% no-repeat rgba(255, 255, 255, 0.8);
+	    cursor: wait;
+	    height: 100%;
+	    left: 0;
+	    position: fixed;
+	    top: 0;
+	    width: 100%;
+	    z-index: 999999;
+	}
+	.loader h1{
+	    background: none;
+	    border: none;
+	    color: #458976;
+	    font-size: 22px;
+	    font-family: "Open Sans",sans-serif;
+	    font-variant: small-caps;
+	    font-weight: 700;
+	    height: 700px;
+	    line-height: 700px;
+	    margin: 0 0 10px;
+	    padding: 0;
+	    text-align: center;
+	}
+	</style>    
+	<!-- API MAPBOX GL-->
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css' rel='stylesheet' />
     <!-- CHARGEMENT DES FEUILLES DE STYLE CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">  <!-- TEMPLATE -->
