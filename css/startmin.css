@@ -110,6 +110,7 @@ body {
     border-bottom: 0!important;
 }
 .nav li a {
+    padding-left: 30px;
     padding-top:8px;
     padding-bottom : 8px;
 }
@@ -291,3 +292,10 @@ li:hover {
    background-color: #f2f2f2
 }
 
+a  img {
+	 height : 15px; 
+    position : left;
+    left : 5px;
+    top : 7px;
+    z-index: 1
+}
