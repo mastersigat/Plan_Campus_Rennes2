@@ -192,14 +192,14 @@ a {
 }
 #DDD {
     position : absolute;
-    right : 5px;
-    top:7px;
+    right :505px;
+    top:10px;
     z-index:9999;
 }
 #DDD button {
     background-color : grey;
     border:none;
-    padding:2px;
+    padding:5px;
     padding-left : 10px;
     padding-right: 10px;
     opacity : 0.85;
