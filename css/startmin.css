@@ -238,6 +238,9 @@ a {
     min-width:180px;
     box-shadow: 2px 1px 1px grey;
 }
+mapboxgl.GeolocateControl {
+bottom : 30px
+}
 .mapboxgl-popup-content-wrapper {
   padding:1%;
 }
