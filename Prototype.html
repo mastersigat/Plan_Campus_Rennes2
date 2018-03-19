@@ -9,7 +9,7 @@
     <title>Prototype Mapbox GL</title>
     <style> 
     .loader{
-	    background-fill-opacity : 1;
+	    opacity : 1;
 	    background: url('css/ajax-loader.gif') 50% 50% no-repeat rgba(255, 255, 255, 0.8);
 	    cursor: wait;
 	    height: 100%;
@@ -108,9 +108,18 @@
                     <li>
                         <a href="#">Scolarité et Administration <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/scolarites.png"/><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li id = "UFR">
-                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">UFR</a>
+                            <li id = "Département de formation">
+                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">Département de formation</a>
                             </li>
+                            <li id = "Département de recherche">
+                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">Département de recherche</a>
+                            </li>
+                            <li >
+                                <img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
+                                <a  id = "UFR" href="#">UFR<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertUFR"></ul>
+                            </li>
+            
                         </ul>
                     </li>
                     <li>
@@ -135,7 +144,9 @@
                             <li id = "Caféterias">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Caféterias</a>
                             </li>
-
+                            <li id = "Machines à café">
+                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Machines à café</a>
+                            </li>
                             <li id = "Résidences universitaires">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Résidences universitaires</a>
                             </li>                            
@@ -327,6 +338,26 @@
     var insertSallesSpecifiques = document.getElementById('insertSallesSpecifiques');
     var sallesSpeInfoPopup = ['Nom','Batiment','Niveau'];
     var sallesSpeIconSize = [1.5,13,2,22,60]
+    // Département de formation
+    var formaCount = 0; 
+    var formaLink = document.getElementById('Département de formation');
+    var formaColor = '#ff4000'
+    var formaInfoPopup = ['Nom','Batiment','Niveau','Info'];
+    var formaIconSize = [1.5,13,2,22,60]
+    // Département de recherche
+    var rechCount = 0; 
+    var rechLink = document.getElementById('Département de recherche');
+    var rechColor = '#ff4000'
+    var rechInfoPopup = ['Nom','Batiment','Niveau','Info'];
+    var rechIconSize = [1.5,13,2,22,60]
+    // UFR
+    var UFRCount = 0;
+    var UFRColor = 'blue';
+    var listeUFR = []; // Création dynamique de la liste des salles à partir du jeu de données
+    var UFRLink = document.getElementById('UFR');
+    var insertUFR = document.getElementById('insertUFR');
+    var UFRInfoPopup = ['Nom','Batiment','Niveau'];
+    var UFRIconSize = [1.5,13,2,22,60] 
     // Couche toilettes
     var toilettesCount = 0; // initialisation du compteur de clics
     var toilettesLink = document.getElementById('Toilettes');
@@ -1172,10 +1203,24 @@ map.on("load", function() {
         addCategoryOverlay('Amphithéâtre',amphiCount,amphiColor,amphiInfoPopup,amphiIconSize,amphitheatresLink);
         amphiCount += 1;
     }
-    
+    UFRLink.onclick = function(e){
+        addCategoryOverlay('UFR',UFRCount,UFRColor,UFRInfoPopup,UFRIconSize,UFRLink);
+        if (sallesSpeCount==0){
+            createHTMLList('UFR',listeUFR,insertUFR,UFRCount);
+        }
+        UFRCount += 1;
+    }
     sallesInfoLink.onclick = function(e){
         addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup,sallesInfoIconSize,sallesInfoLink);
         sallesInfoCount += 1;
+    }
+    formaLink.onclick = function(e){
+        addCategoryOverlay('Département de formation',formaCount,formaColor,formaInfoPopup,formaIconSize,formaLink);
+        formaCount += 1;
+    }
+    rechLink.onclick = function(e){
+        addCategoryOverlay('Département de recherche',rechCount,rechColor,rechInfoPopup,rechIconSize,rechLink);
+        rechCount += 1;
     }
     toilettesLink.onclick = function(e){
         addCategoryOverlay('Toilettes',toilettesCount,toilettesColor,toilettesInfoPopup,toilettesIconSize,toilettesLink);
