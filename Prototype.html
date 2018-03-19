@@ -1759,6 +1759,11 @@ map.addControl(new mapboxgl.ScaleControl({
 maxWidth: 120,
 unit: 'metric'}));
 
+var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
+map.addControl(new mapboxgl.ScaleControl({
+maxWidth: 120,
+unit: 'metric'}));
 </script>
 <script>jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });</script>
 
