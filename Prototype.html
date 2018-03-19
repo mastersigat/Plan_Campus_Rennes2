@@ -953,7 +953,14 @@ function getPopup(infoPopup,couche){
                     popupContent += '<p>Contacter par téléphone'+feature.properties.Tel+'</p>';
                 }
             } 
-        }       
+        } 
+	  for(var i = 0; i < infoPopup.length; i++){
+		   if (infoPopup[i]=='Image'){
+		   		if (feature.properties.Image !== "null"){
+                    popupContent += '<img src = \''+ feature.properties.Image+'\'/>'
+                }
+            }
+        } 		  
         popup = new mapboxgl.Popup({ 
             offset: [0, -15],
             closeButton: false
