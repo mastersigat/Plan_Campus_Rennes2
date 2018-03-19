@@ -1759,11 +1759,12 @@ map.addControl(new mapboxgl.ScaleControl({
 maxWidth: 120,
 unit: 'metric'}));
 
-var nav = new mapboxgl.NavigationControl();
-map.addControl(nav, 'top-left');
-map.addControl(new mapboxgl.ScaleControl({
-maxWidth: 120,
-unit: 'metric'}));
+map.addControl(new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true
+}));
 </script>
 <script>jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });</script>
 
