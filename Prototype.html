@@ -22,7 +22,7 @@
 	.loader h1{
 	    background: none;
 	    border: none;
-	    color: #286090;
+	    color: #45739B;
 	    font-size: 22px;
 	    font-family: "Open Sans",sans-serif;
 	    font-variant: small-caps;
@@ -80,7 +80,7 @@
             <!-- Search bar -->  
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
-                    <div class="input-group custom-search-form">
+                    <div id = "searchFieldContainer" class="input-group custom-search-form">
                         <input id= "searchfield" type="text" placeholder="Rechercher..." onkeypress="return runScriptKey(event)">
                             <span class="input-group-btn">
                                 <button class="btn btn-primary" id = "searchButton" type="button" onclick = "return runScriptClic(event)">
@@ -482,6 +482,7 @@
     var lineairePMRInfoPopup = null;
     var lineairePMRIconSize = [1.5,13,2,22,60];
     var lineairePMRType = 'line'    
+
     //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
     
     //Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
@@ -720,9 +721,11 @@ var popupContent = null
                 }        
             }
             htmllink.style.backgroundColor = '#EEEEEE';
+
         } else {
             var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
             if (visibility === 'visible') {
+
                 for (var i = 0; i < htmllink.childNodes.length; i++) {
                     if (htmllink.childNodes[i].className == "case") {
                         notes = htmllink.childNodes[i];
@@ -731,6 +734,7 @@ var popupContent = null
                     }        
                 }
                 htmllink.style.removeProperty('background-color');
+
                 map.setLayoutProperty(nomDeLaCouche,'visibility','none');
                 Layers = Layers.filter(item => item != nomDeLaCouche);
                 if (etiquette){
@@ -740,6 +744,7 @@ var popupContent = null
             } else {
                 map.setLayoutProperty(nomDeLaCouche,'visibility','visible');
                 Layers.push(nomDeLaCouche);
+
                 for (var i = 0; i < htmllink.childNodes.length; i++) {
                     if (htmllink.childNodes[i].className == "case") {
                         notes = htmllink.childNodes[i];
@@ -750,7 +755,9 @@ var popupContent = null
                 htmllink.style.backgroundColor = '#EEEEEE';
             }
         };
+
         } else {
+
 	        var etiquette = false;
 	        var contenuPopup = infoPopup;
 	        for(var i = 0; i < Etiquette.length; i++){
@@ -786,10 +793,13 @@ var popupContent = null
 	                    }
 	                    htmllink.style.backgroundColor = '#EEEEEE';
 	                }
+
 	                if (htmllink.nodeName == 'A'){
 	                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');
 	                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
 	                }
+
+
 	            if (etiquette){
 	                overlayEtiquette = map.addLayer({
 	                    id: nomDeLaCoucheEtiquette,
@@ -824,10 +834,12 @@ var popupContent = null
 	                        }        
 	                    }
 	                    htmllink.style.removeProperty('background-color');
+
 	                }
 	                if (htmllink.nodeName == 'A'){
 	                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png');
 	                    htmllink.parentElement.style.removeProperty('background-color');
+
 	                }
 	                map.setLayoutProperty(nomDeLaCouche,'visibility','none');
 	                Layers = Layers.filter(item => item != nomDeLaCouche);
@@ -849,11 +861,13 @@ var popupContent = null
 	                        }        
 	                    }
 	                    htmllink.style.backgroundColor = '#EEEEEE';
+
 	                }
 	                if (htmllink.nodeName == 'A'){
 	                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');
 	                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
 	                }
+
 	                if (etiquette){
 	                    map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','visible')
 	                    Layers.push(nomDeLaCoucheEtiquette); 
@@ -944,7 +958,11 @@ function getPopup(infoPopup,couche){
 	  	for(var i = 0; i < infoPopup.length; i++){
 		   	if (infoPopup[i]=='Image'){
 		   		if (feature.properties.Image !== "null"){
+		   			if (feature.properties.Categorie == 'Département de formation'){
+                    popupTitle += '<img style = \'height : 60px; position : absolute; right : 0;top:0\' src = \''+ feature.properties.Image+'\'/>'
+		   			} else {
                     popupContent += '<img style = \'height : 60px; left : 50%\' src = \''+ feature.properties.Image+'\'/>'
+                	}
                 }
             }
         } 		  
@@ -1305,6 +1323,7 @@ map.on("load", function() {
     lineairePMRLink.onclick = function(e){
         addCategoryOverlay('lineairePMR',lineairePMRCount,lineairePMRColor,lineairePMRInfoPopup,lineairePMRIconSize,lineairePMRLink,lineairePMRType);
         lineairePMRCount += 1;
+
     }
 });
 //////////////////////////////////// couches temps réel //////////////////////////////////////////////
@@ -1588,9 +1607,7 @@ busLink.onclick = function (e) {
     function getSearchPopup(){
         var popupTitle = searchItem.properties.Nom;
         var popupContent = '';
-        if (searchItem.properties.Image != null  ){
-            popupContent += '<img src = \''+ searchItem.properties.Photo+'\'/>';
-        };
+
         if (searchItem.properties.Batiment != null ){
             popupContent += '<p>Batiment '+searchItem.properties.Batiment;
         };
@@ -1612,6 +1629,13 @@ busLink.onclick = function (e) {
         if (searchItem.properties.Tel != null ){
             popupContent += '<p>Contacter par téléphone : '+searchItem.properties.Tel+'</p>';
         };
+        if (searchItem.properties.Image != null  ){
+        	if (searchItem.properties.Categorie == 'Département de formation'){
+        		popupTitle += '<img style = \'height : 60px ; position : absolute ; right : 0\' src = \''+ searchItem.properties.Image+'\'/>';
+        	} else {
+            popupContent += '<img style = \'height : 50px\' src = \''+ searchItem.properties.Image+'\'/>';
+        	}
+        };
         searchPopup = new mapboxgl.Popup({
             offset:[0,-15],
             closeButton: false
@@ -1620,6 +1644,7 @@ busLink.onclick = function (e) {
         .setHTML('<h1>'+popupTitle+'</h1><p>'+popupContent+'</p>')
             .addTo(map);
     };  
+
     function getSearchedItem(){
         if (searchValue !==null){
                 searchValue = null
@@ -1697,9 +1722,26 @@ busLink.onclick = function (e) {
                     
                     }
                 })
+                var beforeCross = document.getElementById('searchfield');
+                var cross = document.createElement('img');
+                cross.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/cross_searchbar.png');
+                cross.style.height = '15px';
+                cross.style.top = '7px';
+                cross.style.marginLeft = '135px';
+                cross.style.position = 'absolute';
+                cross.style.right = '2px';
+                cross.style.cursor = 'pointer';
+                beforeCross.parentNode.insertBefore(cross,beforeCross.nextSibling);
+                cross.onclick = function(e){
+                	Layers = Layers.filter(item => item != searchLayerId);
+                	map.removeLayer(searchLayerId);
+                	searchPopup.remove();
+                	cross.parentNode.removeChild(cross);
+                }
             }
         }
     }
+
 function runScriptKey(e) {
     if (e.keyCode == 13) {
         getSearchedItem();
@@ -1744,6 +1786,7 @@ map.addControl(nav, 'top-left');
 map.addControl(new mapboxgl.ScaleControl({
 maxWidth: 120,
 unit: 'metric'}));
+
 map.addControl(new mapboxgl.GeolocateControl({
     positionOptions: {
         enableHighAccuracy: true
