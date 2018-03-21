@@ -22,7 +22,7 @@
 	.loader h1{
 	    background: none;
 	    border: none;
-	    color: #286090;
+	    color: #45739B;
 	    font-size: 22px;
 	    font-family: "Open Sans",sans-serif;
 	    font-variant: small-caps;
@@ -80,7 +80,7 @@
             <!-- Search bar -->  
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
-                    <div class="input-group custom-search-form">
+                    <div id = "searchFieldContainer" class="input-group custom-search-form">
                         <input id= "searchfield" type="text" placeholder="Rechercher..." onkeypress="return runScriptKey(event)">
                             <span class="input-group-btn">
                                 <button class="btn btn-primary" id = "searchButton" type="button" onclick = "return runScriptClic(event)">
@@ -958,7 +958,11 @@ function getPopup(infoPopup,couche){
 	  	for(var i = 0; i < infoPopup.length; i++){
 		   	if (infoPopup[i]=='Image'){
 		   		if (feature.properties.Image !== "null"){
+		   			if (feature.properties.Categorie == 'Département de formation'){
+                    popupTitle += '<img style = \'height : 60px; position : absolute; right : 0;top:0\' src = \''+ feature.properties.Image+'\'/>'
+		   			} else {
                     popupContent += '<img style = \'height : 60px; left : 50%\' src = \''+ feature.properties.Image+'\'/>'
+                	}
                 }
             }
         } 		  
@@ -1635,6 +1639,7 @@ busLink.onclick = function (e) {
         .setHTML('<h1>'+popupTitle+'</h1><p>'+popupContent+'</p>')
             .addTo(map);
     };  
+
     function getSearchedItem(){
         if (searchValue !==null){
                 searchValue = null
@@ -1712,9 +1717,26 @@ busLink.onclick = function (e) {
                     
                     }
                 })
+                var beforeCross = document.getElementById('searchfield');
+                var cross = document.createElement('img');
+                cross.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/cross_searchbar.png');
+                cross.style.height = '15px';
+                cross.style.top = '7px';
+                cross.style.marginLeft = '135px';
+                cross.style.position = 'absolute';
+                cross.style.right = '2px';
+                cross.style.cursor = 'pointer';
+                beforeCross.parentNode.insertBefore(cross,beforeCross.nextSibling);
+                cross.onclick = function(e){
+                	Layers = Layers.filter(item => item != searchLayerId);
+                	map.removeLayer(searchLayerId);
+                	searchPopup.remove();
+                	cross.parentNode.removeChild(cross);
+                }
             }
         }
     }
+
 function runScriptKey(e) {
     if (e.keyCode == 13) {
         getSearchedItem();
