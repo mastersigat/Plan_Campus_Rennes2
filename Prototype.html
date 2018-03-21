@@ -9,29 +9,13 @@
     <title>Prototype Mapbox GL</title>
     <style> 
     .loader{
-	    opacity : 1;
-	    background: url('css/ajax-loader.gif') 50% 50% no-repeat rgba(255, 255, 255, 0.8);
-	    cursor: wait;
-	    height: 100%;
-	    left: 0;
-	    position: fixed;
-	    top: 0;
-	    width: 100%;
-	    z-index: 999999;
+	    background-color : white;cursor: wait;height: 100%;left: 0;position: fixed;top: 0;width: 100%;z-index: 999999;
 	}
+    #loader-img{
+	    position:absolute;left: 50%;top: 50%;width: 30px;height: 30px;margin-left: -15px; margin-top: -15px; 
+    }
 	.loader h1{
-	    background: none;
-	    border: none;
-	    color: #45739B;
-	    font-size: 22px;
-	    font-family: "Open Sans",sans-serif;
-	    font-variant: small-caps;
-	    font-weight: 700;
-	    height: 700px;
-	    line-height: 700px;
-	    margin: 0 0 10px;
-	    padding: 0;
-	    text-align: center;
+	    position : absolute;background: none;border: none;color: #45739B;font-size: 15px;top:60%;left : 50%;font-family: "Open Sans",sans-serif;font-variant: small-caps;font-weight: 700;height: 30px;width: 200px;margin-top : -15px;margin-left : -100px;text-align: center;
 	}
 	</style>    
 	<!-- API MAPBOX GL-->
@@ -63,7 +47,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="js/startmin.js"></script>
 <!-- LOADER -->
-<div class = "loader"><h1>Chargement de la page</h1></div>
+<div class = "loader"><center><img id = "loader-img" src = 'css/ajax-loader.gif'><h1>Chargement de la page</h1></center></div>
 <div id="wrapper">
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
@@ -257,6 +241,7 @@
             </div>
             <div id="map" style="position:relative;margin-top:50px;margin-right:0;margin-left:0;margin-bottom:0;padding-right : 0;padding-left : 0; padding-top:0;padding-bottom:0;z-index:1;height:90vh">
                 <div id="DDD" class="btn-group">
+                    <button  class="btn btn-primary" id="DDButton">2D</button>
                     <button  class="btn btn-primary" id="DDDButton">3D</button>
                 </div>
                 <div id="campus" class="btn-group">
@@ -951,7 +936,7 @@ function getPopup(infoPopup,couche){
         for(var i = 0; i < infoPopup.length; i++){
             if (infoPopup[i]=='Tel'){
                 if (feature.properties.Tel !== "null"){
-                    popupContent += '<p>Contacter par téléphone'+feature.properties.Tel+'</p>';
+                    popupContent += '<p>Contacter par téléphone : '+feature.properties.Tel+'</p>';
                 }
             } 
         } 
@@ -1209,6 +1194,7 @@ map.on("load", function() {
         maxzoom : 14,
     });
  
+
     
 //////////////////////////////////   OVERLAYS //////////////////////////////////////
     amphitheatresLink.onclick = function(e){
@@ -1644,7 +1630,8 @@ busLink.onclick = function (e) {
         .setHTML('<h1>'+popupTitle+'</h1><p>'+popupContent+'</p>')
             .addTo(map);
     };  
-
+    var cross = null;
+    var searchBarCrossPresence = null;
     function getSearchedItem(){
         if (searchValue !==null){
                 searchValue = null
@@ -1723,21 +1710,25 @@ busLink.onclick = function (e) {
                     }
                 })
                 var beforeCross = document.getElementById('searchfield');
-                var cross = document.createElement('img');
-                cross.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/cross_searchbar.png');
-                cross.style.height = '15px';
-                cross.style.top = '7px';
-                cross.style.marginLeft = '130px';
-                cross.style.position = 'absolute';
-                cross.style.right = '2px';
-                cross.style.cursor = 'pointer';
-                beforeCross.parentNode.insertBefore(cross,beforeCross.nextSibling);
-                cross.onclick = function(e){
-                	Layers = Layers.filter(item => item != searchLayerId);
-                	map.removeLayer(searchLayerId);
-                	searchPopup.remove();
-                	cross.parentNode.removeChild(cross);
-                }
+                if (searchBarCrossPresence == null) {
+                	searchBarCrossPresence = 'yes';
+                	cross = document.createElement('img');
+	                cross.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/cross_searchbar.png');
+	                cross.style.height = '15px';
+	                cross.style.top = '7px';
+	                cross.style.marginLeft = '135px';
+	                cross.style.position = 'absolute';
+	                cross.style.right = '2px';
+	                cross.style.cursor = 'pointer';
+	                beforeCross.parentNode.insertBefore(cross,beforeCross.nextSibling);
+	                cross.onclick = function(e){
+	                	Layers = Layers.filter(item => item != searchLayerId);
+	                	map.removeLayer(searchLayerId);
+	                	searchPopup.remove();
+	                	cross.parentNode.removeChild(cross);
+	                	searchBarCrossPresence = null;
+	                }
+	            }
             }
         }
     }
@@ -1753,32 +1744,54 @@ function runScriptClic(e){
     
     
 //////////////////////////////////   3D   //////////////////////////////////////
-document.getElementById('DDD').addEventListener('click',function(){
+DDButton = document.getElementById('DDButton');
+DDDButton =  document.getElementById('DDDButton');
+DDButton.style.backgroundColor = "#286090"
+DDD = false
+
+DDDButton.addEventListener('click',function(){
     var X = map.getCenter()["lng"];
     var Y = map.getCenter()["lat"];
-    var button = document.getElementById('DDDButton');
+    var currentZoom = map.getZoom()
     if (DDD===false){
+        Y = Y -0.00021;
         getBati3D();
+        zoomCible = currentZoom +0.5;
         map.flyTo({
             center:[X,Y],
-            pitch:55,
-            speed:0.1
+            pitch:60,
+            speed:0.08,
+            zoom:zoomCible
         });
-        button.style.backgroundColor = '#286090';
+        DDDButton.style.backgroundColor = '#286090';
         DDD=true;
         map.dragRotate.enable();
-    } else {
+        DDButton.style.backgroundColor = "grey";
+    }
+})
+DDButton.addEventListener('click',function(){
+    var X = map.getCenter()["lng"];
+    var Y = map.getCenter()["lat"];
+    var currentZoom = map.getZoom()
+    var button = document.getElementById('DDDButton');
+    if (DDD){
+        Y = Y +0.00021;
         getBati2D();
+        zoomCible = currentZoom -0.5;
         map.flyTo({
             center:[X,Y],
             pitch:0,
-            bearing:0,
-            speed:0.1
-        }); 
-        button.style.backgroundColor = 'grey';
-        DDD=false;  
+            speed:0.08,
+            zoom:zoomCible
+        });
         map.dragRotate.disable();
-    }
+
+        DDButton.style.backgroundColor = '#286090';
+        DDD=false;
+
+        map.dragRotate.enable();
+        DDDButton.style.backgroundColor = "grey"
+	}
 })
 //////////////////////////////////   Ajout de l'habillage de la carte //////////////////////////////////////
 var nav = new mapboxgl.NavigationControl();
