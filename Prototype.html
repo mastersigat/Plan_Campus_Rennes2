@@ -241,8 +241,6 @@
             </div>
             <div id="map" style="position:relative;margin-top:50px;margin-right:0;margin-left:0;margin-bottom:0;padding-right : 0;padding-left : 0; padding-top:0;padding-bottom:0;z-index:1;height:90vh">
                 <div id="DDD" class="btn-group">
-                    <button  class="btn btn-primary" id="DDButton">2D</button>
-                    <button  class="btn btn-primary" id="DDDButton">3D</button>
                 </div>
                 <div id="campus" class="btn-group">
                     <button  class="btn btn-primary" id="Villejean">Villejean</button>
@@ -258,7 +256,20 @@
     // Adapter la largeur des raccourcis spatiaux en fonction de l'écran
     var largeurEcran = screen.width
     zoomBase = 15.8;
-    if (largeurEcran < 500){zoomBase = 14.8;}
+    if (largeurEcran < 500){
+    	zoomBase = 14.8;
+    } else {
+    	var Bouton2D = document.createElement('button');
+    	Bouton2D.setAttribute("class","btn btn-primary");
+    	Bouton2D.setAttribute("id","DDButton");
+    	Bouton2D.innerHTML = '2D';
+    	var Bouton3D = document.createElement('button');
+    	Bouton3D.setAttribute("class","btn btn-primary");
+    	Bouton3D.setAttribute("id","DDDButton");
+    	Bouton3D.innerHTML = '3D';
+    	document.getElementById("DDD").appendChild(Bouton2D);
+    	document.getElementById("DDD").appendChild(Bouton3D);
+    }
     if (largeurEcran > 1500){zoomBase = 16.1;}
     if (largeurEcran > 1000) {
         document.getElementById('campus').style.width = '40%';
@@ -1177,22 +1188,7 @@ map.on("load", function() {
             'line-width' : {'base': 1.2,'stops': [[13, 0.5], [22, 3]]}
             }
         });
-    //Etiquettes campus
-    map.addLayer({
-        id: "Etiquette Campus",
-        type: "symbol",
-        source: {
-            type: "geojson",
-            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
-        },
-        filter : [ '==','Categorie','Bâtiments'],
-        layout: {
-            "text-field": "{Etiquette}",
-            "text-anchor": "center",
-            "text-size":11
-        },
-        maxzoom : 14,
-    });
+
  
 
     
@@ -1716,7 +1712,7 @@ busLink.onclick = function (e) {
 	                cross.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/cross_searchbar.png');
 	                cross.style.height = '15px';
 	                cross.style.top = '7px';
-	                cross.style.marginLeft = '135px';
+	                cross.style.marginLeft = '128px';
 	                cross.style.position = 'absolute';
 	                cross.style.right = '2px';
 	                cross.style.cursor = 'pointer';
