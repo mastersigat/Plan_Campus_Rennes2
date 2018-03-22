@@ -256,19 +256,32 @@
     // Adapter la largeur des raccourcis spatiaux en fonction de l'écran
     var largeurEcran = screen.width
     zoomBase = 15.8;
+
+    var BoutonsD = document.getElementById("DDD")
+	var Bouton2D = document.createElement('button');
+	Bouton2D.setAttribute("class","btn btn-primary");
+	Bouton2D.setAttribute("id","DDButton");
+	Bouton2D.innerHTML = '2D';
+	var Bouton3D = document.createElement('button');
+	Bouton3D.setAttribute("class","btn btn-primary");
+	Bouton3D.setAttribute("id","DDDButton");
+	Bouton3D.innerHTML = '3D';
+	
+
     if (largeurEcran < 500){
     	zoomBase = 14.8;
+    	BoutonsD.style.position = 'absolute';
+    	BoutonsD.style.height = '50px';
+    	BoutonsD.style.width = '100px';
+    	BoutonsD.style.top = '95%';
+    	BoutonsD.style.left = '50%';
+    	BoutonsD.style.marginTop = '-25px';
+    	BoutonsD.style.marginLeft = '-50px';
+    	BoutonsD.appendChild(Bouton2D);
+    	BoutonsD.appendChild(Bouton3D);
     } else {
-    	var Bouton2D = document.createElement('button');
-    	Bouton2D.setAttribute("class","btn btn-primary");
-    	Bouton2D.setAttribute("id","DDButton");
-    	Bouton2D.innerHTML = '2D';
-    	var Bouton3D = document.createElement('button');
-    	Bouton3D.setAttribute("class","btn btn-primary");
-    	Bouton3D.setAttribute("id","DDDButton");
-    	Bouton3D.innerHTML = '3D';
-    	document.getElementById("DDD").appendChild(Bouton2D);
-    	document.getElementById("DDD").appendChild(Bouton3D);
+    	BoutonsD.appendChild(Bouton2D);
+    	BoutonsD.appendChild(Bouton3D);
     }
     if (largeurEcran > 1500){zoomBase = 16.1;}
     if (largeurEcran > 1000) {
@@ -297,7 +310,8 @@
         zoom: zoomBase,
         minZoom:13, // zoom minimal
         pitch : 0, // inclinaison de base
-        maxBounds: rennesBounds // starting zoom
+        maxBounds: rennesBounds,
+        attributionControl : false // starting zoom
     });
     map.dragRotate.disable(); // vue 2D de base 
    
@@ -681,7 +695,7 @@ var popupContent = null
             layout: {
                 "text-field": "{name}",
                 "text-anchor": "center",
-                "text-size":{'base': 1.4,'stops': [[13, 2], [22, 60]]}
+                "text-size":{'base': 1.2,'stops': [[13, 2.5], [22, 60]]}
             },
             minzoom : 14,
             });
@@ -1802,6 +1816,44 @@ map.addControl(new mapboxgl.GeolocateControl({
     },
     trackUserLocation: true
 }));
+
+attributionContainer = document.createElement('div');
+attributionContainer.style.backgroundColor='white';
+attributionContainer.style.position = 'absolute';
+attributionContainer.style.background = 'rgba(255,255,255, 0.5)';
+attributionContainer.style.bottom = '0';
+attributionContainer.style.right = '0';
+attributionContainer.style.display = 'inline-block';
+attributionContainer.style.zIndex = '9999';
+
+attributionLink1 = document.createElement('a');
+attributionLink1.innerHTML = '© OpenMapTiles '
+attributionLink1.setAttribute("class","attribution");
+attributionLink1.setAttribute('href','https://openmaptiles.org');
+
+attributionLink2 = document.createElement('a');
+attributionLink2.innerHTML = '© OpenStreetMap contributors ';
+attributionLink2.setAttribute("class","attribution");
+attributionLink2.setAttribute('href','http://www.openstreetmap.org/about');
+
+attributionLink3 = document.createElement('a');
+attributionLink3.innerHTML = '© Mapbox GL ';
+attributionLink3.setAttribute("class","attribution");
+attributionLink3.setAttribute('href','https://www.mapbox.com/mapbox-gl-js/api');
+
+attributionLink4 = document.createElement('a');
+attributionLink4.innerHTML = '© Master SIGAT';
+attributionLink4.setAttribute("class","attribution");
+attributionLink4.setAttribute('href','https://esigat.wordpress.com');
+
+var carte = document.getElementById('map');
+carte.appendChild(attributionContainer);
+attributionContainer.appendChild(attributionLink1);
+attributionContainer.appendChild(attributionLink2);
+attributionContainer.appendChild(attributionLink3);
+attributionContainer.appendChild(attributionLink4);
+
+
 </script>
 <script>jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });</script>
 
