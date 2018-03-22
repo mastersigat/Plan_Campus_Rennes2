@@ -106,7 +106,7 @@
                             </li>
             
                         </ul>
-                    </li>
+                    </li>                  
                     <li>
                         <a href="#">Bibliothèques et Culture<img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/biblio.png"/><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -128,9 +128,6 @@
                             </li>
                             <li id = "Caféterias">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Caféterias</a>
-                            </li>
-                            <li id = "Machines à café">
-                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Machines à café</a>
                             </li>
                             <li id = "Résidences universitaires">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Résidences universitaires</a>
@@ -172,7 +169,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Services divers<img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/divers.png"/><span class="fa arrow"></span></a>
+                        <a href="#">Divers<img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/divers.png"/><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level" >
                             <li id = "Toilettes">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Toilettes</a>
@@ -193,9 +190,6 @@
                                 <ul class="nav nav-third-level">
                                     <li id= "Ascenseurs">
                                          <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Ascenseurs</a>
-                                    </li>
-                                     <li id = "Escaliers">
-                                         <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Escaliers</a>
                                     </li>
                                     <li id = "Accès PMR">
                                          <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Accès PMR</a>
@@ -606,7 +600,7 @@
             layout: {
                 "text-field": "{name}",
                 "text-anchor": "center",
-                "text-size":{'base': 1.4,'stops': [[13, 2], [22, 60]]}
+                "text-size":{'base': 1.3,'stops': [[13, 2.2], [22, 60]]},
             },
             minzoom : 14,
         });
@@ -695,7 +689,7 @@ var popupContent = null
             layout: {
                 "text-field": "{name}",
                 "text-anchor": "center",
-                "text-size":{'base': 1.2,'stops': [[13, 2.5], [22, 60]]}
+                "text-size":{'base': 1.3,'stops': [[13, 2.2], [22, 60]]}
             },
             minzoom : 14,
             });
@@ -1275,6 +1269,20 @@ map.on("load", function() {
      associationsbriochinesLink.onclick = function(e){
         addCategoryOverlay('Associations briochines',associationsbriochinesCount,associationsbriochinesColor,associationsbriochinesInfoPopup,associationsbriochinesIconSize,associationsbriochinesLink);
         associationsbriochinesCount += 1;
+ 		for (var i = 0; i < Layers.length; i++) {        
+ 			if (Layers[i] = 'Associations briochines'){
+ 			map.setMaxBounds(mazierBounds);
+	        map.flyTo({
+	            center:[-2.7410000,48.513033],
+	            zoom:16.5,
+	            pitch:45,
+	            speed:0.6
+	        });
+	        zoomMazier.style.backgroundColor = '#286090';
+	        zoomVillejean.style.backgroundColor = 'grey';
+	        zoomLaHarpe.style.backgroundColor = 'grey';
+    		}
+    	}
     }
     associationscasLink.onclick = function(e){
         addCategoryOverlay('Associations culturelles, artistiques et sportives',associationscasCount,associationscasColor,associationscasInfoPopup,associationscasIconSize,associationscasLink);
@@ -1816,43 +1824,43 @@ map.addControl(new mapboxgl.GeolocateControl({
     },
     trackUserLocation: true
 }));
+if (screen.width>700){
+	attributionContainer = document.createElement('div');
+	attributionContainer.style.backgroundColor='white';
+	attributionContainer.style.position = 'absolute';
+	attributionContainer.style.background = 'rgba(255,255,255, 0.5)';
+	attributionContainer.style.bottom = '0';
+	attributionContainer.style.right = '0';
+	attributionContainer.style.display = 'inline-block';
+	attributionContainer.style.zIndex = '9999';
 
-attributionContainer = document.createElement('div');
-attributionContainer.style.backgroundColor='white';
-attributionContainer.style.position = 'absolute';
-attributionContainer.style.background = 'rgba(255,255,255, 0.5)';
-attributionContainer.style.bottom = '0';
-attributionContainer.style.right = '0';
-attributionContainer.style.display = 'inline-block';
-attributionContainer.style.zIndex = '9999';
+	attributionLink1 = document.createElement('a');
+	attributionLink1.innerHTML = '© OpenMapTiles '
+	attributionLink1.setAttribute("class","attribution");
+	attributionLink1.setAttribute('href','https://openmaptiles.org');
 
-attributionLink1 = document.createElement('a');
-attributionLink1.innerHTML = '© OpenMapTiles '
-attributionLink1.setAttribute("class","attribution");
-attributionLink1.setAttribute('href','https://openmaptiles.org');
+	attributionLink2 = document.createElement('a');
+	attributionLink2.innerHTML = '© OpenStreetMap contributors ';
+	attributionLink2.setAttribute("class","attribution");
+	attributionLink2.setAttribute('href','http://www.openstreetmap.org/about');
 
-attributionLink2 = document.createElement('a');
-attributionLink2.innerHTML = '© OpenStreetMap contributors ';
-attributionLink2.setAttribute("class","attribution");
-attributionLink2.setAttribute('href','http://www.openstreetmap.org/about');
+	attributionLink3 = document.createElement('a');
+	attributionLink3.innerHTML = '© Mapbox GL ';
+	attributionLink3.setAttribute("class","attribution");
+	attributionLink3.setAttribute('href','https://www.mapbox.com/mapbox-gl-js/api');
 
-attributionLink3 = document.createElement('a');
-attributionLink3.innerHTML = '© Mapbox GL ';
-attributionLink3.setAttribute("class","attribution");
-attributionLink3.setAttribute('href','https://www.mapbox.com/mapbox-gl-js/api');
+	attributionLink4 = document.createElement('a');
+	attributionLink4.innerHTML = '© Master SIGAT';
+	attributionLink4.setAttribute("class","attribution");
+	attributionLink4.setAttribute('href','https://esigat.wordpress.com');
 
-attributionLink4 = document.createElement('a');
-attributionLink4.innerHTML = '© Master SIGAT';
-attributionLink4.setAttribute("class","attribution");
-attributionLink4.setAttribute('href','https://esigat.wordpress.com');
-
-var carte = document.getElementById('map');
-carte.appendChild(attributionContainer);
-attributionContainer.appendChild(attributionLink1);
-attributionContainer.appendChild(attributionLink2);
-attributionContainer.appendChild(attributionLink3);
-attributionContainer.appendChild(attributionLink4);
-
+	var carte = document.getElementById('map');
+	carte.appendChild(attributionContainer);
+	attributionContainer.appendChild(attributionLink1);
+	attributionContainer.appendChild(attributionLink2);
+	attributionContainer.appendChild(attributionLink3);
+	attributionContainer.appendChild(attributionLink4);
+}
 
 </script>
 <script>jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });</script>
