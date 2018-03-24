@@ -425,6 +425,12 @@
     var associationscasColor = '#FFFF00';
     var associationscasInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationscasIconSize = [1.5,13,2,22,60]
+    // Couche Pole santé
+    var polesanteCount = 0; // initialisation du compteur de clics
+    var polesanteLink = document.getElementById('Pole santé');
+    var polesanteColor = '#FF00D3';
+    var polesanteInfoPopup = ['Nom','Categorie','Batiment','Niveau'];
+    var polesanteIconSize = [1.5,13,2,22,60]
      // Couche Associations de solidarité et de sensibilisation
     var associationssolidariteCount = 0; // initialisation du compteur de clics
     var associationssolidariteLink = document.getElementById('Associations de solidarité et de sensibilisation');
@@ -1411,6 +1417,10 @@ map.on("load", function() {
             createHTMLList('Lieu culturel',listelieuCulturel,insertLieuCulturel,lieuCulturelCount);
         }
         lieuCulturelCount += 1;
+    }
+    polesanteLink.onclick = function(e){
+        addCategoryOverlay('Pole santé',polesanteCount,polesanteColor,polesanteInfoPopup,polesanteIconSize,polesanteLink);
+        polesanteCount += 1;
     }
     equipementSportifLink.onclick = function(e){
         addCategoryOverlay('Equipement sportif',equipementSportifCount,equipementSportifColor,equipementSportifInfoPopup,equipementSportifIconSize,equipementSportifLink);
