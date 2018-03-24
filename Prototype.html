@@ -1967,15 +1967,15 @@ busLink.onclick = function (e) {
 				                "icon-image": searchLayerId+'image',
 				                "icon-size":{'base': taillePicto[0],'stops': [[taillePicto[1],taillePicto[2]], [taillePicto[3], taillePicto[4]]]},
 				                "icon-allow-overlap": true,
-				            },
-				            "paint": {
-				          		"icon-translate":{ stops: [
-           							[13, [0, -5]],
-						            [22, [0, -40]]
+				                "icon-offset":{ stops: [
+           							[13, [0, -15]],
+						            [22, [0, -60]]
 						        ]}
-				            }
+				            },
 				        });
 				    });
+
+
                 Layers.push(searchLayerId);
                 map.on('mousemove', function (e) {
                     var features = map.queryRenderedFeatures(e.point, { layers: Layers });
