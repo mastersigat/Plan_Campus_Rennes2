@@ -518,7 +518,12 @@
     var restoUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var restoUnivIconSize = [1.5,13,2,22,60];
     var restoUnivURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/restauu_marker.png';
-
+    // Couche Pole santé
+    var polesanteCount = 0; // initialisation du compteur de clics
+    var polesanteLink = document.getElementById('Pole santé');
+    var polesanteColor = '#FF00D3';
+    var polesanteInfoPopup = ['Nom','Categorie','Batiment','Niveau'];
+    var polesanteIconSize = [1.5,13,2,22,60]
        // Lineaire PMR
     var lineairePMRCount = 0; // initialisation du compteur de clics
     var lineairePMRLink = document.getElementById("Cheminements accessibles");
@@ -526,7 +531,12 @@
     var lineairePMRInfoPopup = null;
     var lineairePMRIconSize = [1.5,13,2,22,60];
     var lineairePMRType = 'line'    
-
+    // Couche Accès PMR
+    var accesPMRCount = 0; // initialisation du compteur de clics
+    var accesPMRLink = document.getElementById('Accès PMR');
+    var accesPMRColor = '#138fad';
+    var accesPMRInfoPopup = ['Categorie'];
+    var accesPMRIconSize = [1.5,13,2,22,60]
     //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
     
     //Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
@@ -1613,6 +1623,14 @@ map.on("load", function() {
         lineairePMRCount += 1;
 
     }
+    polesanteLink.onclick = function(e){
+        addCategoryOverlay('Pole santé',polesanteCount,polesanteColor,polesanteInfoPopup,polesanteIconSize,polesanteLink);
+        polesanteCount += 1;
+    }
+    accesPMRLink.onclick = function(e){
+        addCategoryOverlay('Accès PMR',accesPMRCount,accesPMRColor,accesPMRInfoPopup,accesPMRIconSize,accesPMRLink);
+        accesPMRCount += 1;
+    }    
 });
 //////////////////////////////////// couches temps réel //////////////////////////////////////////////
 // Velostar 
