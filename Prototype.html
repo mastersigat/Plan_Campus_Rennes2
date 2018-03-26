@@ -9,29 +9,13 @@
     <title>Prototype Mapbox GL</title>
     <style> 
     .loader{
-	    opacity : 1;
-	    background: url('css/ajax-loader.gif') 50% 50% no-repeat rgba(255, 255, 255, 0.8);
-	    cursor: wait;
-	    height: 100%;
-	    left: 0;
-	    position: fixed;
-	    top: 0;
-	    width: 100%;
-	    z-index: 999999;
+	    background-color : white;cursor: wait;height: 100%;left: 0;position: fixed;top: 0;width: 100%;z-index: 999999;
 	}
+    #loader-img{
+	    position:absolute;left: 50%;top: 50%;width: 30px;height: 30px;margin-left: -15px; margin-top: -15px; 
+    }
 	.loader h1{
-	    background: none;
-	    border: none;
-	    color: #458976;
-	    font-size: 22px;
-	    font-family: "Open Sans",sans-serif;
-	    font-variant: small-caps;
-	    font-weight: 700;
-	    height: 700px;
-	    line-height: 700px;
-	    margin: 0 0 10px;
-	    padding: 0;
-	    text-align: center;
+	    position : absolute;background: none;border: none;color: #45739B;font-size: 15px;top:60%;left : 50%;font-family: "Open Sans",sans-serif;font-variant: small-caps;font-weight: 700;height: 30px;width: 200px;margin-top : -15px;margin-left : -100px;text-align: center;
 	}
 	</style>    
 	<!-- API MAPBOX GL-->
@@ -47,6 +31,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 <body>
 <!-- MAPBOX GL -->
@@ -62,7 +47,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="js/startmin.js"></script>
 <!-- LOADER -->
-<div class = "loader"><h1>Chargement de la page</h1></div>
+<div class = "loader"><center><img id = "loader-img" src = 'css/ajax-loader.gif'><h1>Chargement de la page</h1></center></div>
 <div id="wrapper">
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
@@ -79,7 +64,7 @@
             <!-- Search bar -->  
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
-                    <div class="input-group custom-search-form">
+                    <div id = "searchFieldContainer" class="input-group custom-search-form">
                         <input id= "searchfield" type="text" placeholder="Rechercher..." onkeypress="return runScriptKey(event)">
                             <span class="input-group-btn">
                                 <button class="btn btn-primary" id = "searchButton" type="button" onclick = "return runScriptClic(event)">
@@ -121,7 +106,7 @@
                             </li>
             
                         </ul>
-                    </li>
+                    </li>                  
                     <li>
                         <a href="#">Bibliothèques et Culture<img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/biblio.png"/><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -143,9 +128,6 @@
                             </li>
                             <li id = "Caféterias">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Caféterias</a>
-                            </li>
-                            <li id = "Machines à café">
-                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Machines à café</a>
                             </li>
                             <li id = "Résidences universitaires">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Résidences universitaires</a>
@@ -187,7 +169,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Services divers<img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/divers.png"/><span class="fa arrow"></span></a>
+                        <a href="#">Divers<img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/divers.png"/><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level" >
                             <li id = "Toilettes">
                                  <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Toilettes</a>
@@ -208,9 +190,6 @@
                                 <ul class="nav nav-third-level">
                                     <li id= "Ascenseurs">
                                          <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Ascenseurs</a>
-                                    </li>
-                                    <li id = "Escaliers">
-                                         <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Escaliers</a>
                                     </li>
                                     <li id = "Accès PMR">
                                          <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Accès PMR</a>
@@ -256,7 +235,6 @@
             </div>
             <div id="map" style="position:relative;margin-top:50px;margin-right:0;margin-left:0;margin-bottom:0;padding-right : 0;padding-left : 0; padding-top:0;padding-bottom:0;z-index:1;height:90vh">
                 <div id="DDD" class="btn-group">
-                    <button  class="btn btn-primary" id="DDDButton">3D</button>
                 </div>
                 <div id="campus" class="btn-group">
                     <button  class="btn btn-primary" id="Villejean">Villejean</button>
@@ -272,9 +250,35 @@
     // Adapter la largeur des raccourcis spatiaux en fonction de l'écran
     var largeurEcran = screen.width
     zoomBase = 15.8;
-    if (largeurEcran < 500){zoomBase = 14.8;}
+
+    var BoutonsD = document.getElementById("DDD")
+	var Bouton2D = document.createElement('button');
+	Bouton2D.setAttribute("class","btn btn-primary");
+	Bouton2D.setAttribute("id","DDButton");
+	Bouton2D.innerHTML = '2D';
+	var Bouton3D = document.createElement('button');
+	Bouton3D.setAttribute("class","btn btn-primary");
+	Bouton3D.setAttribute("id","DDDButton");
+	Bouton3D.innerHTML = '3D';
+	
+
+    if (largeurEcran < 500){
+    	zoomBase = 14.8;
+    	BoutonsD.style.position = 'absolute';
+    	BoutonsD.style.height = '50px';
+    	BoutonsD.style.width = '100px';
+    	BoutonsD.style.top = '95%';
+    	BoutonsD.style.left = '50%';
+    	BoutonsD.style.marginTop = '-25px';
+    	BoutonsD.style.marginLeft = '-50px';
+    	BoutonsD.appendChild(Bouton2D);
+    	BoutonsD.appendChild(Bouton3D);
+    } else {
+    	BoutonsD.appendChild(Bouton2D);
+    	BoutonsD.appendChild(Bouton3D);
+    }
     if (largeurEcran > 1500){zoomBase = 16.1;}
-    if (largeurEcran > 1000) {
+    if (largeurEcran > 1000) {https://github.com/Xueimuohtreb/Plan-interactif/upload/master/icons/iconfond
         document.getElementById('campus').style.width = '40%';
         document.getElementById('Villejean').style.width= '33%';
         document.getElementById('LaHarpe').style.width= '33%';
@@ -300,7 +304,8 @@
         zoom: zoomBase,
         minZoom:13, // zoom minimal
         pitch : 0, // inclinaison de base
-        maxBounds: rennesBounds // starting zoom
+        maxBounds: rennesBounds,
+        attributionControl : false // starting zoom
     });
     map.dragRotate.disable(); // vue 2D de base 
    
@@ -316,20 +321,23 @@
     var salleRY = null;
     
     // AJOUT DES VARIABLES OVERLAY
-    
+    // Taille picto:
+    taillePicto = [1,13,0.1,25,1.5]
+
     // Couche amphithéâtres
     var amphiCount = 0; // initialisation du compteur 
     var amphitheatresLink = document.getElementById('Amphithéâtres'); // Recherche de la balise html liée à la couche
     var amphiColor = '#003399'; // couleur de la couche
     Etiquette.push('Amphithéâtre'); // Ajout des etiquettes
     var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite']; // Données ajoutées dans la popup
-    var amphiIconSize = [1.5,13,2,22,60]    
+    var amphiIconSize = [1.5,13,2,22,60] ;
+    var amphiURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/amphi_marker.png';   
     // Couche salles informatique
     var sallesInfoCount = 0; 
     var sallesInfoLink = document.getElementById('Salles informatique');
     var sallesInfoColor = '#ff4000'
     var sallesInfoInfoPopup = ['Nom','Batiment','Niveau','Capacite','Info'];
-    var sallesInfoIconSize = [1.5,13,2,22,60]
+    var sallesInfoURL =  'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/salle_info_marker.png';
     // Couche salles spécifiques
     var sallesSpeCount = 0;
     var sallesSpeColor = 'blue';
@@ -337,19 +345,24 @@
     var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
     var insertSallesSpecifiques = document.getElementById('insertSallesSpecifiques');
     var sallesSpeInfoPopup = ['Nom','Batiment','Niveau'];
-    var sallesSpeIconSize = [1.5,13,2,22,60]
+    var sallesSpeIconSize = [1.5,13,2,22,60];
+    var sallesSpeURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sallespe_marker.png' ;  
+
     // Département de formation
     var formaCount = 0; 
     var formaLink = document.getElementById('Département de formation');
-    var formaColor = '#ff4000'
-    var formaInfoPopup = ['Nom','Batiment','Niveau','Info'];
+    var formaColor = '#F5A9A9'
+    var formaInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var formaIconSize = [1.5,13,2,22,60]
+    var formaURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/formation_marker.png';   
+
     // Département de recherche
     var rechCount = 0; 
     var rechLink = document.getElementById('Département de recherche');
     var rechColor = '#ff4000'
-    var rechInfoPopup = ['Nom','Batiment','Niveau','Info'];
+    var rechInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var rechIconSize = [1.5,13,2,22,60]
+    var rechURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/recherche_marker.png';
     // UFR
     var UFRCount = 0;
     var UFRColor = 'blue';
@@ -357,25 +370,33 @@
     var UFRLink = document.getElementById('UFR');
     var insertUFR = document.getElementById('insertUFR');
     var UFRInfoPopup = ['Nom','Batiment','Niveau'];
-    var UFRIconSize = [1.5,13,2,22,60] 
+    var UFRIconSize = [1.5,13,2,22,60];
+    var UFRURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
+ 
     // Couche toilettes
     var toilettesCount = 0; // initialisation du compteur de clics
     var toilettesLink = document.getElementById('Toilettes');
     var toilettesColor = 'green';
     var toilettesInfoPopup = ['Categorie','Batiment','Niveau','Info'];
-    var toilettesIconSize = [1.5,13,2,22,60]
+    var toilettesIconSize = [1.5,13,2,22,60];
+    var toilettesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/wc_marker.png';
+   
     // Couche copieurs
     var copieurCount = 0; // initialisation du compteur de clics
     var copieurLink = document.getElementById('Copieurs');
     var copieurColor = 'purple';
     var copieursInfoPopup = ['Categorie','Batiment','Niveau','Info'];
-    var copieursIconSize = [1.5,13,2,22,60]
+    var copieursIconSize = [1.5,13,2,22,60];
+    var copieursURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/copieur_marker.png';
+
     // Couche équipements sportifs
     var equipementSportifCount = 0; // initialisation du compteur de clics
     var equipementSportifLink = document.getElementById('Equipements sportifs');
     var equipementSportifColor = 'black';
     var equipementSportifInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info'];
-    var equipementSportifIconSize = [1.5,13,2,22,60]
+    var equipementSportifIconSize = [1.5,13,2,22,60];
+    var equipementSportifURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sport_marker.png';
+
     // Couche Lieu culturel
     var lieuCulturelCount = 0; // initialisation du compteur de clics
     var lieuCulturelLink = document.getElementById('Lieu culturel');
@@ -383,61 +404,79 @@
     var lieuCulturelColor = 'black';
     var lieuCulturelInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Capacite','Mail','Tel','Lien'];
     var insertLieuCulturel = document.getElementById('insertLieuCulturel');
-    var lieuCulturelIconSize = [1.5,13,2,22,60]
+    var lieuCulturelIconSize = [1.5,13,2,22,60];
+    var lieuCulturelURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/culture_marker.png';
+
+
     // Couche espace détente
     var espaceDetenteCount = 0; // initialisation du compteur de clics
     var espaceDetenteLink = document.getElementById('Espace détente');
     var espaceDetenteColor = 'yellow';
     var espaceDetenteInfoPopup = ['Categorie','Batiment','Niveau','Info'];
-    var espaceDetenteIconSize = [1.5,13,2,22,60]
+    var espaceDetenteIconSize = [1.5,13,2,22,60];
+
     // Couche cafeterias
     var cafeteriasCount = 0; // initialisation du compteur de clics
     var cafeteriasLink = document.getElementById('Caféterias');
     var cafeteriasColor = 'brown';
     var cafeteriasInfoPopup = ['Categorie','Batiment','Niveau','Info'];
-    var cafeteriasIconSize = [1.5,13,2,22,60]
+    var cafeteriasIconSize = [1.5,13,2,22,60];
+    var cafeteriasURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/cafeteria_marker.png';
+
     // Couche Associations de filières
     var associationsfilieresCount = 0; // initialisation du compteur de clics
     var associationsfilieresLink = document.getElementById('Associations de filières');
     var associationsfilieresColor = 'silver';
     var associationsfilieresInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationsfilieresIconSize = [1.5,13,2,22,60]
+    var associationsfilieresIconSize = [1.5,13,2,22,60];
+    var associationsfilieresURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker.png';
+
      // Couche Associations de Masters et Doctorats
     var associationsmasterCount = 0; // initialisation du compteur de clics
     var associationsmasterLink = document.getElementById('Associations de Masters et Doctorats');
-    var associationsmasterColor = 'silver';
+    var associationsmasterColor = '#A5DF00';
     var associationsmasterInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationsmasterIconSize = [1.5,13,2,22,60]
+    var associationsmasterIconSize = [1.5,13,2,22,60];
+    var associationsmasterURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker2.png';
+
     // Couche Associations briochines
     var associationsbriochinesCount = 0; // initialisation du compteur de clics
     var associationsbriochinesLink = document.getElementById('Associations briochines');
     var associationsbriochinesColor = 'silver';
     var associationsbriochinesInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationsbriochinesIconSize = [1.5,13,2,22,60]
+    var associationsbriochinesIconSize = [1.5,13,2,22,60];
+    var associationsbriochinesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker3.png';
+
         // Couche Associations culturelles, artistiques et sportives
     var associationscasCount = 0; // initialisation du compteur de clics
     var associationscasLink = document.getElementById('Associations culturelles, artistiques et sportives');
-    var associationscasColor = 'silver';
+    var associationscasColor = '#FFFF00';
     var associationscasInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationscasIconSize = [1.5,13,2,22,60]
+    var associationscasIconSize = [1.5,13,2,22,60];
+    var associationscasURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker4.png';
+
      // Couche Associations de solidarité et de sensibilisation
     var associationssolidariteCount = 0; // initialisation du compteur de clics
     var associationssolidariteLink = document.getElementById('Associations de solidarité et de sensibilisation');
-    var associationssolidariteColor = 'silver';
+    var associationssolidariteColor = '#00FFFF';
     var associationssolidariteInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationssolidariteIconSize = [1.5,13,2,22,60]
+    var associationssolidariteIconSize = [1.5,13,2,22,60];
+    var associationssolidariteURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker5.png';
+
      // Couche Autres
     var associationsCount = 0; // initialisation du compteur de clics
     var associationsLink = document.getElementById('Autres');
     var associationsColor = 'silver';
     var associationsInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationsIconSize = [1.5,13,2,22,60]
+    var associationsURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker6.png';
+
     // Couche ascenseur
     var ascenseurCount = 0; // initialisation du compteur de clics
     var ascenseurLink = document.getElementById('Ascenseurs');
     var ascenseurColor = '#1da34a';
     var ascenseurInfoPopup = ['Categorie'];
-    var ascenseurIconSize = [1.5,13,2,22,60]
+    var ascenseurIconSize = [1.5,13,2,22,60];
     // Couche parking
     var parkingCount = 0; // initialisation du compteur de clics
     var parkingLink = document.getElementById('Parkings');
@@ -462,18 +501,29 @@
     var bibliothequesColor = 'purple';
     var bibliothequesInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var bibliothequesIconSize = [1.5,13,2,22,60];
+    var bibliothequesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/biblio_marker.png';
+
         // Couche Résidences universitaires
     var resUnivCount = 0; // initialisation du compteur de clics
     var resUnivLink = document.getElementById("Résidences universitaires");
     var resUnivColor = 'purple';
     var resUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var resUnivIconSize = [1.5,13,2,22,60];
+    var resUnivURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/resuniv_marker.png';
+
         // Couche Restaurants universitaires
     var restoUnivCount = 0; // initialisation du compteur de clics
     var restoUnivLink = document.getElementById("Restaurants universitaires");
     var restoUnivColor = 'purple';
     var restoUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var restoUnivIconSize = [1.5,13,2,22,60];
+    var restoUnivURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/restauu_marker.png';
+    // Couche Pole santé
+    var polesanteCount = 0; // initialisation du compteur de clics
+    var polesanteLink = document.getElementById('Pole santé');
+    var polesanteColor = '#FF00D3';
+    var polesanteInfoPopup = ['Nom','Categorie','Batiment','Niveau'];
+    var polesanteIconSize = [1.5,13,2,22,60]
        // Lineaire PMR
     var lineairePMRCount = 0; // initialisation du compteur de clics
     var lineairePMRLink = document.getElementById("Cheminements accessibles");
@@ -481,7 +531,12 @@
     var lineairePMRInfoPopup = null;
     var lineairePMRIconSize = [1.5,13,2,22,60];
     var lineairePMRType = 'line'    
-
+    // Couche Accès PMR
+    var accesPMRCount = 0; // initialisation du compteur de clics
+    var accesPMRLink = document.getElementById('Accès PMR');
+    var accesPMRColor = '#138fad';
+    var accesPMRInfoPopup = ['Categorie'];
+    var accesPMRIconSize = [1.5,13,2,22,60]
     //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
     
     //Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
@@ -595,7 +650,7 @@
             layout: {
                 "text-field": "{name}",
                 "text-anchor": "center",
-                "text-size":{'base': 1.4,'stops': [[13, 2], [22, 60]]}
+                "text-size":{'base': 1.3,'stops': [[13, 2.2], [22, 60]]},
             },
             minzoom : 14,
         });
@@ -684,13 +739,16 @@ var popupContent = null
             layout: {
                 "text-field": "{name}",
                 "text-anchor": "center",
-                "text-size":{'base': 1.4,'stops': [[13, 2], [22, 60]]}
+                "text-size":{'base': 1.3,'stops': [[13, 2.5], [22, 60]]},
+                "text-max-width":8
             },
             minzoom : 14,
+
             });
         };
     
-   function addCategoryOverlay(nomDeLaCouche,overlayCount,color,infoPopup,iconSize,htmllink,type){
+   function addCategoryOverlay(nomDeLaCouche,overlayCount,color,infoPopup,iconSize,htmllink,type,iconURL){
+        
         if (type=='line'){
         	console.log('yeah');
 	        if (overlayCount === 0){
@@ -766,6 +824,67 @@ var popupContent = null
 	            }
 	        }
 	        if (overlayCount === 0){
+	        	if (iconURL){
+					map.loadImage(iconURL, function(error, image) {
+				        if (error) throw error;
+				        map.addImage(nomDeLaCouche+'image', image);
+				        map.addLayer({
+				            "id": nomDeLaCouche,
+				            "type": "symbol",
+				            "source": {
+				                "type": "geojson",
+				                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
+                				},
+                			"filter" : [ '==','Categorie',nomDeLaCouche],
+				            "layout": {
+				                "icon-image": nomDeLaCouche+'image',
+				                "icon-size":{'base': iconSize[0],'stops': [[iconSize[1],iconSize[2]], [iconSize[3], iconSize[4]]]},
+				                "icon-allow-overlap": true,
+				                "icon-offset":{ stops: [
+           							[13, [0, -30]],
+						            [22, [0, -40]]
+						        ]}
+				            },
+
+				        });
+				    });
+				    Layers.push(nomDeLaCouche);
+
+				    if (etiquette){                
+		                function etiqOverlay(){
+			                overlayEtiquette = map.addLayer({
+			                    id: nomDeLaCoucheEtiquette,
+			                    type: "symbol",
+			                    source: {
+			                        type: "geojson",
+			                        data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
+			                    },
+			                    filter : [ '==','Categorie',nomDeLaCouche],
+			                    layout: {
+			                        "text-field": "{Etiquette}",
+			                        "text-anchor": "center",
+			                        "text-size":{'base': 1.5,'stops': [[13, 8], [22, 50]]}, 
+						            "text-allow-overlap": true,
+						            "text-offset":{ stops: [
+		           							[15, [0, -1.75]],
+								            [22, [0, -1.6]]
+								        ]}
+
+			                    },
+			                    paint: {
+			                        "text-color":"white",
+			                        },
+			                    minzoom:15.5
+			                    });
+			                	map.moveLayer(nomDeLaCouche+'etiquette',0)
+		                }
+		                setTimeout(etiqOverlay,1000);
+		                Layers.push(nomDeLaCoucheEtiquette);
+
+		            }
+
+        		} else {
+
 	            map.addLayer({
 	                id: nomDeLaCouche,
 	                type: "circle",
@@ -780,25 +899,7 @@ var popupContent = null
 	                    "circle-color" : color,
 	                    "circle-opacity":0.9
 	                    }
-	                });             
-	                Layers.push(nomDeLaCouche); 
-	                if (htmllink.nodeName == 'LI'){
-	                    for (var i = 0; i < htmllink.childNodes.length; i++) {
-	                        if (htmllink.childNodes[i].className == "case") {
-	                            notes = htmllink.childNodes[i];
-	                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
-	                            break;
-	                        }        
-	                    }
-	                    htmllink.style.backgroundColor = '#EEEEEE';
-	                }
-
-	                if (htmllink.nodeName == 'A'){
-	                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');
-	                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
-	                }
-
-
+	                });   
 	            if (etiquette){
 	                overlayEtiquette = map.addLayer({
 	                    id: nomDeLaCoucheEtiquette,
@@ -820,7 +921,27 @@ var popupContent = null
 	                    });
 	                
 	                Layers.push(nomDeLaCoucheEtiquette); 
-	            }   
+	            	} 
+	            }          
+	                Layers.push(nomDeLaCouche); 
+	                if (htmllink.nodeName == 'LI'){
+	                    for (var i = 0; i < htmllink.childNodes.length; i++) {
+	                        if (htmllink.childNodes[i].className == "case") {
+	                            notes = htmllink.childNodes[i];
+	                            notes.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png')
+	                            break;
+	                        }        
+	                    }
+	                    htmllink.style.backgroundColor = '#EEEEEE';
+	                }
+
+	                if (htmllink.nodeName == 'A'){
+	                    htmllink.previousElementSibling.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png');
+	                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
+	                }
+
+
+  		
 	        } else {
 	            var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
 	            if (visibility === 'visible') {
@@ -850,6 +971,8 @@ var popupContent = null
 	                }
 	            } else {
 	                map.setLayoutProperty(nomDeLaCouche,'visibility','visible');
+
+	                map.moveLayer(nomDeLaCouche,0)
 	                Layers.push(nomDeLaCouche);
 	                if (htmllink.nodeName == 'LI'){
 	                    for (var i = 0; i < htmllink.childNodes.length; i++) {
@@ -869,18 +992,21 @@ var popupContent = null
 
 	                if (etiquette){
 	                    map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','visible')
-	                    Layers.push(nomDeLaCoucheEtiquette); 
+	                    Layers.push(nomDeLaCoucheEtiquette);
+	                    map.moveLayer(nomDeLaCoucheEtiquette,0) 
 	                }
 	            }
 	        };
-	            getPopup(contenuPopup,nomDeLaCouche);
+	            getPopup(contenuPopup,nomDeLaCouche,iconURL);
 	            map.on('mousemove', function (e) {
 	                var features = map.queryRenderedFeatures(e.point, { layers: Layers });
 	                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 	            });
 	        }
-    }
-function getPopup(infoPopup,couche){
+		}
+    
+function getPopup(infoPopup,couche,iconURL){
+	console.log(iconURL);
     map.on('click', function (e) {
         var features = map.queryRenderedFeatures(e.point, { 
             layers: [couche] 
@@ -950,17 +1076,39 @@ function getPopup(infoPopup,couche){
         for(var i = 0; i < infoPopup.length; i++){
             if (infoPopup[i]=='Tel'){
                 if (feature.properties.Tel !== "null"){
-                    popupContent += '<p>Contacter par téléphone'+feature.properties.Tel+'</p>';
+                    popupContent += '<p>Contacter par téléphone : '+feature.properties.Tel+'</p>';
                 }
             } 
-        }       
-        popup = new mapboxgl.Popup({ 
+        } 
+	  	for(var i = 0; i < infoPopup.length; i++){
+		   	if (infoPopup[i]=='Image'){
+		   		if (feature.properties.Image !== "null"){
+		   			if (feature.properties.Categorie == 'Département de formation'){
+                    popupTitle += '<img style = \'height : 60px; position : absolute; right : 0;top:0\' src = \''+ feature.properties.Image+'\'/>'
+		   			} else {
+                    popupContent += '<img style = \'height : 60px; left : 50%\' src = \''+ feature.properties.Image+'\'/>'
+                	}
+                }
+            }
+        } 		  
+        if (iconURL !== undefined){
+        	popup = new mapboxgl.Popup({ 
+            offset: [0,-40],
+            closeButton: false
+        	})
+        	.setLngLat(feature.geometry.coordinates)
+            .setHTML('<h1>'+popupTitle+'</h1>'+popupContent)
+                .addTo(map);
+        } else {
+        	popup = new mapboxgl.Popup({ 
             offset: [0, -15],
             closeButton: false
-        })
-            .setLngLat(feature.geometry.coordinates)
-            .setHTML('<h1>'+popupTitle+'</h1><p>'+popupContent+'</p>')
+        	})
+        	.setLngLat(feature.geometry.coordinates)
+            .setHTML('<h1>'+popupTitle+'</h1>'+popupContent)
                 .addTo(map);
+        }	
+
         }); 
 }
 var salleRecherchee = null
@@ -1025,7 +1173,7 @@ function getSwitchPopup(){
         popupContent += '<p>Contacter par téléphone :'+salleRecherchee.properties.Tel+'</p>';
     }
     popupList = new mapboxgl.Popup({
-        offset:[0,-15],
+        offset:[0,-45],
         closeButton: false
     })
     .setLngLat(salleRecherchee.geometry.coordinates)
@@ -1180,104 +1328,278 @@ map.on("load", function() {
             'line-width' : {'base': 1.2,'stops': [[13, 0.5], [22, 3]]}
             }
         });
-    //Etiquettes campus
+
+     //picto fond de carte
+    //Bibliothèque
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/biblio.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('biblio', image);
+        map.addLayer({
+            "id": "biblio",
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/biblio.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "biblio",
+                "icon-size": 0.90
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Caféteria
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/cafe.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('cafe', image);
+        map.addLayer({
+            "id": "cafeteria",
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/cafeteria.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "cafe",
+                "icon-size": 0.80
+            },
+			minzoom : 16,
+        });
+    });
+	
+    //Restaurant U
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/resto.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('resto', image);
+        map.addLayer({
+            "id": "ru",
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/ru.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "resto",
+                "icon-size": 0.80
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Parking
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/parking.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('parking', image);
+        map.addLayer({
+            "id": "parking",
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/parking.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "parking",
+                "icon-size": 0.50
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Metro
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/metro.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('metro', image);
+        map.addLayer({
+            "id": "metro",
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/station_metro.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "metro",
+                "icon-size": 0.80
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Pôle Sante
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/sante.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('sante', image);
+        map.addLayer({
+            "id": "polesante",
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/polesante.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "sante",
+                "icon-size": 0.80
+            },
+			minzoom : 17,
+        });
+    });
+	
+    //Piscine
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/piscine.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('piscine', image);
+        map.addLayer({
+            "id": "piscine",
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/piscine.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "piscine",
+                "icon-size": 1.00
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Bus
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/bus.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('bus', image);
+        map.addLayer({
+            "id": "bus",
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/bus.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "bus",
+                "icon-size": 0.60
+            },
+			minzoom : 16,
+        });
+    });
+    // Couche piste athletisme
     map.addLayer({
-        id: "Etiquette Campus",
-        type: "symbol",
+        id: "Ligne métro",
+        type: "line",
         source: {
             type: "geojson",
-            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/points.geojson"
+            data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/ligne_métro.geojson"
         },
-        filter : [ '==','Categorie','Bâtiments'],
-        layout: {
-            "text-field": "{Etiquette}",
-            "text-anchor": "center",
-            "text-size":11
-        },
-        maxzoom : 14,
+        paint: {
+            'line-color': 'red',
+            'line-opacity':0.85
+        }
     });
- 
+       
+
+
     
 //////////////////////////////////   OVERLAYS //////////////////////////////////////
     amphitheatresLink.onclick = function(e){
-        addCategoryOverlay('Amphithéâtre',amphiCount,amphiColor,amphiInfoPopup,amphiIconSize,amphitheatresLink);
+        addCategoryOverlay('Amphithéâtre',amphiCount,amphiColor,amphiInfoPopup,taillePicto,amphitheatresLink,'point',amphiURL);
         amphiCount += 1;
     }
     UFRLink.onclick = function(e){
-        addCategoryOverlay('UFR',UFRCount,UFRColor,UFRInfoPopup,UFRIconSize,UFRLink);
+        addCategoryOverlay('UFR',UFRCount,UFRColor,UFRInfoPopup,taillePicto,UFRLink,'point',UFRURL);
         if (sallesSpeCount==0){
             createHTMLList('UFR',listeUFR,insertUFR,UFRCount);
         }
         UFRCount += 1;
     }
     sallesInfoLink.onclick = function(e){
-        addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup,sallesInfoIconSize,sallesInfoLink);
+        addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup,taillePicto,sallesInfoLink,'point',sallesInfoURL);
         sallesInfoCount += 1;
     }
     formaLink.onclick = function(e){
-        addCategoryOverlay('Département de formation',formaCount,formaColor,formaInfoPopup,formaIconSize,formaLink);
+        addCategoryOverlay('Département de formation',formaCount,formaColor,formaInfoPopup,taillePicto,formaLink,'point',formaURL);
         formaCount += 1;
     }
     rechLink.onclick = function(e){
-        addCategoryOverlay('Département de recherche',rechCount,rechColor,rechInfoPopup,rechIconSize,rechLink);
+        addCategoryOverlay('Département de recherche',rechCount,rechColor,rechInfoPopup,taillePicto,rechLink,'point',rechURL);
         rechCount += 1;
     }
     toilettesLink.onclick = function(e){
-        addCategoryOverlay('Toilettes',toilettesCount,toilettesColor,toilettesInfoPopup,toilettesIconSize,toilettesLink);
+        addCategoryOverlay('Toilettes',toilettesCount,toilettesColor,toilettesInfoPopup,taillePicto,toilettesLink,'point',toilettesURL);
         toilettesCount += 1;
     }
     copieurLink.onclick = function(e){
-        addCategoryOverlay('Copieur',copieurCount,copieurColor,copieursInfoPopup,copieursIconSize,copieurLink);
+        addCategoryOverlay('Copieur',copieurCount,copieurColor,copieursInfoPopup,taillePicto,copieurLink,'point',copieursURL);
         copieurCount += 1;
     }
     sallesSpecifiquesLink.onclick = function(e){
-        addCategoryOverlay('Salles spécifiques',sallesSpeCount,sallesSpeColor,sallesSpeInfoPopup,sallesSpeIconSize,sallesSpecifiquesLink);
+        addCategoryOverlay('Salles spécifiques',sallesSpeCount,sallesSpeColor,sallesSpeInfoPopup,taillePicto,sallesSpecifiquesLink,'point',sallesSpeURL);
         if (sallesSpeCount==0){
             createHTMLList('Salles spécifiques',listeSallesSpecifiques,insertSallesSpecifiques,sallesSpeCount);
         }
         sallesSpeCount +=1;
     }
     lieuCulturelLink.onclick = function(e){
-        addCategoryOverlay('Lieu culturel',lieuCulturelCount,lieuCulturelColor,lieuCulturelInfoPopup,lieuCulturelIconSize,lieuCulturelLink);
+        addCategoryOverlay('Lieu culturel',lieuCulturelCount,lieuCulturelColor,lieuCulturelInfoPopup,taillePicto,lieuCulturelLink,'point',lieuCulturelURL);
         if (lieuCulturelCount==0){
             createHTMLList('Lieu culturel',listelieuCulturel,insertLieuCulturel,lieuCulturelCount);
         }
         lieuCulturelCount += 1;
     }
     equipementSportifLink.onclick = function(e){
-        addCategoryOverlay('Equipement sportif',equipementSportifCount,equipementSportifColor,equipementSportifInfoPopup,equipementSportifIconSize,equipementSportifLink);
+        addCategoryOverlay('Equipement sportif',equipementSportifCount,equipementSportifColor,equipementSportifInfoPopup,taillePicto,equipementSportifLink,'point',equipementSportifURL);
         equipementSportifCount += 1;
     }
     espaceDetenteLink.onclick = function(e){
-        addCategoryOverlay('Espace détente',espaceDetenteCount,espaceDetenteColor,espaceDetenteInfoPopup,espaceDetenteIconSize,espaceDetenteLink);
+        addCategoryOverlay('Espace détente',espaceDetenteCount,espaceDetenteColor,espaceDetenteInfoPopup,taillePicto,espaceDetenteLink,'point');
         espaceDetenteCount += 1;
     }
     cafeteriasLink.onclick = function(e){
-        addCategoryOverlay('Cafétéria',cafeteriasCount,cafeteriasColor,cafeteriasInfoPopup,cafeteriasIconSize,cafeteriasLink);
+        addCategoryOverlay('Cafétéria',cafeteriasCount,cafeteriasColor,cafeteriasInfoPopup,taillePicto,cafeteriasLink,'point',cafeteriasURL);
         cafeteriasCount += 1;
     }
     associationsfilieresLink.onclick = function(e){
-        addCategoryOverlay('Associations de filières',associationsfilieresCount,associationsfilieresColor,associationsfilieresInfoPopup,associationsfilieresIconSize,associationsfilieresLink);
+        addCategoryOverlay('Associations de filières',associationsfilieresCount,associationsfilieresColor,associationsfilieresInfoPopup,taillePicto,associationsfilieresLink,'point',associationsfilieresURL);
         associationsfilieresCount += 1;
     }
        associationsmasterLink.onclick = function(e){
-        addCategoryOverlay('Associations de Masters et Doctorats',associationsmasterCount,associationsmasterColor,associationsmasterInfoPopup,associationsmasterIconSize,associationsmasterLink);
+        addCategoryOverlay('Associations de Masters et Doctorats',associationsmasterCount,associationsmasterColor,associationsmasterInfoPopup,taillePicto,associationsmasterLink,'point',associationsmasterURL);
         associationsmasterCount += 1;
     }
      associationsbriochinesLink.onclick = function(e){
-        addCategoryOverlay('Associations briochines',associationsbriochinesCount,associationsbriochinesColor,associationsbriochinesInfoPopup,associationsbriochinesIconSize,associationsbriochinesLink);
+        addCategoryOverlay('Associations briochines',associationsbriochinesCount,associationsbriochinesColor,associationsbriochinesInfoPopup,taillePicto,associationsbriochinesLink,'point',associationsbriochinesURL);
         associationsbriochinesCount += 1;
+ 		for (var i = 0; i < Layers.length; i++) {        
+ 			if (Layers[i] = 'Associations briochines'){
+ 			map.setMaxBounds(mazierBounds);
+	        map.flyTo({
+	            center:[-2.7410000,48.513033],
+	            zoom:16.5,
+	            pitch:45,
+	            speed:0.6
+	        });
+	        zoomMazier.style.backgroundColor = '#286090';
+	        zoomVillejean.style.backgroundColor = 'grey';
+	        zoomLaHarpe.style.backgroundColor = 'grey';
+    		}
+    	}
     }
     associationscasLink.onclick = function(e){
-        addCategoryOverlay('Associations culturelles, artistiques et sportives',associationscasCount,associationscasColor,associationscasInfoPopup,associationscasIconSize,associationscasLink);
+        addCategoryOverlay('Associations culturelles, artistiques et sportives',associationscasCount,associationscasColor,associationscasInfoPopup,taillePicto,associationscasLink,'point',associationscasURL);
         associationscasCount += 1;
     }
       associationssolidariteLink.onclick = function(e){
-        addCategoryOverlay('Associations de solidarité et de sensibilisation',associationssolidariteCount,associationssolidariteColor,associationssolidariteInfoPopup,associationssolidariteIconSize,associationssolidariteLink);
+        addCategoryOverlay('Associations de solidarité et de sensibilisation',associationssolidariteCount,associationssolidariteColor,associationssolidariteInfoPopup,taillePicto,associationssolidariteLink,'point',associationssolidariteURL);
         associationssolidariteCount += 1;
     }
      associationsLink.onclick = function(e){
-        addCategoryOverlay('Autres',associationsCount,associationsColor,associationsInfoPopup,associationsIconSize,associationsLink);
+        addCategoryOverlay('Autres',associationsCount,associationsColor,associationsInfoPopup,taillePicto,associationsLink,'point',associationsURL);
         associationsCount += 1;
     }
     ascenseurLink.onclick = function(e){
@@ -1293,19 +1615,19 @@ map.on("load", function() {
         parkingPMRCount += 1;
     }
     parkingVeloLink.onclick = function(e){
-        addCategoryOverlay('Parking vélo',parkingVeloCount,parkingVeloColor,parkingVeloInfoPopupparkingVeloIconSize,parkingVeloLink);
+        addCategoryOverlay('Parking vélo',parkingVeloCount,parkingVeloColor,parkingVeloInfoPopup,parkingVeloIconSize,parkingVeloLink);
         parkingVeloCount += 1;
     }
     bibliothequesLink.onclick = function(e){
-        addCategoryOverlay('Bibliothèques',bibliothequesCount,bibliothequesColor,bibliothequesInfoPopup,bibliothequesIconSize,bibliothequesLink);
+        addCategoryOverlay('Bibliothèques',bibliothequesCount,bibliothequesColor,bibliothequesInfoPopup,taillePicto,bibliothequesLink,'point',bibliothequesURL);
         bibliothequesCount += 1;
     }
     resUnivLink.onclick = function(e){
-        addCategoryOverlay('Résidence Universitaire',resUnivCount,resUnivColor,resUnivInfoPopup,resUnivIconSize,resUnivLink);
+        addCategoryOverlay('Résidence Universitaire',resUnivCount,resUnivColor,resUnivInfoPopup,taillePicto,resUnivLink,'point',resUnivURL);
         resUnivCount += 1;
     }
     restoUnivLink.onclick = function(e){
-        addCategoryOverlay('Restaurant Universitaire',restoUnivCount,restoUnivColor,restoUnivInfoPopup,restoUnivIconSize,restoUnivLink);
+        addCategoryOverlay('Restaurant Universitaire',restoUnivCount,restoUnivColor,restoUnivInfoPopup,taillePicto,restoUnivLink,'point',restoUnivURL);
         restoUnivCount += 1;
     }
     lineairePMRLink.onclick = function(e){
@@ -1313,6 +1635,14 @@ map.on("load", function() {
         lineairePMRCount += 1;
 
     }
+    polesanteLink.onclick = function(e){
+        addCategoryOverlay('Pole santé',polesanteCount,polesanteColor,polesanteInfoPopup,polesanteIconSize,polesanteLink);
+        polesanteCount += 1;
+    }
+    accesPMRLink.onclick = function(e){
+        addCategoryOverlay('Accès PMR',accesPMRCount,accesPMRColor,accesPMRInfoPopup,accesPMRIconSize,accesPMRLink);
+        accesPMRCount += 1;
+    }    
 });
 //////////////////////////////////// couches temps réel //////////////////////////////////////////////
 // Velostar 
@@ -1595,9 +1925,7 @@ busLink.onclick = function (e) {
     function getSearchPopup(){
         var popupTitle = searchItem.properties.Nom;
         var popupContent = '';
-        if (searchItem.properties.Image != null  ){
-            popupContent += '<img src = \''+ searchItem.properties.Photo+'\'/>';
-        };
+
         if (searchItem.properties.Batiment != null ){
             popupContent += '<p>Batiment '+searchItem.properties.Batiment;
         };
@@ -1619,14 +1947,23 @@ busLink.onclick = function (e) {
         if (searchItem.properties.Tel != null ){
             popupContent += '<p>Contacter par téléphone : '+searchItem.properties.Tel+'</p>';
         };
+        if (searchItem.properties.Image != null  ){
+        	if (searchItem.properties.Categorie == 'Département de formation'){
+        		popupTitle += '<img style = \'height : 60px ; position : absolute ; right : 0\' src = \''+ searchItem.properties.Image+'\'/>';
+        	} else {
+            popupContent += '<img style = \'height : 50px\' src = \''+ searchItem.properties.Image+'\'/>';
+        	}
+        };
         searchPopup = new mapboxgl.Popup({
-            offset:[0,-15],
+            offset:[0,-45],
             closeButton: false
     })
         .setLngLat(searchItem.geometry.coordinates)
         .setHTML('<h1>'+popupTitle+'</h1><p>'+popupContent+'</p>')
             .addTo(map);
     };  
+    var cross = null;
+    var searchBarCrossPresence = null;
     function getSearchedItem(){
         if (searchValue !==null){
                 searchValue = null
@@ -1643,20 +1980,32 @@ busLink.onclick = function (e) {
             for(var i = 0; i < POI.length; i++){
                 if (POI[i].properties.Nom === searchValue){
                     searchItem = POI[i];
-                    map.addLayer({
-                        id: searchLayerId,
-                        type:'circle',
-                        source:{
-                            type:"geojson",
-                            data: searchItem
-                        },
-                        layout:{'visibility':'visible'},
-                        paint:{
-                            "circle-radius": {'base': 1.5,'stops': [[13, 2], [22, 60]]},
-                            "circle-color" :'#FF0000',
-                            "circle-opacity":0.9
-                        }
-                    });
+                    
+
+
+					map.loadImage('https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/recherche.png', function(error, image) {
+				        if (error) throw error;
+				        map.addImage(searchLayerId+'image', image);
+				        map.addLayer({
+				            "id": searchLayerId,
+				            "type": "symbol",
+				            "source": {
+				                "type": "geojson",
+				                "data": searchItem
+                				},
+				            "layout": {
+				                "icon-image": searchLayerId+'image',
+				                "icon-size":{'base': taillePicto[0],'stops': [[taillePicto[1],taillePicto[2]], [taillePicto[3], taillePicto[4]]]},
+				                "icon-allow-overlap": true,
+				                "icon-offset":{ stops: [
+           							[13, [0, -15]],
+						            [22, [0, -60]]
+						        ]}
+				            },
+				        });
+				    });
+
+
                 Layers.push(searchLayerId);
                 map.on('mousemove', function (e) {
                     var features = map.queryRenderedFeatures(e.point, { layers: Layers });
@@ -1704,9 +2053,30 @@ busLink.onclick = function (e) {
                     
                     }
                 })
+                var beforeCross = document.getElementById('searchfield');
+                if (searchBarCrossPresence == null) {
+                	searchBarCrossPresence = 'yes';
+                	cross = document.createElement('img');
+	                cross.setAttribute('src','https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/cross_searchbar.png');
+	                cross.style.height = '15px';
+	                cross.style.top = '7px';
+	                cross.style.marginLeft = '128px';
+	                cross.style.position = 'absolute';
+	                cross.style.right = '2px';
+	                cross.style.cursor = 'pointer';
+	                beforeCross.parentNode.insertBefore(cross,beforeCross.nextSibling);
+	                cross.onclick = function(e){
+	                	Layers = Layers.filter(item => item != searchLayerId);
+	                	map.removeLayer(searchLayerId);
+	                	searchPopup.remove();
+	                	cross.parentNode.removeChild(cross);
+	                	searchBarCrossPresence = null;
+	                }
+	            }
             }
         }
     }
+
 function runScriptKey(e) {
     if (e.keyCode == 13) {
         getSearchedItem();
@@ -1718,32 +2088,54 @@ function runScriptClic(e){
     
     
 //////////////////////////////////   3D   //////////////////////////////////////
-document.getElementById('DDD').addEventListener('click',function(){
+DDButton = document.getElementById('DDButton');
+DDDButton =  document.getElementById('DDDButton');
+DDButton.style.backgroundColor = "#286090"
+DDD = false
+
+DDDButton.addEventListener('click',function(){
     var X = map.getCenter()["lng"];
     var Y = map.getCenter()["lat"];
-    var button = document.getElementById('DDDButton');
+    var currentZoom = map.getZoom()
     if (DDD===false){
+        Y = Y -0.00021;
         getBati3D();
+        zoomCible = currentZoom +0.5;
         map.flyTo({
             center:[X,Y],
-            pitch:45,
-            speed:0.1
+            pitch:60,
+            speed:0.08,
+            zoom:zoomCible
         });
-        button.style.backgroundColor = '#286090';
+        DDDButton.style.backgroundColor = '#286090';
         DDD=true;
         map.dragRotate.enable();
-    } else {
+        DDButton.style.backgroundColor = "grey";
+    }
+})
+DDButton.addEventListener('click',function(){
+    var X = map.getCenter()["lng"];
+    var Y = map.getCenter()["lat"];
+    var currentZoom = map.getZoom()
+    var button = document.getElementById('DDDButton');
+    if (DDD){
+        Y = Y +0.00021;
         getBati2D();
+        zoomCible = currentZoom -0.5;
         map.flyTo({
             center:[X,Y],
             pitch:0,
-            bearing:0,
-            speed:0.1
-        }); 
-        button.style.backgroundColor = 'grey';
-        DDD=false;  
+            speed:0.08,
+            zoom:zoomCible
+        });
         map.dragRotate.disable();
-    }
+
+        DDButton.style.backgroundColor = '#286090';
+        DDD=false;
+
+        map.dragRotate.enable();
+        DDDButton.style.backgroundColor = "grey"
+	}
 })
 //////////////////////////////////   Ajout de l'habillage de la carte //////////////////////////////////////
 var nav = new mapboxgl.NavigationControl();
@@ -1751,6 +2143,50 @@ map.addControl(nav, 'top-left');
 map.addControl(new mapboxgl.ScaleControl({
 maxWidth: 120,
 unit: 'metric'}));
+
+map.addControl(new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true
+}));
+if (screen.width>700){
+	attributionContainer = document.createElement('div');
+	attributionContainer.style.backgroundColor='white';
+	attributionContainer.style.position = 'absolute';
+	attributionContainer.style.background = 'rgba(255,255,255, 0.5)';
+	attributionContainer.style.bottom = '0';
+	attributionContainer.style.right = '0';
+	attributionContainer.style.display = 'inline-block';
+	attributionContainer.style.zIndex = '9999';
+
+	attributionLink1 = document.createElement('a');
+	attributionLink1.innerHTML = '© OpenMapTiles '
+	attributionLink1.setAttribute("class","attribution");
+	attributionLink1.setAttribute('href','https://openmaptiles.org');
+
+	attributionLink2 = document.createElement('a');
+	attributionLink2.innerHTML = '© OpenStreetMap contributors ';
+	attributionLink2.setAttribute("class","attribution");
+	attributionLink2.setAttribute('href','http://www.openstreetmap.org/about');
+
+	attributionLink3 = document.createElement('a');
+	attributionLink3.innerHTML = '© Mapbox GL ';
+	attributionLink3.setAttribute("class","attribution");
+	attributionLink3.setAttribute('href','https://www.mapbox.com/mapbox-gl-js/api');
+
+	attributionLink4 = document.createElement('a');
+	attributionLink4.innerHTML = '© Master SIGAT';
+	attributionLink4.setAttribute("class","attribution");
+	attributionLink4.setAttribute('href','https://esigat.wordpress.com');
+
+	var carte = document.getElementById('map');
+	carte.appendChild(attributionContainer);
+	attributionContainer.appendChild(attributionLink1);
+	attributionContainer.appendChild(attributionLink2);
+	attributionContainer.appendChild(attributionLink3);
+	attributionContainer.appendChild(attributionLink4);
+}
 
 </script>
 <script>jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });</script>
