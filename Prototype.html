@@ -247,7 +247,19 @@
 </div>
 <script>    
     ///////////////////////////////////////  Initialisation du fond de carte //////////////////////////////////
-    // Adapter la largeur des raccourcis spatiaux en fonction de l'écran
+   
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+	console.log(vars)
+
+    return vars;
+}
+
+	
+// Adapter la largeur des raccourcis spatiaux en fonction de l'écran
     var largeurEcran = screen.width
     zoomBase = 15.8;
 
