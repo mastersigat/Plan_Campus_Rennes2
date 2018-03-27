@@ -154,15 +154,15 @@
                             <li id = "Associations de Masters et Doctorats">
                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Associations de Masters et Doctorats</a>
                             </li>
-                            <li id = "Associations briochines">
-                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Associations briochines</a>
-                            </li>
                             <li id = "Associations culturelles, artistiques et sportives">
                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Associations culturelles, artistiques et sportives</a>
                             </li>
                             <li id = "Associations de solidarité et de sensibilisation">
                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Associations de solidarité et de sensibilisation</a>
                             </li>
+                            <li id = "Associations briochines">
+                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Associations briochines  (Campus Mazier)</a>
+                            </li>                          
                             <li id = "Autres">
                                 <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Autres</a>
                             </li>
@@ -372,15 +372,13 @@
     var UFRInfoPopup = ['Nom','Batiment','Niveau'];
     var UFRIconSize = [1.5,13,2,22,60];
     var UFRURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
- 
     // Couche toilettes
     var toilettesCount = 0; // initialisation du compteur de clics
     var toilettesLink = document.getElementById('Toilettes');
     var toilettesColor = 'green';
     var toilettesInfoPopup = ['Categorie','Batiment','Niveau','Info'];
     var toilettesIconSize = [1.5,13,2,22,60];
-    var toilettesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/wc_marker.png';
-   
+    var toilettesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/wc_marker.png';  
     // Couche copieurs
     var copieurCount = 0; // initialisation du compteur de clics
     var copieurLink = document.getElementById('Copieurs');
@@ -388,7 +386,6 @@
     var copieursInfoPopup = ['Categorie','Batiment','Niveau','Info'];
     var copieursIconSize = [1.5,13,2,22,60];
     var copieursURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/copieur_marker.png';
-
     // Couche équipements sportifs
     var equipementSportifCount = 0; // initialisation du compteur de clics
     var equipementSportifLink = document.getElementById('Equipements sportifs');
@@ -396,7 +393,6 @@
     var equipementSportifInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info'];
     var equipementSportifIconSize = [1.5,13,2,22,60];
     var equipementSportifURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sport_marker.png';
-
     // Couche Lieu culturel
     var lieuCulturelCount = 0; // initialisation du compteur de clics
     var lieuCulturelLink = document.getElementById('Lieu culturel');
@@ -406,15 +402,12 @@
     var insertLieuCulturel = document.getElementById('insertLieuCulturel');
     var lieuCulturelIconSize = [1.5,13,2,22,60];
     var lieuCulturelURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/culture_marker.png';
-
-
     // Couche espace détente
     var espaceDetenteCount = 0; // initialisation du compteur de clics
     var espaceDetenteLink = document.getElementById('Espace détente');
     var espaceDetenteColor = 'yellow';
     var espaceDetenteInfoPopup = ['Categorie','Batiment','Niveau','Info'];
     var espaceDetenteIconSize = [1.5,13,2,22,60];
-
     // Couche cafeterias
     var cafeteriasCount = 0; // initialisation du compteur de clics
     var cafeteriasLink = document.getElementById('Caféterias');
@@ -422,7 +415,6 @@
     var cafeteriasInfoPopup = ['Categorie','Batiment','Niveau','Info'];
     var cafeteriasIconSize = [1.5,13,2,22,60];
     var cafeteriasURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/cafeteria_marker.png';
-
     // Couche Associations de filières
     var associationsfilieresCount = 0; // initialisation du compteur de clics
     var associationsfilieresLink = document.getElementById('Associations de filières');
@@ -430,7 +422,6 @@
     var associationsfilieresInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationsfilieresIconSize = [1.5,13,2,22,60];
     var associationsfilieresURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker.png';
-
      // Couche Associations de Masters et Doctorats
     var associationsmasterCount = 0; // initialisation du compteur de clics
     var associationsmasterLink = document.getElementById('Associations de Masters et Doctorats');
@@ -438,7 +429,6 @@
     var associationsmasterInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationsmasterIconSize = [1.5,13,2,22,60];
     var associationsmasterURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker2.png';
-
     // Couche Associations briochines
     var associationsbriochinesCount = 0; // initialisation du compteur de clics
     var associationsbriochinesLink = document.getElementById('Associations briochines');
@@ -446,23 +436,20 @@
     var associationsbriochinesInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationsbriochinesIconSize = [1.5,13,2,22,60];
     var associationsbriochinesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker3.png';
-
-        // Couche Associations culturelles, artistiques et sportives
+    // Couche Associations culturelles, artistiques et sportives
     var associationscasCount = 0; // initialisation du compteur de clics
     var associationscasLink = document.getElementById('Associations culturelles, artistiques et sportives');
     var associationscasColor = '#FFFF00';
     var associationscasInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationscasIconSize = [1.5,13,2,22,60];
     var associationscasURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker4.png';
-
-     // Couche Associations de solidarité et de sensibilisation
+    // Couche Associations de solidarité et de sensibilisation
     var associationssolidariteCount = 0; // initialisation du compteur de clics
     var associationssolidariteLink = document.getElementById('Associations de solidarité et de sensibilisation');
     var associationssolidariteColor = '#00FFFF';
     var associationssolidariteInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationssolidariteIconSize = [1.5,13,2,22,60];
     var associationssolidariteURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker5.png';
-
      // Couche Autres
     var associationsCount = 0; // initialisation du compteur de clics
     var associationsLink = document.getElementById('Autres');
@@ -470,7 +457,6 @@
     var associationsInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationsIconSize = [1.5,13,2,22,60]
     var associationsURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker6.png';
-
     // Couche ascenseur
     var ascenseurCount = 0; // initialisation du compteur de clics
     var ascenseurLink = document.getElementById('Ascenseurs');
@@ -524,6 +510,7 @@
     var polesanteColor = '#FF00D3';
     var polesanteInfoPopup = ['Nom','Categorie','Batiment','Niveau'];
     var polesanteIconSize = [1.5,13,2,22,60]
+    var polesanteURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sante_marker.png';
        // Lineaire PMR
     var lineairePMRCount = 0; // initialisation du compteur de clics
     var lineairePMRLink = document.getElementById("Cheminements accessibles");
@@ -1621,10 +1608,9 @@ map.on("load", function() {
     lineairePMRLink.onclick = function(e){
         addCategoryOverlay('lineairePMR',lineairePMRCount,lineairePMRColor,lineairePMRInfoPopup,lineairePMRIconSize,lineairePMRLink,lineairePMRType);
         lineairePMRCount += 1;
-
     }
     polesanteLink.onclick = function(e){
-        addCategoryOverlay('Pole santé',polesanteCount,polesanteColor,polesanteInfoPopup,polesanteIconSize,polesanteLink);
+        addCategoryOverlay('Pole santé',polesanteCount,polesanteColor,polesanteInfoPopup,taillePicto,polesanteLink,'point',polesanteURL);
         polesanteCount += 1;
     }
     accesPMRLink.onclick = function(e){
