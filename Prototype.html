@@ -1050,7 +1050,7 @@ function getPopup(infoPopup,couche,iconURL){
         for(var i = 0; i < infoPopup.length; i++){
             if (infoPopup[i]=='Lien'){
                 if (feature.properties.Lien !== "null"){
-                    popupContent += '<p><a href = '+feature.properties.Lien+'>Site internet<a></p>';
+                    popupContent += '<p><a href = '+feature.properties.Lien+' target=\"_blank\">Site internet<a></p>';
                 }
             } 
         }
@@ -1152,7 +1152,7 @@ function getSwitchPopup(){
         popupContent += '<p>'+salleRecherchee.properties.Info+'<p>';
     }
     if (salleRecherchee.properties.Lien !== null){
-        popupContent += '<p><a href = '+salleRecherchee.properties.Lien+'>Site internet<a></p>';
+        popupContent += '<p><a href = '+salleRecherchee.properties.Lien+' target=\"_blank\">Site internet<a></p>';
     }
     if (salleRecherchee.properties.Mail !== null){
         popupContent += '<p>Contacter par mail : '+salleRecherchee.properties.Mail+'</p>';
@@ -1914,7 +1914,7 @@ busLink.onclick = function (e) {
             popupContent += '<p>'+searchItem.properties.Capacite+'<p>';
         };
         if (searchItem.properties.Lien != null ){
-            popupContent += '<p><a href = '+searchItem.properties.Lien+'>Site internet<a></p>';
+            popupContent += '<p><a href = '+searchItem.properties.Lien+' target=\"_blank\">Site internet<a></p>';
         };
         if (searchItem.properties.Mail != null ){
             popupContent += '<p>Contacter par mail : '+searchItem.properties.Mail+'</p>';
