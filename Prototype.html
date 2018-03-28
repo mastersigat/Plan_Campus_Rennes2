@@ -90,6 +90,28 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#">Structures et services <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/services.png"/><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+    						<li >
+                                <img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
+                                <a  id = "Services centraux" href="#">Services centraux<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertServicescen"></ul>
+                            </li>
+                            <li >
+                                <img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
+                                <a  id = "Services généraux" href="#">Services généraux<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertServicesgen"></ul>
+                            </li>
+                            <li >
+                                <img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
+                                <a  id = "Services commun" href="#">Services commun<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertServicescom"></ul>
+                            </li>
+            
+                        </ul>
+                    </li>                  
+                    <li>
+                    <li>
                         <a href="#">Scolarité et Administration <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/scolarites.png"/><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li id = "Département de formation">
@@ -204,7 +226,7 @@
                                     <li id = "Réseau de bus">
                                          <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Réseau de bus</a>
                                     </li>
-                                    <li id = "Métro">
+                                    <li id = "Cheminements Métro">
                                          <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Métro</a>
                                     </li>
                                     <li id = "Parkings vélo">
@@ -218,7 +240,7 @@
                                     </li>
                                     <li id = "Places handicapés"> 
                                          <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#" >Places handicapés</a>
-                                    </li>                                                                                                                                                   
+                                    </li>                                                                                                                                                    
                                 </ul>
                             </li>   
                         </ul>
@@ -341,6 +363,37 @@
     var sallesSpeIconSize = [1.5,13,2,22,60];
     var sallesSpeURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sallespe_marker.png' ;  
 
+
+    // Services centraux
+    var ServicescenCount = 0;
+    var ServicescenColor = 'blue';
+    var listeServicescen= []; // Création dynamique de la liste des salles à partir du jeu de données
+    var ServicescenLink = document.getElementById('Services centraux');
+    var insertServicescen = document.getElementById('insertServicescen');
+    var ServicescenInfoPopup = ['Nom','Batiment','Niveau'];
+    var ServicescenIconSize = [1.5,13,2,22,60];
+    var ServicescenURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
+    
+    // Services commun
+    var ServicescomCount = 0;
+    var ServicescomColor = 'blue';
+    var listeServicescom = []; // Création dynamique de la liste des salles à partir du jeu de données
+    var ServicescomLink = document.getElementById('Services commun');
+    var insertServicescom = document.getElementById('insertServicescom');
+    var ServicescomInfoPopup = ['Nom','Batiment','Niveau'];
+    var ServicescomIconSize = [1.5,13,2,22,60];
+    var ServicescomURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
+    
+    // Services généraux
+    var ServicesgenCount = 0;
+    var ServicesgenColor = 'blue';
+    var listeServicesgen = []; // Création dynamique de la liste des salles à partir du jeu de données
+    var ServicesgenLink = document.getElementById('Services généraux');
+    var insertServicesgen = document.getElementById('insertServicesgen');
+    var ServicesgenInfoPopup = ['Nom','Batiment','Niveau'];
+    var ServicesgenIconSize = [1.5,13,2,22,60];
+    var ServicesgenURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
+    
     // Département de formation
     var formaCount = 0; 
     var formaLink = document.getElementById('Département de formation');
@@ -510,6 +563,19 @@
     var lineairePMRColor = 'purple';
     var lineairePMRInfoPopup = null;
     var lineairePMRIconSize = [1.5,13,2,22,60];
+    // Ligne métro
+    var lineairemetroCount = 0; // initialisation du compteur de clics
+    var metroLink = document.getElementById("Cheminements Métro");
+    var lineairemetroColor = 'purple';
+    var lineairemetroInfoPopup = null;
+    var lineairemetroIconSize = [1.5,13,2,22,60];
+    var lineairemetroType = 'line'  
+    // point métro
+    var pointmetroCount = 0; // initialisation du compteur de clics
+    var pointmetroColor = 'purple';
+    var pointmetroInfoPopup = null;
+    var pointmetroIconSize = [1.5,13,2,22,60];
+   	var pointmetroURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sante_marker.png'
     var lineairePMRType = 'line'    
     // Couche Accès PMR
     var accesPMRCount = 0; // initialisation du compteur de clics
@@ -739,6 +805,7 @@ var popupContent = null
 	                    type: "geojson",
 	                    data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/lineaire_PMR.geojson"
 	                },
+	                filter : [ '==','Categorie',nomDeLaCouche],
 			        layout: {
 			            "line-join": "round",
 			            "line-cap": "round"
@@ -1486,6 +1553,27 @@ map.on("load", function() {
         }
         UFRCount += 1;
     }
+    ServicescomLink.onclick = function(e){
+        addCategoryOverlay('Services commun',ServicescomCount,ServicescomColor,ServicescomInfoPopup,taillePicto,ServicescomLink,'point',ServicescomURL);
+        if (sallesSpeCount==0){
+            createHTMLList('Services commun',listeServicescom,insertServicescom,ServicescomCount);
+        }
+        ServicescomCount += 1;
+    }
+    ServicesgenLink.onclick = function(e){
+        addCategoryOverlay('Services généraux',ServicesgenCount,ServicesgenColor,ServicesgenInfoPopup,taillePicto,ServicesgenLink,'point',ServicesgenURL);
+        if (sallesSpeCount==0){
+            createHTMLList('Services généraux',listeServicesgen,insertServicesgen,ServicesgenCount);
+        }
+        ServicesgenCount += 1;
+    }
+    ServicescenLink.onclick = function(e){
+        addCategoryOverlay('Services centraux',ServicescenCount,ServicescenColor,ServicescenInfoPopup,taillePicto,ServicescenLink,'point',ServicescenURL);
+        if (sallesSpeCount==0){
+            createHTMLList('Services centraux',listeServicescen,insertServicescen,ServicescenCount);
+        }
+        ServicescenCount += 1;
+    }
     sallesInfoLink.onclick = function(e){
         addCategoryOverlay('Salle informatique',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup,taillePicto,sallesInfoLink,'point',sallesInfoURL);
         sallesInfoCount += 1;
@@ -1599,8 +1687,15 @@ map.on("load", function() {
         restoUnivCount += 1;
     }
     lineairePMRLink.onclick = function(e){
-        addCategoryOverlay('lineairePMR',lineairePMRCount,lineairePMRColor,lineairePMRInfoPopup,tailleLine,lineairePMRLink,lineairePMRType);
+        addCategoryOverlay('Cheminements accessibles',lineairePMRCount,lineairePMRColor,lineairePMRInfoPopup,lineairePMRIconSize,lineairePMRLink,lineairePMRType);
         lineairePMRCount += 1;
+    }
+    metroLink.onclick = function(e){
+        addCategoryOverlay('Cheminements Métro',lineairemetroCount,lineairemetroColor,lineairemetroInfoPopup,lineairemetroIconSize,metroLink,lineairemetroType);
+        lineairemetroCount += 1;
+        addCategoryOverlay('Métro',pointmetroCount,pointmetroColor,pointmetroInfoPopup,pointmetroIconSize,metroLink,'point');
+        pointmetroCount += 1;
+        
     }
     polesanteLink.onclick = function(e){
         addCategoryOverlay('Pole santé',polesanteCount,polesanteColor,polesanteInfoPopup,taillePicto,polesanteLink,'point',polesanteURL);
