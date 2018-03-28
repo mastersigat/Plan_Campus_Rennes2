@@ -31,7 +31,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 <body>
 <!-- MAPBOX GL -->
@@ -251,7 +250,6 @@
 // Adapter la largeur des raccourcis spatiaux en fonction de l'écran
     var largeurEcran = screen.width
     zoomBase = 15.8;
-
     var BoutonsD = document.getElementById("DDD")
 	var Bouton2D = document.createElement('button');
 	Bouton2D.setAttribute("class","btn btn-primary");
@@ -261,8 +259,6 @@
 	Bouton3D.setAttribute("class","btn btn-primary");
 	Bouton3D.setAttribute("id","DDDButton");
 	Bouton3D.innerHTML = '3D';
-	
-
     if (largeurEcran < 500){
     	zoomBase = 14.8;
     	BoutonsD.style.position = 'absolute';
@@ -309,9 +305,7 @@
         attributionControl : false // starting zoom
     });
     map.dragRotate.disable(); // vue 2D de base 
-   
-    ///////////////////////////////////////  initialisation des variables overlay //////////////////////////////////
-    
+    ///////////////////////////////////////  initialisation des variables overlay //////////////////////////////////    
     var Etiquette = []; // Insérer les couches ayant des étiquettes (exemple amphithéâtres)
     var Layers = [];
     // Initialisation des variables d'overlay
@@ -319,12 +313,11 @@
     var popupList = null;
     // Coordonnées de la salle sélectionnée
     var salleRX = null;
-    var salleRY = null;
-    
+    var salleRY = null;    
     // AJOUT DES VARIABLES OVERLAY
     // Taille picto:
     taillePicto = [1,13,0.1,25,1.5]
-
+	tailleLine = 1
     // Couche amphithéâtres
     var amphiCount = 0; // initialisation du compteur 
     var amphitheatresLink = document.getElementById('Amphithéâtres'); // Recherche de la balise html liée à la couche
@@ -1607,7 +1600,7 @@ map.on("load", function() {
         restoUnivCount += 1;
     }
     lineairePMRLink.onclick = function(e){
-        addCategoryOverlay('lineairePMR',lineairePMRCount,lineairePMRColor,lineairePMRInfoPopup,lineairePMRIconSize,lineairePMRLink,lineairePMRType);
+        addCategoryOverlay('lineairePMR',lineairePMRCount,lineairePMRColor,lineairePMRInfoPopup,tailleLine,lineairePMRLink,lineairePMRType);
         lineairePMRCount += 1;
     }
     polesanteLink.onclick = function(e){
