@@ -7,7 +7,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Prototype Mapbox GL</title>
-    <style> 
+    <style>
+	html, body{overflow:hidden;}
+
     .loader{
 	    background-color : white;cursor: wait;height: 100%;left: 0;position: fixed;top: 0;width: 100%;z-index: 999999;
 	}
@@ -106,25 +108,7 @@
                             </li>
             
                         </ul>
-                    </li>                       
-
-                    <li>
-                        <a href="#">Scolarité et Administration <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/scolarites.png"/><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li id = "Département de formation">
-                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">Département de formation</a>
-                            </li>
-                            <li id = "Département de recherche">
-                                <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case"><a href="#">Département de recherche</a>
-                            </li>
-                            <li >
-                                <img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "case">
-                                <a  id = "UFR" href="#">UFR<span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level" id = "insertUFR"></ul>
-                            </li>
-            
-                        </ul>
-                    </li>                  
+                    </li>                                         
                     <li>
                         <a href="#">Bibliothèques et Culture<img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/biblio.png"/><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -326,18 +310,16 @@
     ///////////////////////////////////////  initialisation des variables overlay ////////////////////////////////// 
     var case1 = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png'
     var case2 = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png'    
-    var Etiquette = []; // Liste des couches ayant des étiquettes (exemple amphithéâtres)
-    var Layers = []; // Liste des couches
-    var popup = null; // Variable popup
-    var popupList = null; // Variable popup sur les listes d'enregistrements
-    // Coordonnées de la salle sélectionnée
-    var salleRX = null; 
-    var salleRY = null;    
+ 
     // Taille overlay:
     tailleMarker = [1,13,0.1,25,1.5]; // taille adaptative des éléments type marker
 	tailleLine = 1; // taille des éléments type ligne
 	taillePoint = [1.5,13,2,22,60]; // taille adaptative des éléments type point
 	taillePicto = [1.5,13,2,22,60]; // taille adaptative des éléments type pictogramme (circulaire)
+    var Etiquette = []; // Liste des couches ayant des étiquettes (exemple amphithéâtres)
+	var activeLayerBackground = '#EEEEEE' // couleur du background des lignes
+
+	/////////////// VARIABLES COUCHES ////////////////////
     // Couche amphithéâtres
     var amphiCount = 0; // initialisation du compteur 
     var amphitheatresLink = document.getElementById('Amphithéâtres'); // Recherche de la balise html liée à la couche
@@ -348,7 +330,7 @@
     // Couche salles informatique
     var sallesInfoCount = 0; 
     var sallesInfoLink = document.getElementById('Salles informatique');
-    var sallesInfoColor = '#ff4000'
+    var sallesInfoColor = '#ff4000';
     var sallesInfoInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var sallesInfoURL =  'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/salle_info_marker.png';
     // Couche salles spécifiques
@@ -386,30 +368,6 @@
     var ServicesgenInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var ServicesgenURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
     
-    // Département de formation
-    var formaCount = 0; 
-    var formaLink = document.getElementById('Département de formation');
-    var formaColor = '#F5A9A9'
-    var formaInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
-    var formaIconSize = [1.5,13,2,22,60]
-    var formaURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/formation_marker.png';   
-
-    // Département de recherche
-    var rechCount = 0; 
-    var rechLink = document.getElementById('Département de recherche');
-    var rechColor = '#ff4000'
-    var rechInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
-    var rechIconSize = [1.5,13,2,22,60]
-    var rechURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/recherche_marker.png';
-    // UFR
-    var UFRCount = 0;
-    var UFRColor = 'blue';
-    var listeUFR = []; // Création dynamique de la liste des salles à partir du jeu de données
-    var UFRLink = document.getElementById('UFR');
-    var insertUFR = document.getElementById('insertUFR');
-    var UFRInfoPopup = ['Nom','Batiment','Niveau'];
-    var UFRIconSize = [1.5,13,2,22,60];
-    var UFRURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
     // Couche toilettes
     var toilettesCount = 0; // initialisation du compteur de clics
     var toilettesLink = document.getElementById('Toilettes');
@@ -562,6 +520,15 @@
     var accesPMRColor = '#138fad';
     var accesPMRInfoPopup = ['Categorie'];
     var accesPMRIconSize = [1.5,13,2,22,60]
+
+
+    ////////////// Autres variables
+    var Layers = []; // Liste des couches
+    var popup = null; // Variable popup
+    var popupList = null; // Variable popup sur les listes d'enregistrements
+    // Coordonnées de la salle sélectionnée
+    var salleRX = null; 
+    var salleRY = null;  
     //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
     
     //Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
@@ -768,13 +735,12 @@ var popupContent = null
                 "text-max-width":8
             },
             minzoom : 14,
-
             });
         };
 
 
 
-   function addCategoryOverlay(htmllink,nomDeLaCouche,ordre,type,overlayCount,color,infoPopup,iconSize,iconURL){
+   function addCategoryOverlay(htmllink,nomDeLaCouche,ordre,type,colorOrUrl,iconSize,infoPopup,overlayCount){
         ////////// AJOUT DES DONNEES TYPE LINEAIRE ////////////
 
         if (type=='line'){
@@ -792,7 +758,7 @@ var popupContent = null
 			            "line-cap": "round"
 			        },
 			        paint: {
-			            "line-color": "red",
+			            "line-color": colorOrUrl,
 			            "line-width": 2
 			        }
 	            });   
@@ -804,7 +770,7 @@ var popupContent = null
                     break;
                 }        
             }
-            htmllink.style.backgroundColor = '#EEEEEE';
+            htmllink.style.backgroundColor = activeLayerBackground;
         } else {
             var visibility = map.getLayoutProperty(nomDeLaCouche,'visibility');
             if (visibility === 'visible') {
@@ -835,7 +801,7 @@ var popupContent = null
                         break;
                     }        
                 }
-                htmllink.style.backgroundColor = '#EEEEEE';
+                htmllink.style.backgroundColor = activeLayerBackground;
             }
         };
 		////////// AJOUT DES DONNEES PONCTUELLES ////////////
@@ -851,7 +817,7 @@ var popupContent = null
 	        if (overlayCount === 0){
 	        	////////// AJOUT DES DONNEES PONCTUELLES (MARKER) ////////////
 	        	if (type == 'marker'){
-					map.loadImage(iconURL, function(error, image) {
+					map.loadImage(colorOrUrl, function(error, image) {
 				        if (error) throw error;
 				        map.addImage(nomDeLaCouche+'image', image);
 				        map.addLayer({
@@ -922,7 +888,7 @@ var popupContent = null
 	                layout: {'visibility': 'visible'}, 
 	                paint: {
 	                    "circle-radius": {'base': iconSize[0],'stops': [[iconSize[1],iconSize[2]], [iconSize[3], iconSize[4]]]},
-	                    "circle-color" : color,
+	                    "circle-color" : colorOrUrl,
 	                    "circle-opacity":0.9
 	                    }
 	                });   
@@ -949,7 +915,7 @@ var popupContent = null
 	                Layers.push(nomDeLaCoucheEtiquette); 
 	            	} 
 	            } else if (type = 'picto') {
-					map.loadImage(iconURL, function(error, image) {
+					map.loadImage(colorOrUrl, function(error, image) {
 				        if (error) throw error;
 				        map.addImage(nomDeLaCouche+'image', image);
 				        map.addLayer({
@@ -1008,12 +974,12 @@ var popupContent = null
 	                            break;
 	                        }        
 	                    }
-	                    htmllink.style.backgroundColor = '#EEEEEE';
+	                    htmllink.style.backgroundColor = activeLayerBackground;
 	                }
 
 	                if (htmllink.nodeName == 'A'){
 	                    htmllink.childNodes[0].setAttribute('src',case2);
-	                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
+	                    htmllink.parentElement.style.backgroundColor = activeLayerBackground;
 	                }
 
 
@@ -1060,12 +1026,12 @@ var popupContent = null
 	                            break;
 	                        }        
 	                    }
-	                    htmllink.style.backgroundColor = '#EEEEEE';
+	                    htmllink.style.backgroundColor = activeLayerBackground;
 
 	                }
 	                if (htmllink.nodeName == 'A'){
 	                    htmllink.childNodes[0].setAttribute('src',case2);
-	                    htmllink.parentElement.style.backgroundColor = '#EEEEEE';
+	                    htmllink.parentElement.style.backgroundColor = activeLayerBackground;
 	                }
 
 	                if (etiquette){
@@ -1089,13 +1055,12 @@ var popupContent = null
 	            	showLayer(nomDeLaCouche,htmllink);
 	            }
 	        };
-	            getPopup(contenuPopup,nomDeLaCouche,iconURL);
+	            getPopup(contenuPopup,nomDeLaCouche,colorOrUrl);
 	            map.on('mousemove', function (e) {
 	                var features = map.queryRenderedFeatures(e.point, { layers: Layers });
 	                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 	            });
 	        }
-
 		}
     
 function getPopup(infoPopup,couche,iconURL){
@@ -1620,97 +1585,103 @@ map.on("load", function() {
 
     
 //////////////////////////////////   OVERLAYS //////////////////////////////////////
+
+//////////////////////////////////  Groupe Amphis et salles spécifiques //////////////////////////////////////
+
+
     amphitheatresLink.onclick = function(e){
-        addCategoryOverlay(amphitheatresLink,'Amphithéâtre','layer','marker',amphiCount,amphiColor,amphiInfoPopup,tailleMarker,amphiURL);
+        addCategoryOverlay(amphitheatresLink,'Amphithéâtre','layer','marker',amphiURL,tailleMarker,amphiInfoPopup,amphiCount);
         amphiCount += 1;
     }
-    UFRLink.onclick = function(e){
-        addCategoryOverlay(UFRLink,'UFR','layer','marker',UFRCount,UFRColor,UFRInfoPopup,tailleMarker,UFRURL);
-        if (sallesSpeCount==0){
-            createHTMLList('UFR',listeUFR,insertUFR,UFRCount);
-        }
-        UFRCount += 1;
-    }
     sallesInfoLink.onclick = function(e){
-        addCategoryOverlay(sallesInfoLink,'Salle informatique','layer','marker',sallesInfoCount,sallesInfoColor,sallesInfoInfoPopup,tailleMarker,sallesInfoURL);
+        addCategoryOverlay(sallesInfoLink,'Salle informatique','layer','marker',sallesInfoURL,tailleMarker,sallesInfoInfoPopup,sallesInfoCount);
         sallesInfoCount += 1;
     }
+    sallesSpecifiquesLink.onclick = function(e){
+        addCategoryOverlay(sallesSpecifiquesLink,'Salles spécifiques','list','marker',sallesSpeURL,tailleMarker,sallesSpeInfoPopup,sallesSpeCount);
+        if (sallesSpeCount==0){
+            createHTMLList('Salles spécifiques',listeSallesSpecifiques,insertSallesSpecifiques,sallesSpeCount);
+        }
+        sallesSpeCount +=1;
+    }
+
+//////////////////////////////////  Structures et services //////////////////////////////////////
 
     ServicescomLink.onclick = function(e){
-        addCategoryOverlay(ServicescomLink,'Services commun',ServicescomLinkState,'marker',ServicescomCount,ServicescomColor,ServicescomInfoPopup,tailleMarker,ServicescomURL);
+        addCategoryOverlay(ServicescomLink,'Services commun',ServicescomLinkState,'marker',ServicescomURL,tailleMarker,ServicescomInfoPopup,ServicescomCount);
         if (ServicescomCount==0){
             createHTMLList('Services commun',listeServicescom,insertServicescom,ServicescomCount);
         }
         ServicescomCount += 1;
     }
     ServicesgenLink.onclick = function(e){
-        addCategoryOverlay(ServicesgenLink,'Services généraux',ServicesgenLinkState,'marker',ServicesgenCount,ServicesgenColor,ServicesgenInfoPopup,tailleMarker,ServicesgenURL);
+        addCategoryOverlay(ServicesgenLink,'Services généraux',ServicesgenLinkState,'marker',ServicesgenURL,tailleMarker,ServicesgenInfoPopup,ServicesgenCount);
         if (ServicesgenCount==0){
             createHTMLList('Services généraux',listeServicesgen,insertServicesgen,ServicesgenCount);
         }
         ServicesgenCount += 1;
     }    
     ServicescenLink.onclick = function(e){
-        addCategoryOverlay(ServicescenLink,'Services centraux',ServicescenLinkState,'marker',ServicescenCount,ServicescenColor,ServicescenInfoPopup,tailleMarker,ServicescenURL);
+        addCategoryOverlay(ServicescenLink,'Services centraux',ServicescenLinkState,'marker',ServicescenURL,tailleMarker,ServicescenInfoPopup,ServicescenCount);
         if (ServicescenCount==0){
             createHTMLList('Services centraux',listeServicescen,insertServicescen,ServicescenCount);
         }
         ServicescenCount += 1;
     }
-    formaLink.onclick = function(e){
-        addCategoryOverlay(formaLink,'Département de formation','layer','marker',formaCount,formaColor,formaInfoPopup,tailleMarker,formaURL);
-        formaCount += 1;
-    }
-    rechLink.onclick = function(e){
-        addCategoryOverlay(rechLink,'Département de recherche','layer','marker',rechCount,rechColor,rechInfoPopup,tailleMarker,rechURL);
-        rechCount += 1;
-    }
-    toilettesLink.onclick = function(e){
-        addCategoryOverlay(toilettesLink,'Toilettes','layer','marker',toilettesCount,toilettesColor,toilettesInfoPopup,tailleMarker,toilettesURL);
-        toilettesCount += 1;
-    }
-    copieurLink.onclick = function(e){
-        addCategoryOverlay(copieurLink,'Copieur','layer','marker',copieurCount,copieurColor,copieursInfoPopup,tailleMarker,copieursURL);
-        copieurCount += 1;
-    }
-    
 
-    sallesSpecifiquesLink.onclick = function(e){
-        addCategoryOverlay(sallesSpecifiquesLink,'Salles spécifiques','list','marker',sallesSpeCount,sallesSpeColor,sallesSpeInfoPopup,tailleMarker,sallesSpeURL);
-        if (sallesSpeCount==0){
-            createHTMLList('Salles spécifiques',listeSallesSpecifiques,insertSallesSpecifiques,sallesSpeCount);
-        }
-        sallesSpeCount +=1;
-    }
+//////////////////////////////////  Bibliothèques et culture //////////////////////////////////////
     lieuCulturelLink.onclick = function(e){
-        addCategoryOverlay(lieuCulturelLink,'Lieu culturel','list','marker',lieuCulturelCount,lieuCulturelColor,lieuCulturelInfoPopup,tailleMarker,lieuCulturelURL);
+        addCategoryOverlay(lieuCulturelLink,'Lieu culturel','list','marker',lieuCulturelURL,tailleMarker,lieuCulturelInfoPopup,lieuCulturelCount);
         if (lieuCulturelCount==0){
             createHTMLList('Lieu culturel',listelieuCulturel,insertLieuCulturel,lieuCulturelCount);
         }
         lieuCulturelCount += 1;
     }
-    equipementSportifLink.onclick = function(e){
-        addCategoryOverlay(equipementSportifLink,'Equipement sportif','layer','marker',equipementSportifCount,equipementSportifColor,equipementSportifInfoPopup,tailleMarker,equipementSportifURL);
-        equipementSportifCount += 1;
+    bibliothequesLink.onclick = function(e){
+        addCategoryOverlay(bibliothequesLink,'Bibliothèques','layer','marker',bibliothequesURL,tailleMarker,bibliothequesInfoPopup,bibliothequesCount);
+        bibliothequesCount += 1;
     }
-    espaceDetenteLink.onclick = function(e){
-        addCategoryOverlay(espaceDetenteLink,'Espace détente','layer','marker',espaceDetenteCount,espaceDetenteColor,espaceDetenteInfoPopup,tailleMarker,);
-        espaceDetenteCount += 1;
+
+////////////////////////////////// Restauration et logement //////////////////////////////////////
+    resUnivLink.onclick = function(e){
+        addCategoryOverlay(resUnivLink,'Résidence Universitaire','layer','marker',resUnivURL,tailleMarker,resUnivInfoPopup,resUnivCount);
+        resUnivCount += 1;
+    }
+    restoUnivLink.onclick = function(e){
+        addCategoryOverlay(restoUnivLink,'Restaurant Universitaire','layer','marker',restoUnivURL,tailleMarker,restoUnivInfoPopup,restoUnivCount);
+        restoUnivCount += 1;
     }
     cafeteriasLink.onclick = function(e){
-        addCategoryOverlay(cafeteriasLink,'Cafétéria','layer','marker',cafeteriasCount,cafeteriasColor,cafeteriasInfoPopup,tailleMarker,cafeteriasURL);
+        addCategoryOverlay(cafeteriasLink,'Cafétéria','layer','marker',cafeteriasURL,tailleMarker,cafeteriasInfoPopup,cafeteriasCount);
         cafeteriasCount += 1;
     }
+
+
+//////////////////////////////////  Sport et santé //////////////////////////////////////
+    equipementSportifLink.onclick = function(e){
+        addCategoryOverlay(equipementSportifLink,'Equipement sportif','layer','marker',equipementSportifURL,tailleMarker,equipementSportifInfoPopup,equipementSportifCount);
+        equipementSportifCount += 1;
+    }
+
+    polesanteLink.onclick = function(e){
+        addCategoryOverlay(polesanteLink,'Pole santé','layer','marker',polesanteURL,tailleMarker,polesanteCount,polesanteInfoPopup);
+        polesanteCount += 1;
+    }
+
+
+//////////////////////////////////  Vie associative ///////////////////////////////////////
+
+
     associationsfilieresLink.onclick = function(e){
-        addCategoryOverlay(associationsfilieresLink,'Associations de filières','layer','marker',associationsfilieresCount,associationsfilieresColor,associationsfilieresInfoPopup,tailleMarker,associationsfilieresURL);
+        addCategoryOverlay(associationsfilieresLink,'Associations de filières','layer','marker',associationsfilieresURL,tailleMarker,associationsfilieresInfoPopup,associationsfilieresCount);
         associationsfilieresCount += 1;
     }
    associationsmasterLink.onclick = function(e){
-    addCategoryOverlay(associationsmasterLink,'Associations de Masters et Doctorats','layer','marker',associationsmasterCount,associationsmasterColor,associationsmasterInfoPopup,tailleMarker,associationsmasterURL);
+    addCategoryOverlay(associationsmasterLink,'Associations de Masters et Doctorats','layer','marker',associationsmasterURL,tailleMarker,associationsmasterInfoPopup,associationsmasterCount);
     associationsmasterCount += 1;
     }
      associationsbriochinesLink.onclick = function(e){
-        addCategoryOverlay(associationsbriochinesLink,'Associations briochines','layer','marker',associationsbriochinesCount,associationsbriochinesColor,associationsbriochinesInfoPopup,tailleMarker,associationsbriochinesURL);
+        addCategoryOverlay(associationsbriochinesLink,'Associations briochines','layer','marker',associationsbriochinesURL,tailleMarker,associationsbriochinesInfoPopup,associationsbriochinesCount);
         associationsbriochinesCount += 1;
  		for (var i = 0; i < Layers.length; i++) {        
  			if (Layers[i] = 'Associations briochines'){
@@ -1728,55 +1699,61 @@ map.on("load", function() {
     	}
     }
     associationscasLink.onclick = function(e){
-        addCategoryOverlay(associationscasLink,'Associations culturelles, artistiques et sportives','layer','marker',associationscasCount,associationscasColor,associationscasInfoPopup,tailleMarker,associationscasURL);
+        addCategoryOverlay(associationscasLink,'Associations culturelles, artistiques et sportives','layer','marker',associationscasURL,tailleMarker,associationscasInfoPopup,associationscasCount);
         associationscasCount += 1;
     }
       associationssolidariteLink.onclick = function(e){
-        addCategoryOverlay(associationssolidariteLink,'Associations de solidarité et de sensibilisation','layer','marker',associationssolidariteCount,associationssolidariteColor,associationssolidariteInfoPopup,tailleMarker,associationssolidariteURL);
+        addCategoryOverlay(associationssolidariteLink,'Associations de solidarité et de sensibilisation','layer','marker',associationssolidariteURL,tailleMarker,associationssolidariteInfoPopup,associationssolidariteCount);
         associationssolidariteCount += 1;
     }
      associationsLink.onclick = function(e){
-        addCategoryOverlay(associationsLink,'Autres','layer','marker',associationsCount,associationsColor,associationsInfoPopup,tailleMarker,associationsURL);
+        addCategoryOverlay(associationsLink,'Autres','layer','marker',associationsURL,tailleMarker,associationsInfoPopup,associationsCount);
         associationsCount += 1;
     }
+
+
+
+//////////////////////////////////  Divers ///////////////////////////////////////
+
+
+    toilettesLink.onclick = function(e){
+        addCategoryOverlay(toilettesLink,'Toilettes','layer','marker',toilettesURL,tailleMarker,toilettesInfoPopup,toilettesCount);
+        toilettesCount += 1;
+    }
+    copieurLink.onclick = function(e){
+        addCategoryOverlay(copieurLink,'Copieur','layer','marker',copieursURL,tailleMarker,copieursInfoPopup,copieurCount);
+        copieurCount += 1;
+    }
+    
+    espaceDetenteLink.onclick = function(e){
+        addCategoryOverlay(espaceDetenteLink,'Espace détente','layer','marker',espaceDetenteColor,tailleMarker,espaceDetenteInfoPopup,espaceDetenteCount);
+        espaceDetenteCount += 1;
+    }
+
+//////////////////////////////////  Mobilité et accessibilité ///////////////////////////////////////
+
     ascenseurLink.onclick = function(e){
-        addCategoryOverlay(ascenseurLink,'Ascenseur','layer','point',ascenseurCount,ascenseurColor,ascenseurInfoPopup,ascenseurIconSize);
+        addCategoryOverlay(ascenseurLink,'Ascenseur','layer','point',ascenseurColor,ascenseurIconSize,ascenseurInfoPopup,ascenseurCount);
         ascenseurCount += 1;
     }
     parkingLink.onclick = function(e){
-        addCategoryOverlay(parkingLink,'Parking','layer','point',parkingCount,parkingColor,parkingInfoPopup,parkingIconSize);
+        addCategoryOverlay(parkingLink,'Parking','layer','point',parkingColor,parkingIconSize,parkingInfoPopup,parkingCount);
         parkingCount += 1;
     }
     parkingPMRLink.onclick = function(e){
-        addCategoryOverlay(parkingPMRLink,'Parking PMR','layer','point',parkingPMRCount,parkingPMRColor,parkingPMRInfoPopup,parkingPMRIconSize);
+        addCategoryOverlay(parkingPMRLink,'Parking PMR','layer','point',parkingPMRColor,parkingPMRIconSize,parkingPMRInfoPopup,parkingPMRCount);
         parkingPMRCount += 1;
     }
     parkingVeloLink.onclick = function(e){
-        addCategoryOverlay(parkingVeloLink,'Parking vélo','layer','point',parkingVeloCount,parkingVeloColor,parkingVeloInfoPopup,parkingVeloIconSize);
+        addCategoryOverlay(parkingVeloLink,'Parking vélo','layer','point',parkingVeloColor,parkingVeloIconSize,parkingVeloInfoPopup,parkingVeloCount);
         parkingVeloCount += 1;
     }
-    bibliothequesLink.onclick = function(e){
-        addCategoryOverlay(bibliothequesLink,'Bibliothèques','layer','marker',bibliothequesCount,bibliothequesColor,bibliothequesInfoPopup,tailleMarker,bibliothequesURL);
-        bibliothequesCount += 1;
-    }
-    resUnivLink.onclick = function(e){
-        addCategoryOverlay(resUnivLink,'Résidence Universitaire','layer','marker',resUnivCount,resUnivColor,resUnivInfoPopup,tailleMarker,resUnivURL);
-        resUnivCount += 1;
-    }
-    restoUnivLink.onclick = function(e){
-        addCategoryOverlay(restoUnivLink,'Restaurant Universitaire','layer','marker',restoUnivCount,restoUnivColor,restoUnivInfoPopup,tailleMarker,restoUnivURL);
-        restoUnivCount += 1;
-    }
     lineairePMRLink.onclick = function(e){
-        addCategoryOverlay(lineairePMRLink,'lineairePMR','layer','line',lineairePMRCount,lineairePMRColor,lineairePMRInfoPopup,tailleLine);
+        addCategoryOverlay(lineairePMRLink,'lineairePMR','layer','line',lineairePMRColor,tailleLine,lineairePMRInfoPopup,lineairePMRCount);
         lineairePMRCount += 1;
     }
-    polesanteLink.onclick = function(e){
-        addCategoryOverlay(polesanteLink,'Pole santé','layer','marker',polesanteCount,polesanteColor,polesanteInfoPopup,tailleMarker,polesanteURL);
-        polesanteCount += 1;
-    }
     accesPMRLink.onclick = function(e){
-        addCategoryOverlay(accesPMRLink,'Accès PMR','layer','point',accesPMRCount,accesPMRColor,accesPMRInfoPopup,accesPMRIconSize);
+        addCategoryOverlay(accesPMRLink,'Accès PMR','layer','point',accesPMRColor,accesPMRIconSize,accesPMRInfoPopup,accesPMRCount);
         accesPMRCount += 1;
     }    
 });
