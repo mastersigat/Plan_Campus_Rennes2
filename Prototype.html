@@ -320,22 +320,21 @@
 	var activeLayerBackground = '#EEEEEE' // couleur du background des lignes
 
 	/////////////// VARIABLES COUCHES ////////////////////
+
+
     // Couche amphithéâtres
     var amphiCount = 0; // initialisation du compteur 
     var amphitheatresLink = document.getElementById('Amphithéâtres'); // Recherche de la balise html liée à la couche
-    var amphiColor = '#003399'; // couleur de la couche
     Etiquette.push('Amphithéâtre'); // Ajout des etiquettes
     var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite']; // Données ajoutées dans la popup
     var amphiURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/amphi_marker.png';   
     // Couche salles informatique
     var sallesInfoCount = 0; 
     var sallesInfoLink = document.getElementById('Salles informatique');
-    var sallesInfoColor = '#ff4000';
     var sallesInfoInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var sallesInfoURL =  'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/salle_info_marker.png';
     // Couche salles spécifiques
     var sallesSpeCount = 0;
-    var sallesSpeColor = 'blue';
     var listeSallesSpecifiques = []; // Création dynamique de la liste des salles à partir du jeu de données
     var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
     var insertSallesSpecifiques = document.getElementById('insertSallesSpecifiques');
@@ -343,61 +342,52 @@
     var sallesSpeURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sallespe_marker.png' ;  
     // Services centraux
     var ServicescenCount = 0;
-    var ServicescenColor = 'blue';
     var listeServicescen= []; // Création dynamique de la liste des salles à partir du jeu de données
     var ServicescenLink = document.getElementById('Services centraux');
     var insertServicescen = document.getElementById('insertServicescen');
     var ServicescenInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
-    var ServicescenURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
-    
+    var ServicescenURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';   
     // Services commun
     var ServicescomCount = 0;
-    var ServicescomColor = 'blue';
     var listeServicescom = []; // Création dynamique de la liste des salles à partir du jeu de données
     var ServicescomLink = document.getElementById('Services commun');
     var insertServicescom = document.getElementById('insertServicescom');
     var ServicescomInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
-    var ServicescomURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
-    
+    var ServicescomURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';    
     // Services généraux
     var ServicesgenCount = 0;
-    var ServicesgenColor = 'blue';
     var listeServicesgen = []; // Création dynamique de la liste des salles à partir du jeu de données
     var ServicesgenLink = document.getElementById('Services généraux');
     var insertServicesgen = document.getElementById('insertServicesgen');
     var ServicesgenInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var ServicesgenURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/UFR_marker.png';
-    
-    // Couche toilettes
-    var toilettesCount = 0; // initialisation du compteur de clics
-    var toilettesLink = document.getElementById('Toilettes');
-    var toilettesColor = 'green';
-    var toilettesInfoPopup = ['Categorie','Batiment','Niveau','Info'];
-    var toilettesIconSize = [1.5,13,2,22,60];
-    var toilettesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/wc_marker.png';  
-    // Couche copieurs
-    var copieurCount = 0; // initialisation du compteur de clics
-    var copieurLink = document.getElementById('Copieurs');
-    var copieurColor = 'purple';
-    var copieursInfoPopup = ['Categorie','Batiment','Niveau','Info'];
-    var copieursIconSize = [1.5,13,2,22,60];
-    var copieursURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/copieur_marker.png';
-    // Couche équipements sportifs
-    var equipementSportifCount = 0; // initialisation du compteur de clics
-    var equipementSportifLink = document.getElementById('Equipements sportifs');
-    var equipementSportifColor = 'black';
-    var equipementSportifInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info'];
-    var equipementSportifIconSize = [1.5,13,2,22,60];
-    var equipementSportifURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sport_marker.png';
+    // Couche bibliothèques
+    var bibliothequesCount = 0; // initialisation du compteur de clics
+    var bibliothequesLink = document.getElementById("Bibliothèques");
+    var bibliothequesInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
+    var bibliothequesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/biblio_marker.png';
     // Couche Lieu culturel
     var lieuCulturelCount = 0; // initialisation du compteur de clics
     var lieuCulturelLink = document.getElementById('Lieu culturel');
     var listelieuCulturel = []; // Création dynamique de la liste des salles à partir du jeu de données
-    var lieuCulturelColor = 'black';
     var lieuCulturelInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Capacite','Mail','Tel','Lien'];
     var insertLieuCulturel = document.getElementById('insertLieuCulturel');
-    var lieuCulturelIconSize = [1.5,13,2,22,60];
     var lieuCulturelURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/culture_marker.png';
+    // Couche équipements sportifs
+    var equipementSportifCount = 0; // initialisation du compteur de clics
+    var equipementSportifLink = document.getElementById('Equipements sportifs');
+    var equipementSportifInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info'];
+    var equipementSportifURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sport_marker.png';    
+    // Couche toilettes
+    var toilettesCount = 0; // initialisation du compteur de clics
+    var toilettesLink = document.getElementById('Toilettes');
+    var toilettesInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+    var toilettesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/wc_marker.png';  
+    // Couche copieurs
+    var copieurCount = 0; // initialisation du compteur de clics
+    var copieurLink = document.getElementById('Copieurs');
+    var copieursInfoPopup = ['Categorie','Batiment','Niveau','Info'];
+    var copieursURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/copieur_marker.png';
     // Couche espace détente
     var espaceDetenteCount = 0; // initialisation du compteur de clics
     var espaceDetenteLink = document.getElementById('Espace détente');
@@ -407,51 +397,47 @@
     // Couche cafeterias
     var cafeteriasCount = 0; // initialisation du compteur de clics
     var cafeteriasLink = document.getElementById('Caféterias');
-    var cafeteriasColor = 'brown';
     var cafeteriasInfoPopup = ['Categorie','Batiment','Niveau','Info'];
-    var cafeteriasIconSize = [1.5,13,2,22,60];
     var cafeteriasURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/cafeteria_marker.png';
+    // Couche Résidences universitaires
+    var resUnivCount = 0; // initialisation du compteur de clics
+    var resUnivLink = document.getElementById("Résidences universitaires");
+    var resUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
+    var resUnivURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/resuniv_marker.png';
+    // Couche Restaurants universitaires
+    var restoUnivCount = 0; // initialisation du compteur de clics
+    var restoUnivLink = document.getElementById("Restaurants universitaires");
+    var restoUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
+    var restoUnivURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/restauu_marker.png';
     // Couche Associations de filières
     var associationsfilieresCount = 0; // initialisation du compteur de clics
     var associationsfilieresLink = document.getElementById('Associations de filières');
-    var associationsfilieresColor = 'silver';
     var associationsfilieresInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationsfilieresIconSize = [1.5,13,2,22,60];
     var associationsfilieresURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker.png';
      // Couche Associations de Masters et Doctorats
     var associationsmasterCount = 0; // initialisation du compteur de clics
     var associationsmasterLink = document.getElementById('Associations de Masters et Doctorats');
-    var associationsmasterColor = '#A5DF00';
     var associationsmasterInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationsmasterIconSize = [1.5,13,2,22,60];
     var associationsmasterURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker2.png';
     // Couche Associations briochines
     var associationsbriochinesCount = 0; // initialisation du compteur de clics
     var associationsbriochinesLink = document.getElementById('Associations briochines');
-    var associationsbriochinesColor = 'silver';
     var associationsbriochinesInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationsbriochinesIconSize = [1.5,13,2,22,60];
     var associationsbriochinesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker3.png';
     // Couche Associations culturelles, artistiques et sportives
     var associationscasCount = 0; // initialisation du compteur de clics
     var associationscasLink = document.getElementById('Associations culturelles, artistiques et sportives');
-    var associationscasColor = '#FFFF00';
     var associationscasInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationscasIconSize = [1.5,13,2,22,60];
     var associationscasURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker4.png';
     // Couche Associations de solidarité et de sensibilisation
     var associationssolidariteCount = 0; // initialisation du compteur de clics
     var associationssolidariteLink = document.getElementById('Associations de solidarité et de sensibilisation');
-    var associationssolidariteColor = '#00FFFF';
     var associationssolidariteInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationssolidariteIconSize = [1.5,13,2,22,60];
     var associationssolidariteURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker5.png';
-     // Couche Autres
+     // Couche Associations autres
     var associationsCount = 0; // initialisation du compteur de clics
     var associationsLink = document.getElementById('Autres');
-    var associationsColor = 'silver';
     var associationsInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var associationsIconSize = [1.5,13,2,22,60]
     var associationsURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker6.png';
     // Couche ascenseur
     var ascenseurCount = 0; // initialisation du compteur de clics
@@ -477,42 +463,17 @@
     var parkingVeloColor = 'purple';
     var parkingVeloInfoPopup = ['Categorie'];
     var parkingVeloIconSize = [1.5,13,2,22,60];
-        // Couche bibliothèques
-    var bibliothequesCount = 0; // initialisation du compteur de clics
-    var bibliothequesLink = document.getElementById("Bibliothèques");
-    var bibliothequesColor = 'purple';
-    var bibliothequesInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var bibliothequesIconSize = [1.5,13,2,22,60];
-    var bibliothequesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/biblio_marker.png';
 
-        // Couche Résidences universitaires
-    var resUnivCount = 0; // initialisation du compteur de clics
-    var resUnivLink = document.getElementById("Résidences universitaires");
-    var resUnivColor = 'purple';
-    var resUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var resUnivIconSize = [1.5,13,2,22,60];
-    var resUnivURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/resuniv_marker.png';
-
-        // Couche Restaurants universitaires
-    var restoUnivCount = 0; // initialisation du compteur de clics
-    var restoUnivLink = document.getElementById("Restaurants universitaires");
-    var restoUnivColor = 'purple';
-    var restoUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
-    var restoUnivIconSize = [1.5,13,2,22,60];
-    var restoUnivURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/restauu_marker.png';
     // Couche Pole santé
     var polesanteCount = 0; // initialisation du compteur de clics
     var polesanteLink = document.getElementById('Pole santé');
-    var polesanteColor = '#FF00D3';
     var polesanteInfoPopup = ['Nom','Categorie','Batiment','Niveau'];
-    var polesanteIconSize = [1.5,13,2,22,60]
     var polesanteURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sante_marker.png';
        // Lineaire PMR
     var lineairePMRCount = 0; // initialisation du compteur de clics
     var lineairePMRLink = document.getElementById("Cheminements accessibles");
     var lineairePMRColor = 'purple';
     var lineairePMRInfoPopup = null;
-    var lineairePMRIconSize = [1.5,13,2,22,60];
     var lineairePMRType = 'line'    
     // Couche Accès PMR
     var accesPMRCount = 0; // initialisation du compteur de clics
@@ -521,7 +482,18 @@
     var accesPMRInfoPopup = ['Categorie'];
     var accesPMRIconSize = [1.5,13,2,22,60]
 
-
+       // Lineaire Metro
+    var lineaireMetroCount = 0; // initialisation du compteur de clics
+    var metroLink = document.getElementById("Métro");
+    var lineaireMetroColor = 'red';
+    var lineaireMetroInfoPopup = null;
+    var lineaireMetroIconSize = [1.5,13,2,22,60];
+    var lineaireMetroType = 'line';   
+    // Couche Accès PMR
+    var metroCount = 0; // initialisation du compteur de clics
+    var metroColor = 'red';
+    var metroInfoPopup = ['Categorie','Nom'];
+    var metroIconSize = [1.5,13,4,22,60]
     ////////////// Autres variables
     var Layers = []; // Liste des couches
     var popup = null; // Variable popup
@@ -757,6 +729,7 @@ var popupContent = null
 			            "line-join": "round",
 			            "line-cap": "round"
 			        },
+			        filter : [ '==','Categorie',nomDeLaCouche],
 			        paint: {
 			            "line-color": colorOrUrl,
 			            "line-width": 2
@@ -1055,7 +1028,7 @@ var popupContent = null
 	            	showLayer(nomDeLaCouche,htmllink);
 	            }
 	        };
-	            getPopup(contenuPopup,nomDeLaCouche,colorOrUrl);
+	            getPopup(contenuPopup,nomDeLaCouche,colorOrUrl,type);
 	            map.on('mousemove', function (e) {
 	                var features = map.queryRenderedFeatures(e.point, { layers: Layers });
 	                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
@@ -1063,8 +1036,8 @@ var popupContent = null
 	        }
 		}
     
-function getPopup(infoPopup,couche,iconURL){
-	console.log(iconURL);
+function getPopup(infoPopup,couche,iconURL,type){
+	console.log(type);
     map.on('click', function (e) {
         var features = map.queryRenderedFeatures(e.point, { 
             layers: [couche] 
@@ -1149,7 +1122,7 @@ function getPopup(infoPopup,couche,iconURL){
                 }
             }
         } 		  
-        if (iconURL !== undefined){
+        if (type=='marker'){
         	popup = new mapboxgl.Popup({ 
             offset: [0,-40],
             closeButton: false
@@ -1350,7 +1323,7 @@ var jsonLines = null;
 $.ajax({
     'async':false,
     'global':false,
-    'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/lineaire_PMR.geojson",
+    'url' : "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/lineaire.geojson",
     'dataType' : "json",
     'success' : function(data){
         jsonLines = data;
@@ -1749,12 +1722,18 @@ map.on("load", function() {
         parkingVeloCount += 1;
     }
     lineairePMRLink.onclick = function(e){
-        addCategoryOverlay(lineairePMRLink,'lineairePMR','layer','line',lineairePMRColor,tailleLine,lineairePMRInfoPopup,lineairePMRCount);
+        addCategoryOverlay(lineairePMRLink,'Cheminements accessibles','layer','line',lineairePMRColor,tailleLine,lineairePMRInfoPopup,lineairePMRCount);
         lineairePMRCount += 1;
     }
     accesPMRLink.onclick = function(e){
         addCategoryOverlay(accesPMRLink,'Accès PMR','layer','point',accesPMRColor,accesPMRIconSize,accesPMRInfoPopup,accesPMRCount);
         accesPMRCount += 1;
+    } 
+    metroLink.onclick = function(e){
+        addCategoryOverlay(metroLink,'Cheminements Métro','layer','line',lineaireMetroColor,lineaireMetroIconSize,lineaireMetroInfoPopup,lineaireMetroCount);
+        lineaireMetroCount += 1;
+        addCategoryOverlay(metroLink,'Métro','layer','point',metroColor,metroIconSize,metroInfoPopup,metroCount);
+        metroCount += 1;        
     }    
 });
 //////////////////////////////////// couches temps réel //////////////////////////////////////////////
