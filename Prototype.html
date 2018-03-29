@@ -486,7 +486,7 @@
     var metroCount = 0; // initialisation du compteur de clics
     var metroColor = 'red';
     var metroInfoPopup = ['Categorie','Nom'];
-    var metroIconSize = [1.5,13,4,22,60];
+    var metroIconSize = [1.5,13,4,22,80];
     // Couche vélostar
     var velostarCount = 0; // initialisation du compteur de clics
     var velostarLink = document.getElementById("Parkings vélo");
@@ -1741,7 +1741,7 @@ map.on("load", function() {
         metroCount += 1;        
     }   
     velostarLink.onclick = function(e){
-        addCategoryOverlay(velostarLink,'Station vélostar','layer','point',velostarColor,velostarIconSize,velostarInfoPopup,velostarCount);
+        addCategoryOverlay(velostarLink,'Station vélostar','layer','point',velostarColor,taillePoint,velostarInfoPopup,velostarCount);
         velostarCount += 1;       
     }
     busLink.onclick = function(e){
