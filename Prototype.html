@@ -306,16 +306,15 @@
     var case2 = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png'    
  
     // Taille overlay:
-    var  tailleMarker = [1,13,0.1,25,1.5]; // taille adaptative des éléments type marker
+    var tailleMarker = [1,13,0.1,25,1.5]; // taille adaptative des éléments type marker
+    var taillePetitMarker = [1,13,0.05,25,1]
 	var tailleLine = [1.5,13,2,22,18]; // taille des éléments type ligne
 	var taillePoint = [1.5,13,2,22,60]; // taille adaptative des éléments type point
-	var taillePicto = [1.5,13,2,22,60]; // taille adaptative des éléments type pictogramme (circulaire)
+	var taillePicto = [1.5,13,0.25,22,1.7]; // taille adaptative des éléments type pictogramme 
     var Etiquette = []; // Liste des couches ayant des étiquettes (exemple amphithéâtres)
 	var activeLayerBackground = '#EEEEEE' // couleur du background des lignes
 
 	/////////////// VARIABLES COUCHES ////////////////////
-
-
     // Couche amphithéâtres
     var amphiCount = 0; // initialisation du compteur 
     var amphitheatresLink = document.getElementById('Amphithéâtres'); // Recherche de la balise html liée à la couche
@@ -385,9 +384,8 @@
     // Couche espace détente
     var espaceDetenteCount = 0; // initialisation du compteur de clics
     var espaceDetenteLink = document.getElementById('Espace détente');
-    var espaceDetenteColor = 'brown';
     var espaceDetenteInfoPopup = ['Categorie','Batiment','Niveau','Info'];
-    var espaceDetenteIconSize = [1.5,13,2,22,60];
+    var espaceDetenteURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/espacedetente_marker.png';
     // Couche cafeterias
     var cafeteriasCount = 0; // initialisation du compteur de clics
     var cafeteriasLink = document.getElementById('Caféterias');
@@ -442,22 +440,18 @@
     // Couche parking
     var parkingCount = 0; // initialisation du compteur de clics
     var parkingLink = document.getElementById('Parkings');
-    var parkingColor = '#fc5770';
     var parkingInfoPopup = ['Categorie','Capacite'];
-    var parkingIconSize = [1.5,13,2,22,60]
+    var parkingURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/paking_picto.png';
     // Couche parking PMR
     var parkingPMRCount = 0; // initialisation du compteur de clics
-    var parkingPMRLink = document.getElementById('Places handicapés');
-    var parkingPMRColor = 'purple';
     var parkingPMRInfoPopup = ['Categorie'];
-    var parkingPMRIconSize = [1.5,13,2,22,60]
+    var parkingPMRURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/parkingH_picto.png';
     // Couche parking vélo
     var parkingVeloCount = 0; // initialisation du compteur de clics
     var parkingVeloLink = document.getElementById("Parkings vélo");
     var parkingVeloColor = 'purple';
     var parkingVeloInfoPopup = ['Categorie'];
     var parkingVeloIconSize = [1.5,13,2,22,60];
-
     // Couche Pole santé
     var polesanteCount = 0; // initialisation du compteur de clics
     var polesanteLink = document.getElementById('Pole santé');
@@ -474,7 +468,6 @@
     var accesPMRColor = '#138fad';
     var accesPMRInfoPopup = ['Categorie'];
     var accesPMRIconSize = [1.5,13,2,22,60]
-
        // Lineaire Metro
     var lineaireMetroCount = 0; // initialisation du compteur de clics
     var metroLink = document.getElementById("Métro");
@@ -487,6 +480,7 @@
     var metroColor = 'red';
     var metroInfoPopup = ['Categorie','Nom'];
     var metroIconSize = [1.5,13,4,22,80];
+    var metroURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/metro_picto.png';
     // Couche vélostar
     var velostarCount = 0; // initialisation du compteur de clics
     var velostarLink = document.getElementById("Parkings vélo");
@@ -718,7 +712,7 @@ var popupContent = null
 
 
 
-   function addCategoryOverlay(htmllink,nomDeLaCouche,ordre,type,colorOrUrl,iconSize,infoPopup,overlayCount){
+   function addCategoryOverlay(htmllink,nomDeLaCouche,ordre,type,colorOrUrl,iconSize,infoPopup,overlayCount,minZoom,maxZoom){
         ////////// AJOUT DES DONNEES TYPE LINEAIRE ////////////
 
         if (type=='line'){
@@ -796,6 +790,16 @@ var popupContent = null
 	        if (overlayCount === 0){
 	        	////////// AJOUT DES DONNEES PONCTUELLES (MARKER) ////////////
 	        	if (type == 'marker'){
+	        		var markerOffset = [-15,-20];
+	        		if (iconSize.toString() === '1,13,0.1,25,1.5'){
+	        			markerOffset = [-30,-50];
+	        			console.log(markerOffset)
+	        		} else if (iconSize.toString() === '1,13,0.05,25,1'){
+	        			markerOffset = [-40,-50]
+	        			console.log(markerOffset)
+	        		
+	        		}
+
 					map.loadImage(colorOrUrl, function(error, image) {
 				        if (error) throw error;
 				        map.addImage(nomDeLaCouche+'image', image);
@@ -812,8 +816,8 @@ var popupContent = null
 				                "icon-size":{'base': iconSize[0],'stops': [[iconSize[1],iconSize[2]], [iconSize[3], iconSize[4]]]},
 				                "icon-allow-overlap": true,
 				                "icon-offset":{ stops: [
-           							[13, [0, -30]],
-						            [22, [0, -40]]
+           							[13, [0, markerOffset[0]]],
+						            [22, [0, markerOffset[1]]]
 						        ]}
 				            },
 
@@ -834,18 +838,18 @@ var popupContent = null
 			                    layout: {
 			                        "text-field": "{Etiquette}",
 			                        "text-anchor": "center",
-			                        "text-size":{'base': 1.5,'stops': [[13, 8], [22, 50]]}, 
+			                        "text-size":{'base': 1.5,'stops': [[16.5, 13], [22, 40]]}, 
 						            "text-allow-overlap": true,
 						            "text-offset":{ stops: [
-		           							[15, [0, -1.75]],
-								            [22, [0, -1.6]]
+		           							[16.5, [0, -1.85]],
+								            [20, [0, -1.85]]
 								        ]}
 
 			                    },
 			                    paint: {
 			                        "text-color":"white",
 			                        },
-			                    minzoom:15.5
+			                    minzoom:16.5
 			                    });
 			                	map.moveLayer(nomDeLaCouche+'etiquette',0)
 		                }
@@ -854,7 +858,8 @@ var popupContent = null
 
 		            }
 	        	////////// AJOUT DES DONNEES PONCTUELLES (POINTS) ////////////
-        		} else if (type = 'point'){
+        		} 
+        		if (type == 'point'){
 
 	            map.addLayer({
 	                id: nomDeLaCouche,
@@ -893,7 +898,9 @@ var popupContent = null
 	                
 	                Layers.push(nomDeLaCoucheEtiquette); 
 	            	} 
-	            } else if (type = 'picto') {
+	            }
+	            if (type == 'picto') {
+	            	console.log(colorOrUrl);
 					map.loadImage(colorOrUrl, function(error, image) {
 				        if (error) throw error;
 				        map.addImage(nomDeLaCouche+'image', image);
@@ -1631,7 +1638,7 @@ map.on("load", function() {
         restoUnivCount += 1;
     }
     cafeteriasLink.onclick = function(e){
-        addCategoryOverlay(cafeteriasLink,'Cafétéria','layer','marker',cafeteriasURL,tailleMarker,cafeteriasInfoPopup,cafeteriasCount);
+        addCategoryOverlay(cafeteriasLink,'Cafétéria','layer','marker',cafeteriasURL,taillePetitMarker,cafeteriasInfoPopup,cafeteriasCount);
         cafeteriasCount += 1;
     }
 
@@ -1652,15 +1659,15 @@ map.on("load", function() {
 
 
     associationsfilieresLink.onclick = function(e){
-        addCategoryOverlay(associationsfilieresLink,'Associations de filières','layer','marker',associationsfilieresURL,tailleMarker,associationsfilieresInfoPopup,associationsfilieresCount);
+        addCategoryOverlay(associationsfilieresLink,'Associations de filières','layer','marker',associationsfilieresURL,taillePetitMarker,associationsfilieresInfoPopup,associationsfilieresCount);
         associationsfilieresCount += 1;
     }
    associationsmasterLink.onclick = function(e){
-    addCategoryOverlay(associationsmasterLink,'Associations de Masters et Doctorats','layer','marker',associationsmasterURL,tailleMarker,associationsmasterInfoPopup,associationsmasterCount);
+    addCategoryOverlay(associationsmasterLink,'Associations de Masters et Doctorats','layer','marker',associationsmasterURL,taillePetitMarker,associationsmasterInfoPopup,associationsmasterCount);
     associationsmasterCount += 1;
     }
      associationsbriochinesLink.onclick = function(e){
-        addCategoryOverlay(associationsbriochinesLink,'Associations briochines','layer','marker',associationsbriochinesURL,tailleMarker,associationsbriochinesInfoPopup,associationsbriochinesCount);
+        addCategoryOverlay(associationsbriochinesLink,'Associations briochines','layer','marker',associationsbriochinesURL,taillePetitMarker,associationsbriochinesInfoPopup,associationsbriochinesCount);
         associationsbriochinesCount += 1;
  		for (var i = 0; i < Layers.length; i++) {        
  			if (Layers[i] = 'Associations briochines'){
@@ -1678,25 +1685,23 @@ map.on("load", function() {
     	}
     }
     associationscasLink.onclick = function(e){
-        addCategoryOverlay(associationscasLink,'Associations culturelles, artistiques et sportives','layer','marker',associationscasURL,tailleMarker,associationscasInfoPopup,associationscasCount);
+        addCategoryOverlay(associationscasLink,'Associations culturelles, artistiques et sportives','layer','marker',associationscasURL,taillePetitMarker,associationscasInfoPopup,associationscasCount);
         associationscasCount += 1;
     }
       associationssolidariteLink.onclick = function(e){
-        addCategoryOverlay(associationssolidariteLink,'Associations de solidarité et de sensibilisation','layer','marker',associationssolidariteURL,tailleMarker,associationssolidariteInfoPopup,associationssolidariteCount);
+        addCategoryOverlay(associationssolidariteLink,'Associations de solidarité et de sensibilisation','layer','marker',associationssolidariteURL,taillePetitMarker,associationssolidariteInfoPopup,associationssolidariteCount);
         associationssolidariteCount += 1;
     }
      associationsLink.onclick = function(e){
-        addCategoryOverlay(associationsLink,'Autres','layer','marker',associationsURL,tailleMarker,associationsInfoPopup,associationsCount);
+        addCategoryOverlay(associationsLink,'Autres','layer','marker',associationsURL,taillePetitMarker,associationsInfoPopup,associationsCount);
         associationsCount += 1;
     }
-
-
 
 //////////////////////////////////  Divers ///////////////////////////////////////
 
 
     toilettesLink.onclick = function(e){
-        addCategoryOverlay(toilettesLink,'Toilettes','layer','marker',toilettesURL,tailleMarker,toilettesInfoPopup,toilettesCount);
+        addCategoryOverlay(toilettesLink,'Toilettes','layer','marker',toilettesURL,taillePetitMarker,toilettesInfoPopup,toilettesCount);
         toilettesCount += 1;
     }
     copieurLink.onclick = function(e){
@@ -1705,7 +1710,7 @@ map.on("load", function() {
     }
     
     espaceDetenteLink.onclick = function(e){
-        addCategoryOverlay(espaceDetenteLink,'Espace détente','layer','point',espaceDetenteColor,espaceDetenteIconSize,espaceDetenteInfoPopup,espaceDetenteCount);
+        addCategoryOverlay(espaceDetenteLink,'Espace détente','layer','marker',espaceDetenteURL,tailleMarker,espaceDetenteInfoPopup,espaceDetenteCount);
         espaceDetenteCount += 1;
     }
 
@@ -1716,9 +1721,9 @@ map.on("load", function() {
         ascenseurCount += 1;
     }
     parkingLink.onclick = function(e){
-        addCategoryOverlay(parkingLink,'Parking','layer','point',parkingColor,parkingIconSize,parkingInfoPopup,parkingCount);
+        addCategoryOverlay(parkingLink,'Parking','layer','picto',parkingURL,taillePicto,parkingInfoPopup,parkingCount);
         parkingCount += 1;
-        addCategoryOverlay(parkingLink,'Parking PMR','layer','point',parkingPMRColor,parkingPMRIconSize,parkingPMRInfoPopup,parkingPMRCount);
+        addCategoryOverlay(parkingLink,'Parking PMR','layer','picto',parkingPMRURL,taillePicto,parkingPMRInfoPopup,parkingPMRCount);
         parkingPMRCount += 1;
     }
 
@@ -1737,7 +1742,7 @@ map.on("load", function() {
     metroLink.onclick = function(e){
         addCategoryOverlay(metroLink,'Cheminements Métro','layer','line',lineaireMetroColor,lineaireMetroIconSize,lineaireMetroInfoPopup,lineaireMetroCount);
         lineaireMetroCount += 1;
-        addCategoryOverlay(metroLink,'Métro','layer','point',metroColor,metroIconSize,metroInfoPopup,metroCount);
+        addCategoryOverlay(metroLink,'Métro','layer','picto',metroURL,taillePicto,metroInfoPopup,metroCount);
         metroCount += 1;        
     }   
     velostarLink.onclick = function(e){
