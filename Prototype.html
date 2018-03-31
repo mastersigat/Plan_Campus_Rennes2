@@ -1754,12 +1754,12 @@ map.on("load", function() {
 var geojsonVelos = null;
 var previousDataVelos = { times: [], stations: [] };
 var prevInfo = null;
-var velostarCount = 0
+var velostarTRCount = 0
 var nomLayer= null
 var velostarLink = document.getElementById('Stations vélostar');
 velostarLink.onclick = function (e) {
-    velostarCount +=1 ;
-    if (velostarCount === 1){
+    velostarTRCount +=1 ;
+    if (velostarTRCount === 1){
         updateData();
         function updateData() {
             //Appel de l'API pour les vélos
@@ -1882,12 +1882,12 @@ velostarLink.onclick = function (e) {
 var geojsonBus = null;
 var previousDataBus = { times: [], stations: [] };
 var prevInfo = null;
-var busCount = 0
+var busTRCount = 0
 var nomLayerBus= null
 var busLink = document.getElementById('Réseau de bus');
 busLink.onclick = function (e) {
-    busCount +=1;
-    if (busCount === 1){
+    busTRCount +=1;
+    if (busTRCount === 1){
         updateBusData();
         function updateBusData() {
             //Appel de l'API pour les vélos
