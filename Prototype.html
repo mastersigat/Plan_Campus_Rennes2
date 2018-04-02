@@ -240,7 +240,15 @@
         </div>
     </div>
 </div>
-<script>    
+<script> 
+	
+function getQueryStringValue (key) {  
+  return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+}  
+
+
+// Would write the value of the QueryString-variable called name to the console  
+console.log(getQueryStringValue("name")); 
     ///////////////////////////////////////  Initialisation du fond de carte //////////////////////////////////
 // Adapter le zoom, et la largeur / placement des raccourcis spatiaux en fonction de l'écran
     var largeurEcran = screen.width
