@@ -245,10 +245,11 @@
 function getQueryStringValue (key) {  
   return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
 }  
+var overlay = getQueryStringValue("layer").toString();
 
 
 // Would write the value of the QueryString-variable called name to the console  
-console.log(getQueryStringValue("name")); 
+console.log(getQueryStringValue("layer")); 
     ///////////////////////////////////////  Initialisation du fond de carte //////////////////////////////////
 // Adapter le zoom, et la largeur / placement des raccourcis spatiaux en fonction de l'écran
     var largeurEcran = screen.width
@@ -1583,10 +1584,15 @@ map.on("load", function() {
 //////////////////////////////////  Groupe Amphis et salles spécifiques //////////////////////////////////////
 
 
+	if (overlay == 'Amphithéâtre'){
+        addCategoryOverlay(amphitheatresLink,'Amphithéâtre','layer','marker',amphiURL,tailleMarker,amphiInfoPopup,amphiCount);
+        amphiCount += 1;		
+	} else {
     amphitheatresLink.onclick = function(e){
         addCategoryOverlay(amphitheatresLink,'Amphithéâtre','layer','marker',amphiURL,tailleMarker,amphiInfoPopup,amphiCount);
         amphiCount += 1;
-    }
+    	}
+	}
     sallesInfoLink.onclick = function(e){
         addCategoryOverlay(sallesInfoLink,'Salle informatique','layer','marker',sallesInfoURL,tailleMarker,sallesInfoInfoPopup,sallesInfoCount);
         sallesInfoCount += 1;
