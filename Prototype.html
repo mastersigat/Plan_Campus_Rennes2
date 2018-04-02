@@ -241,18 +241,14 @@
     </div>
 </div>
 <script>  
+
+//////////////////////////////////////  Récupération des variables URL //////////////////////////////////
+
 function getQueryStringValue (key) {  
   return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
 }  
-
-
-// Would write the value of the QueryString-variable called name to the console  
-
 var overlay = getQueryStringValue("layer").toString();
-
 var overlayPoint = getQueryStringValue("point").toString();
-
-
     ///////////////////////////////////////  Initialisation du fond de carte //////////////////////////////////
 // Adapter le zoom, et la largeur / placement des raccourcis spatiaux en fonction de l'écran
     var largeurEcran = screen.width
@@ -512,7 +508,8 @@ var overlayPoint = getQueryStringValue("point").toString();
     var popupList = null; // Variable popup sur les listes d'enregistrements
     // Coordonnées de la salle sélectionnée
     var salleRX = null; 
-    var salleRY = null;  
+    var salleRY = null; 
+    var pictoCount = 0; 
     //////////////////////////////////   Initialisation de de fonctions //////////////////////////////////////
     
     //Variables nécessaires à la fonctionnalité de changement de vue (2D -> 3D)
@@ -537,6 +534,7 @@ var overlayPoint = getQueryStringValue("point").toString();
             map.removeLayer(bati2DHId);
             map.removeLayer(etiqBati2DId);      
         };
+        pictoCount +=1;
         bati3DCount += 1;
         bati3DId = 'bati3DId'+bati3DCount;
         bati3DHId = 'bati3DHId'+bati3DCount;
@@ -621,15 +619,18 @@ var overlayPoint = getQueryStringValue("point").toString();
             type: "symbol",
             source: {
                 type: "geojson",
-                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data//habillage/batiments_centroides.geojson"
+                data: POIBrut
             },
+            filter : [ '==','Categorie','Batiment'],
             layout: {
-                "text-field": "{name}",
+                "text-field": "{Etiquette}",
                 "text-anchor": "center",
-                "text-size":{'base': 1.3,'stops': [[13, 2.2], [22, 60]]},
+                "text-size":{'base': 1.3,'stops': [[13, 2.5], [22, 60]]},
+                "text-max-width":8
             },
             minzoom : 14,
         });
+        addPictoFondDeCarte()
     };
 var popupContent = null
     // Fonction pour afficher le référentiel bati 2D
@@ -639,6 +640,7 @@ var popupContent = null
             map.removeLayer(bati3DHId);
             map.removeLayer(etiqBati3DId);      
         };
+        pictoCount +=1;
         bati2DCount += 1;
         bati2DId = 'bati2DId'+bati2DCount;
         bati2DHId = 'bati2DHId'+bati2DCount;
@@ -710,19 +712,182 @@ var popupContent = null
             type: "symbol",
             source: {
                 type: "geojson",
-                data: "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/habillage/batiments_centroides.geojson"
+                data: POIBrut
             },
+            filter : [ '==','Categorie','Batiment'],
             layout: {
-                "text-field": "{name}",
+                "text-field": "{Etiquette}",
                 "text-anchor": "center",
                 "text-size":{'base': 1.3,'stops': [[13, 2.5], [22, 60]]},
                 "text-max-width":8
             },
             minzoom : 14,
             });
+        	addPictoFondDeCarte()
         };
 
-
+function addPictoFondDeCarte(){
+    //picto fond de carte
+    //Bibliothèque
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/biblio.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('biblio', image);
+        map.addLayer({
+            "id": "biblio"+pictoCount,
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/biblio.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "biblio",
+                "icon-size": 0.90
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Caféteria
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/cafe.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('cafe', image);
+        map.addLayer({
+            "id": "cafeteria"+pictoCount,
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/cafeteria.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "cafe",
+                "icon-size": 0.80
+            },
+			minzoom : 16,
+        });
+    });
+	
+    //Restaurant U
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/resto.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('resto', image);
+        map.addLayer({
+            "id": "ru"+pictoCount,
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/ru.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "resto",
+                "icon-size": 0.80
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Parking
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/parking.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('parking', image);
+        map.addLayer({
+            "id": "parking"+pictoCount,
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/parking.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "parking",
+                "icon-size": 0.50
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Metro
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/metro.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('metro', image);
+        map.addLayer({
+            "id": "metro"+pictoCount,
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/metro.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "metro",
+                "icon-size": 0.80
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Pôle Sante
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/sante.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('sante', image);
+        map.addLayer({
+            "id": "polesante"+pictoCount,
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/polesante.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "sante",
+                "icon-size": 0.80
+            },
+			minzoom : 17,
+        });
+    });
+	
+    //Piscine
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/piscine.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('piscine', image);
+        map.addLayer({
+            "id": "piscine"+pictoCount,
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/piscine.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "piscine",
+                "icon-size": 1.00
+            },
+			minzoom : 15,
+        });
+    });
+	
+    //Bus
+    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/bus.png", function(error, image) {
+        if (error) throw error;
+        map.addImage('bus', image);
+        map.addLayer({
+            "id": "bus"+pictoCount,
+            "type": "symbol",
+            "source": {
+                "type": "geojson",
+                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/bus.geojson"
+            },
+            "layout": {
+                "visibility": 'visible',
+				"icon-image": "bus",
+                "icon-size": 0.60
+            },
+			minzoom : 16,
+        });
+    });
+ }
 	function addPointOverlay(name,iconSize){
 		var iconURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/recherche.png'
 		var markerOffset = [-15,-20];
@@ -1455,170 +1620,7 @@ map.on("load", function() {
             'line-width' : {'base': 1.2,'stops': [[13, 0.5], [22, 3]]}
             }
         });
-
-     //picto fond de carte
-    //Bibliothèque
-    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/biblio.png", function(error, image) {
-        if (error) throw error;
-        map.addImage('biblio', image);
-        map.addLayer({
-            "id": "biblio",
-            "type": "symbol",
-            "source": {
-                "type": "geojson",
-                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/biblio.geojson"
-            },
-            "layout": {
-                "visibility": 'visible',
-				"icon-image": "biblio",
-                "icon-size": 0.90
-            },
-			minzoom : 15,
-        });
-    });
-	
-    //Caféteria
-    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/cafe.png", function(error, image) {
-        if (error) throw error;
-        map.addImage('cafe', image);
-        map.addLayer({
-            "id": "cafeteria",
-            "type": "symbol",
-            "source": {
-                "type": "geojson",
-                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/cafeteria.geojson"
-            },
-            "layout": {
-                "visibility": 'visible',
-				"icon-image": "cafe",
-                "icon-size": 0.80
-            },
-			minzoom : 16,
-        });
-    });
-	
-    //Restaurant U
-    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/resto.png", function(error, image) {
-        if (error) throw error;
-        map.addImage('resto', image);
-        map.addLayer({
-            "id": "ru",
-            "type": "symbol",
-            "source": {
-                "type": "geojson",
-                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/ru.geojson"
-            },
-            "layout": {
-                "visibility": 'visible',
-				"icon-image": "resto",
-                "icon-size": 0.80
-            },
-			minzoom : 15,
-        });
-    });
-	
-    //Parking
-    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/parking.png", function(error, image) {
-        if (error) throw error;
-        map.addImage('parking', image);
-        map.addLayer({
-            "id": "parking",
-            "type": "symbol",
-            "source": {
-                "type": "geojson",
-                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/parking.geojson"
-            },
-            "layout": {
-                "visibility": 'visible',
-				"icon-image": "parking",
-                "icon-size": 0.50
-            },
-			minzoom : 15,
-        });
-    });
-	
-    //Metro
-    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/metro.png", function(error, image) {
-        if (error) throw error;
-        map.addImage('metro', image);
-        map.addLayer({
-            "id": "metro",
-            "type": "symbol",
-            "source": {
-                "type": "geojson",
-                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/metro.geojson"
-            },
-            "layout": {
-                "visibility": 'visible',
-				"icon-image": "metro",
-                "icon-size": 0.80
-            },
-			minzoom : 15,
-        });
-    });
-	
-    //Pôle Sante
-    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/sante.png", function(error, image) {
-        if (error) throw error;
-        map.addImage('sante', image);
-        map.addLayer({
-            "id": "polesante",
-            "type": "symbol",
-            "source": {
-                "type": "geojson",
-                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/polesante.geojson"
-            },
-            "layout": {
-                "visibility": 'visible',
-				"icon-image": "sante",
-                "icon-size": 0.80
-            },
-			minzoom : 17,
-        });
-    });
-	
-    //Piscine
-    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/piscine.png", function(error, image) {
-        if (error) throw error;
-        map.addImage('piscine', image);
-        map.addLayer({
-            "id": "piscine",
-            "type": "symbol",
-            "source": {
-                "type": "geojson",
-                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/piscine.geojson"
-            },
-            "layout": {
-                "visibility": 'visible',
-				"icon-image": "piscine",
-                "icon-size": 1.00
-            },
-			minzoom : 15,
-        });
-    });
-	
-    //Bus
-    map.loadImage("https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/iconfond/bus.png", function(error, image) {
-        if (error) throw error;
-        map.addImage('bus', image);
-        map.addLayer({
-            "id": "bus",
-            "type": "symbol",
-            "source": {
-                "type": "geojson",
-                "data": "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/data/fondcarte/bus.geojson"
-            },
-            "layout": {
-                "visibility": 'visible',
-				"icon-image": "bus",
-                "icon-size": 0.60
-            },
-			minzoom : 16,
-        });
-    });
-       
-
-    
+  
 
     
 //////////////////////////////////   OVERLAYS //////////////////////////////////////
