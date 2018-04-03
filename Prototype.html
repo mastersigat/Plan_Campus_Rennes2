@@ -1377,7 +1377,8 @@ function getPopup(infoPopup,couche,iconURL,type){
 }
 var salleRecherchee = null
 function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
-    salleRecherchee = null
+    salleRecherchee = null;
+
     var listeLink = []; 
     elLink = null
     elList = null
@@ -1389,13 +1390,14 @@ function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
             listeDeNoms.push(data[i]['Nom']);
         }              
         for (i = 0; i < listeDeNoms.length; i++){
+        	currentName = listeDeNoms[i].split("'").join("!");
             elList = document.createElement('li');
             elementCible.appendChild(elList);
             elLink = document.createElement('a');
             elLink.innerHTML = listeDeNoms[i];
             elLink.setAttribute('id',listeDeNoms[i]);
             elLink.setAttribute('href','#');
-            var theFunction = 'javascript:switchPOI('+'\''+listeDeNoms[i].replace("'","!")+'\')'
+            var theFunction = 'javascript:switchPOI('+'\''+currentName+'\')'
             elLink.setAttribute('href',theFunction);
             elList.appendChild(elLink);
         }
@@ -1445,7 +1447,7 @@ function getSwitchPopup(){
         .addTo(map);
 };
 function switchPOI(value){
-    value = value.replace("!","'");
+    value = value.split("!").join("'");
     salleRecherchee = null;
     salleRX = null;
     salleRY = null;
