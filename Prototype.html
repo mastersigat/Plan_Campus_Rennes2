@@ -483,12 +483,18 @@ var overlayPoint = getQueryStringValue("point").toString();
     var lineaireMetroInfoPopup = null;
     var lineaireMetroIconSize = [1.5,13,2,22,60];
     var lineaireMetroType = 'line';   
-    // Couche Accès PMR
+    // Couche arrets metro
     var metroCount = 0; // initialisation du compteur de clics
     var metroColor = 'red';
     var metroInfoPopup = ['Categorie','Nom'];
     var metroIconSize = [1.5,13,4,22,80];
     var metroURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/metro_picto.png';
+    // Couche arrets bus
+    var busCount = 0; // initialisation du compteur de clics
+    var busColor = 'green';
+    var busInfoPopup = ['Categorie','Nom'];
+    var busIconSize = [1.5,13,4,22,80];
+    var busURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/bus_marker.png';
     // Couche vélostar
     var velostarCount = 0; // initialisation du compteur de clics
     var velostarLink = document.getElementById("Parkings vélo");
@@ -1881,7 +1887,9 @@ map.on("load", function() {
     }
     busLink.onclick = function(e){
         addCategoryOverlay(busLink,'Cheminements Bus','layer','line',busLineColor,tailleLine,busLineInfoPopup,busLineCount);
-        busLineCount += 1;       
+        busLineCount += 1; 
+        addCategoryOverlay(busLink,'Bus','layer','picto',busURL,taillePicto,busInfoPopup,busCount);
+        busCount += 1;      
     }           
 });
 //////////////////////////////////// couches temps réel //////////////////////////////////////////////
