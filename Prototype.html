@@ -1212,6 +1212,7 @@ function addPictoFondDeCarte(){
 		                map.setLayoutProperty(nomDeLaCouche,'visibility','none');
 		                Layers = Layers.filter(item => item != nomDeLaCouche);
 		                if (popup) {popup.remove();}
+		                if (popupList){popupList.remove();}
 		                if (etiquette){
 		                    map.setLayoutProperty(nomDeLaCoucheEtiquette,'visibility','none');
 		                    Layers = Layers.filter(item => item != nomDeLaCoucheEtiquette);
