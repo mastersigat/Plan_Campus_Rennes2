@@ -263,11 +263,12 @@ var overlayPoint = getQueryStringValue("point").toString();
 	Bouton3D.setAttribute("id","DDDButton");
 	Bouton3D.innerHTML = '3D';
     if (largeurEcran < 500){
+    	getElementById('map').style.height = '80vh';    		    
     	zoomBase = 14.8;
     	BoutonsD.style.position = 'absolute';
     	BoutonsD.style.height = '50px';
     	BoutonsD.style.width = '100px';
-    	BoutonsD.style.top = '80%';
+    	BoutonsD.style.top = '90%';
     	BoutonsD.style.left = '50%';
     	BoutonsD.style.marginTop = '-25px';
     	BoutonsD.style.marginLeft = '-50px';
