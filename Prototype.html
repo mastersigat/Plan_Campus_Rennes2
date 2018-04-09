@@ -247,6 +247,7 @@
 function getQueryStringValue (key) {  
   return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
 }  
+var device = null
 var overlay = getQueryStringValue("layer").toString();
 var overlayPoint = getQueryStringValue("point").toString();
     ///////////////////////////////////////  Initialisation du fond de carte //////////////////////////////////
@@ -263,6 +264,7 @@ var overlayPoint = getQueryStringValue("point").toString();
 	Bouton3D.setAttribute("id","DDDButton");
 	Bouton3D.innerHTML = '3D';
     if (largeurEcran < 500){
+		device = 'phone';
     	document.getElementById('map').style.height = '80vh';    		    
     	zoomBase = 14.8;
     	BoutonsD.style.position = 'absolute';
@@ -278,7 +280,6 @@ var overlayPoint = getQueryStringValue("point").toString();
     	BoutonsD.appendChild(Bouton2D);
     	BoutonsD.appendChild(Bouton3D);
     }
-    if (largeurEcran > 1500){zoomBase = 16.1;}
     if (largeurEcran > 1000) {https://github.com/Xueimuohtreb/Plan-interactif/upload/master/icons/iconfond
         document.getElementById('campus').style.width = '40%';
         document.getElementById('Villejean').style.width= '33%';
@@ -1499,11 +1500,13 @@ function switchPOI(value){
     } 
 //////////////////////////////////   Interactivité menus //////////////////////////////////////
     // ZOOMS sur les campus
-    var zoomLaHarpe = document.getElementById("LaHarpe")
+    var flyingZoom = 15.8;
+	if (device = 'phone'){flyingZoom = 15};
+	var zoomLaHarpe = document.getElementById("LaHarpe")
     zoomLaHarpe.addEventListener('click', function(){
         map.setMaxBounds(rennesBounds);
         map.flyTo({
-            zoom:16,
+            zoom:flyingZoom,
             center:[-1.7091, 48.1254]
         });
         zoomLaHarpe.style.backgroundColor = '#286090';
@@ -1515,7 +1518,7 @@ function switchPOI(value){
     zoomVillejean.addEventListener('click', function(){
         map.setMaxBounds(rennesBounds);
         map.flyTo({
-            zoom:16,
+            zoom:flyingZoom,
             center:[-1.7013, 48.119365]
         });
         zoomVillejean.style.backgroundColor = '#286090';
@@ -1526,7 +1529,7 @@ function switchPOI(value){
     zoomMazier.addEventListener('click',function(){
         map.setMaxBounds(mazierBounds);
         map.flyTo({
-            zoom:16,
+            zoom:flyingZoom,
             center:[-2.7410000,48.513033]
         });
         zoomMazier.style.backgroundColor = '#286090';
