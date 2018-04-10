@@ -247,13 +247,13 @@
 function getQueryStringValue (key) {  
   return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
 }  
-var device = null
 var overlay = getQueryStringValue("layer").toString();
 var overlayPoint = getQueryStringValue("point").toString();
     ///////////////////////////////////////  Initialisation du fond de carte //////////////////////////////////
 // Adapter le zoom, et la largeur / placement des raccourcis spatiaux en fonction de l'écran
+    var device = null; 
     var largeurEcran = screen.width
-    zoomBase = 15.8;
+    var zoomBase = 15.8;
     var BoutonsD = document.getElementById("DDD")
 	var Bouton2D = document.createElement('button');
 	Bouton2D.setAttribute("class","btn btn-primary");
@@ -312,9 +312,8 @@ var overlayPoint = getQueryStringValue("point").toString();
     map.dragRotate.disable(); // vue 2D de base 
 
     ///////////////////////////////////////  initialisation des variables overlay ////////////////////////////////// 
-    var case1 = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png'
-    var case2 = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png'    
- 
+    var case1 = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png'; // Lien vers l'image case non cochée
+    var case2 = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case2.png'; // Lien vers l'image case cochée
     // Taille overlay:
     var tailleMarker = [1,13,0.1,25,1.5]; // taille adaptative des éléments type marker /!\ NE PAS MODIFIER : pour toute modification de taille, changer la taille du .png
     var taillePetitMarker = [1,13,0.05,25,1] // taille adaptative des éléments type marker /!\ NE PAS MODIFIER : pour toute modification de taille, changer la taille du .png
@@ -329,187 +328,170 @@ var overlayPoint = getQueryStringValue("point").toString();
     var amphiCount = 0; // initialisation du compteur 
     var amphitheatresLink = document.getElementById('Amphithéâtre'); // Recherche de la balise html liée à la couche
     Etiquette.push('Amphithéâtre'); // Ajout des etiquettes
-    var amphiInfoPopup = ['Nom','Batiment','Niveau','Capacite']; // Données ajoutées dans la popup
     var amphiURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/amphi_marker.png';   
     // Couche salles informatique
     var sallesInfoCount = 0; 
     var sallesInfoLink = document.getElementById('Salles informatique');
-    var sallesInfoInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var sallesInfoURL =  'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/salle_info_marker.png';
     // Couche salles spécifiques
     var sallesSpeCount = 0;
     var listeSallesSpecifiques = []; // Création dynamique de la liste des salles à partir du jeu de données
     var sallesSpecifiquesLink = document.getElementById('Salles spécifiques');
     var insertSallesSpecifiques = document.getElementById('insertSallesSpecifiques');
-    var sallesSpeInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var sallesSpeURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sallespe_marker.png' ;  
     // Services centraux
     var ServicescenCount = 0;
     var listeServicescen= []; // Création dynamique de la liste des salles à partir du jeu de données
     var ServicescenLink = document.getElementById('Services centraux');
     var insertServicescen = document.getElementById('insertServicescen');
-    var ServicescenInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var ServicescenURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/servicesce.png';   
     // Services commun
     var ServicescomCount = 0;
     var listeServicescom = []; // Création dynamique de la liste des salles à partir du jeu de données
     var ServicescomLink = document.getElementById('Services commun');
     var insertServicescom = document.getElementById('insertServicescom');
-    var ServicescomInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var ServicescomURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/servicesco.png';    
     // Services généraux
     var ServicesgenCount = 0;
     var listeServicesgen = []; // Création dynamique de la liste des salles à partir du jeu de données
     var ServicesgenLink = document.getElementById('Services généraux');
     var insertServicesgen = document.getElementById('insertServicesgen');
-    var ServicesgenInfoPopup = ['Nom','Batiment','Niveau','Info','Image','Mail','Tel','Lien'];
     var ServicesgenURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/servcesge.png';
     // Couche bibliothèques
     var bibliothequesCount = 0; // initialisation du compteur de clics
     var bibliothequesLink = document.getElementById("Bibliothèques");
-    var bibliothequesInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var bibliothequesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/biblio_marker.png';
     // Couche Lieu culturel
     var lieuCulturelCount = 0; // initialisation du compteur de clics
     var lieuCulturelLink = document.getElementById('Lieu culturel');
     var listelieuCulturel = []; // Création dynamique de la liste des salles à partir du jeu de données
-    var lieuCulturelInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Capacite','Mail','Tel','Lien'];
     var insertLieuCulturel = document.getElementById('insertLieuCulturel');
     var lieuCulturelURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/culture_marker.png';
     // Couche équipements sportifs
     var equipementSportifCount = 0; // initialisation du compteur de clics
     var equipementSportifLink = document.getElementById('Equipements sportifs');
-    var equipementSportifInfoPopup = ['Nom','Categorie','Batiment','Info'];
     var equipementSportifURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sport_marker.png';    
     // Couche toilettes
     var toilettesCount = 0; // initialisation du compteur de clics
     var toilettesLink = document.getElementById('Toilettes');
-    var toilettesInfoPopup = ['Categorie','Batiment','Niveau','Info'];
     var toilettesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/wc_marker.png';  
     // Couche copieurs
     var copieurCount = 0; // initialisation du compteur de clics
     var copieurLink = document.getElementById('Copieurs');
-    var copieursInfoPopup = ['Categorie','Batiment','Niveau','Info'];
     var copieursURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/copieur_marker.png';
     // Couche espace détente
     var espaceDetenteCount = 0; // initialisation du compteur de clics
     var espaceDetenteLink = document.getElementById('Espace détente');
-    var espaceDetenteInfoPopup = ['Categorie','Batiment','Niveau','Info'];
     var espaceDetenteURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/espacedetente_marker.png';
     // Couche cafeterias
     var cafeteriasCount = 0; // initialisation du compteur de clics
     var cafeteriasLink = document.getElementById('Caféterias');
-    var cafeteriasInfoPopup = ['Categorie','Batiment','Niveau','Info'];
     var cafeteriasURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/cafeteria_marker.png';
     // Couche Résidences universitaires
     var resUnivCount = 0; // initialisation du compteur de clics
     var resUnivLink = document.getElementById("Résidences universitaires");
-    var resUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var resUnivURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/resuniv_marker.png';
     // Couche Restaurants universitaires
     var restoUnivCount = 0; // initialisation du compteur de clics
     var restoUnivLink = document.getElementById("Restaurants universitaires");
-    var restoUnivInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var restoUnivURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/restauu_marker.png';
     // Couche Associations de filières
     var associationsfilieresCount = 0; // initialisation du compteur de clics
     var associationsfilieresLink = document.getElementById('Associations de filières');
-    var associationsfilieresInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationsfilieresURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker.png';
      // Couche Associations de Masters et Doctorats
     var associationsmasterCount = 0; // initialisation du compteur de clics
     var associationsmasterLink = document.getElementById('Associations de Masters et Doctorats');
-    var associationsmasterInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationsmasterURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker2.png';
     // Couche Associations briochines
     var associationsbriochinesCount = 0; // initialisation du compteur de clics
     var associationsbriochinesLink = document.getElementById('Associations briochines');
-    var associationsbriochinesInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationsbriochinesURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker3.png';
     // Couche Associations culturelles, artistiques et sportives
     var associationscasCount = 0; // initialisation du compteur de clics
     var associationscasLink = document.getElementById('Associations culturelles, artistiques et sportives');
-    var associationscasInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationscasURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker4.png';
     // Couche Associations de solidarité et de sensibilisation
     var associationssolidariteCount = 0; // initialisation du compteur de clics
     var associationssolidariteLink = document.getElementById('Associations de solidarité et de sensibilisation');
-    var associationssolidariteInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationssolidariteURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker5.png';
      // Couche Associations autres
     var associationsCount = 0; // initialisation du compteur de clics
     var associationsLink = document.getElementById('Autres');
-    var associationsInfoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
     var associationsURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/association_marker6.png';
     // Couche ascenseur
     var ascenseurCount = 0; // initialisation du compteur de clics
     var ascenseurLink = document.getElementById('Ascenseurs');
     var ascenseurColor = '#1da34a';
-    var ascenseurInfoPopup = ['Categorie'];
     var ascenseurIconSize = [1.5,13,2,22,60];
     // Couche parking
     var parkingCount = 0; // initialisation du compteur de clics
     var parkingLink = document.getElementById('Parkings');
-    var parkingInfoPopup = ['Categorie','Capacite'];
     var parkingURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/paking_picto.png';
     // Couche parking PMR
     var parkingPMRCount = 0; // initialisation du compteur de clics
-    var parkingPMRInfoPopup = ['Categorie'];
     var parkingPMRURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/parkingH_picto.png';
     // Couche parking vélo
     var parkingVeloCount = 0; // initialisation du compteur de clics
     var parkingVeloLink = document.getElementById("Parkings vélo");
     var parkingVeloColor = 'purple';
-    var parkingVeloInfoPopup = ['Categorie'];
     var parkingVeloIconSize = [1.5,13,2,22,60];
     // Couche Pole santé
     var polesanteCount = 0; // initialisation du compteur de clics
     var polesanteLink = document.getElementById('Pole santé');
-    var polesanteInfoPopup = ['Nom','Categorie','Batiment','Niveau'];
     var polesanteURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/sante_marker.png';
        // Lineaire PMR
     var lineairePMRCount = 0; // initialisation du compteur de clics
     var lineairePMRLink = document.getElementById("Cheminements accessibles");
     var lineairePMRColor = '#138fad';
-    var lineairePMRInfoPopup = null;
     var lineairePMRType = 'line'    
     // Couche Accès PMR
     var accesPMRCount = 0; // initialisation du compteur de clics
     var accesPMRColor = '#138fad';
-    var accesPMRInfoPopup = ['Categorie'];
     var accesPMRIconSize = [1.5,13,2,22,60]
        // Lineaire Metro
     var lineaireMetroCount = 0; // initialisation du compteur de clics
     var metroLink = document.getElementById("Métro");
     var lineaireMetroColor = 'red';
-    var lineaireMetroInfoPopup = null;
     var lineaireMetroIconSize = [1.5,13,2,22,60];
     var lineaireMetroType = 'line';   
     // Couche arrets metro
     var metroCount = 0; // initialisation du compteur de clics
     var metroColor = 'red';
-    var metroInfoPopup = ['Categorie','Nom'];
     var metroIconSize = [1.5,13,4,22,80];
     var metroURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/metro_picto.png';
     // Couche arrets bus
     var busCount = 0; // initialisation du compteur de clics
     var busColor = 'green';
-    var busInfoPopup = ['Categorie','Nom','Info'];
     var busIconSize = [1.5,13,4,22,80];
     var busURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/bus_marker.png';
     // Couche vélostar
     var velostarCount = 0; // initialisation du compteur de clics
     var velostarLink = document.getElementById("Parkings vélo");
     var velostarColor = 'green';
-    var velostarInfoPopup = ['Categorie','Capacite'];
     // Couche bus
     var busLineCount = 0; // initialisation du compteur de clics
     var busLineLink = document.getElementById("Réseau de bus");
     var busLineColor = '#3893F5';
-    var busLineInfoPopup = ['Categorie','Capacite'];
 
+	//// Récupération en continu de l'état des menus des couches suivantes : 
+	var ServicescenLinkState = null;
+	setInterval(function (){
+		ServicescenLinkState = ServicescenLink.nextElementSibling.className;
+	},500);
+	var ServicesgenLinkState = null;
+	setInterval(function (){
+		ServicesgenLinkState = ServicesgenLink.nextElementSibling.className;
+	},500);
+	var ServicescomLinkState = null;
+	setInterval(function (){
+		ServicescomLinkState = ServicescomLink.nextElementSibling.className;
+	},500);
+	setInterval(function (){
+		sallesSpeLinkState = sallesSpecifiquesLink.nextElementSibling.className;
+	},500);
 
-
+	var listLayers = [ServicescomLink,ServicesgenLink,ServicescenLink,sallesSpecifiquesLink];
     ////////////// Autres variables
     var Layers = []; // Liste des couches
     var popup = null; // Variable popup
@@ -928,13 +910,12 @@ function addPictoFondDeCarte(){
 	        });
 	    });
 	    Layers.push(name);
-	    var infoPopup = ['Nom','Categorie','Batiment','Niveau','Info','Mail','Tel','Lien'];
 	    var couche = name;
 	    var type = 'marker';
 
 	}
 
-    function addCategoryOverlay(htmllink,nomDeLaCouche,ordre,type,colorOrUrl,iconSize,infoPopup,overlayCount,minZoom,maxZoom){
+    function addCategoryOverlay(htmllink,nomDeLaCouche,ordre,type,colorOrUrl,iconSize,overlayCount,minZoom,maxZoom){
         ////////// AJOUT DES DONNEES TYPE LINEAIRE ////////////
 
         if (type=='line'){
@@ -1002,7 +983,6 @@ function addPictoFondDeCarte(){
 		////////// AJOUT DES DONNEES PONCTUELLES ////////////
         } else {
 	        var etiquette = false;
-	        var contenuPopup = infoPopup;
 	        for(var i = 0; i < Etiquette.length; i++){
 	            if (Etiquette[i]==nomDeLaCouche){
 	                etiquette = true;
@@ -1060,18 +1040,17 @@ function addPictoFondDeCarte(){
 			                    layout: {
 			                        "text-field": "{Etiquette}",
 			                        "text-anchor": "center",
-			                        "text-size":{'base': 1.5,'stops': [[16.5, 13], [22, 40]]}, 
+			                        "text-size":{'base': 1.5,'stops': [[15.8, 10], [20, 25]]}, 
 						            "text-allow-overlap": true,
 						            "text-offset":{ stops: [
-		           							[16.5, [0, -1.85]],
-								            [20, [0, -1.85]]
+		           							[15.8, [0, -1.8]],
+								            [20, [0, -2.4]]
 								        ]}
-
 			                    },
 			                    paint: {
 			                        "text-color":"white",
 			                        },
-			                    minzoom:16.5
+			                    minzoom:15.8
 			                    });
 			                	map.moveLayer(nomDeLaCouche+'etiquette',0)
 		                }
@@ -1115,7 +1094,7 @@ function addPictoFondDeCarte(){
 	                    paint: {
 	                        "text-color":"white"
 	                        },
-	                    minzoom:15.5
+	                    minzoom:15.8
 	                    });
 	                
 	                Layers.push(nomDeLaCoucheEtiquette); 
@@ -1143,7 +1122,6 @@ function addPictoFondDeCarte(){
 				        });
 				    });
 				    Layers.push(nomDeLaCouche);
-
 				    if (etiquette){                
 		                function etiqOverlay(){
 			                overlayEtiquette = map.addLayer({
@@ -1163,15 +1141,13 @@ function addPictoFondDeCarte(){
 			                    paint: {
 			                        "text-color":"white",
 			                        },
-			                    minzoom:15.5
+			                    minzoom:15.8
 			                    });
 			                	map.moveLayer(nomDeLaCouche+'etiquette',0)
 		                }
 		                setTimeout(etiqOverlay,1000);
 		                Layers.push(nomDeLaCoucheEtiquette);
-
 		            }
-
 	            }      
 	                Layers.push(nomDeLaCouche); 
 	                if (htmllink.nodeName == 'LI'){
@@ -1188,12 +1164,8 @@ function addPictoFondDeCarte(){
 	                if (htmllink.nodeName == 'A'){
 	                    htmllink.childNodes[0].setAttribute('src',case2);
 	                    htmllink.parentElement.style.backgroundColor = activeLayerBackground;
-	                }
-
-
-  		
+	                } 		
 	        } else {
-
 	        	function hideLayer(nomDeLaCouche,htmllink){
 	        		if (htmllink.nodeName == 'LI'){
 	                    for (var i = 0; i < htmllink.childNodes.length; i++) {
@@ -1264,100 +1236,72 @@ function addPictoFondDeCarte(){
 	            	showLayer(nomDeLaCouche,htmllink);
 	            }
 	        };
-	            getPopup(contenuPopup,nomDeLaCouche,colorOrUrl,type);
+	            getPopup(nomDeLaCouche,colorOrUrl,type);
 	            map.on('mousemove', function (e) {
 	                var features = map.queryRenderedFeatures(e.point, { layers: Layers });
 	                map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 	            });
 	        }
 		}
+
+var popupTitle = null;
+var popupContent = [];
+function getPopupContent(feature){
+	popupTitle = null;
+	popupContent = [];
+        //Titre de la popup
+        if (feature.properties.Categorie !== "null" && feature.properties.Categorie !== null && feature.properties.Categorie !== ""){
+            popupTitle = feature.properties.Categorie;
+        } 
+        if (feature.properties.Nom !== "null" && feature.properties.Nom !== null && feature.properties.Nom !== ""){
+            popupTitle = feature.properties.Nom;
+        }           
+        // Contenu de la popup
+        console.log(feature.properties.Batiment)
+        if (feature.properties.Batiment!== "null" && feature.properties.Batiment !== null && feature.properties.Batiment !== ""){
+            popupContent += '<p>Batiment : '+feature.properties.Batiment+'</p>';
+        }           
+        if (feature.properties.Niveau !== "null" && feature.properties.Niveau !== null && feature.properties.Niveau !== ""){
+            popupContent += '<p>'+feature.properties.Niveau+'</p>';
+        }
+        if (feature.properties.Capacite !== "null" && feature.properties.Capacite !== null && feature.properties.Capacite !== ""){
+            popupContent += '<p>'+feature.properties.Capacite+'<p>';
+        }
+        if (feature.properties.Info !== "null" && feature.properties.Info !== null && feature.properties.Info !== ""){
+            popupContent += '<p>'+feature.properties.Info+'<p>';
+        }
+        if (feature.properties.Lien !== "null" && feature.properties.Lien !== null && feature.properties.Lien !== ""){
+            popupContent += '<p><a href = '+feature.properties.Lien+' target=\"_blank\">Site internet<a></p>';
+        }
+        if (feature.properties.Mail !== "null"  && feature.properties.Mail !== null && feature.properties.Mail !== ""){
+            popupContent += '<p>Contacter par mail : '+feature.properties.Mail+'</p>';
+        }
+        if (feature.properties.Tel !== "null"  && feature.properties.Tel !== null && feature.properties.Tel !== ""){
+            popupContent += '<p>Contacter par téléphone : '+feature.properties.Tel+'</p>';
+        }
+   		if (feature.properties.Image !== "null"  && feature.properties.Image !== null && feature.properties.Image !== ""){
+   			if (feature.properties.Categorie == 'Département de formation'){
+            popupTitle += '<img style = \'height : 60px; position : absolute; right : 0;top:0\' src = \''+ feature.properties.Image+'\'/>'
+   			} else {
+            popupContent += '<img style = \'height : 60px; left : 50%\' src = \''+ feature.properties.Image+'\'/>'
+        	}
+        }
+	}
+
     
-function getPopup(infoPopup,couche,iconURL,type){
-	console.log(type);
+function getPopup(couche,iconURL,type){
     map.on('click', function (e) {
         var features = map.queryRenderedFeatures(e.point, { 
             layers: [couche] 
         });
-        var popupTitle = null;
-        var popupContent = [];
+
         if (!features.length) {
             return;
         }
         var feature = features[0];        
-        //Titre de la popup
-        for(var i = 0; i < infoPopup.length; i++){ 
-            if (infoPopup[i]=='Categorie'){
-                popupTitle = feature.properties.Categorie;
-            } 
-        }
-        for(var i = 0; i < infoPopup.length; i++){ 
-            if (infoPopup[i]=='Nom'){
-                if (feature.properties.Nom!== "null"){
-                    popupTitle = feature.properties.Nom;
-                }   
-            } 
-        }
-        // Contenu de la popup
-        for(var i = 0; i < infoPopup.length; i++){ 
-            if (infoPopup[i]=='Batiment'){
-                if (feature.properties.Batiment!== "null"){
-                    popupContent += '<p>Batiment '+feature.properties.Batiment;
-                }
-            } 
-        }       
-        for(var i = 0; i < infoPopup.length; i++){ 
-            if (infoPopup[i]=='Niveau'){
-                if (feature.properties.Niveau !== "null"){
-                    popupContent += ' '+feature.properties.Niveau;
-                }
-            } 
-        }
-        for(var i = 0; i < infoPopup.length; i++){ 
-            if (infoPopup[i]=='Capacite'){
-                if (feature.properties.Capacite !== "null"){
-                    popupContent += '<p>'+feature.properties.Capacite+'<p>';
-                }
-            } 
-        }           
-        for(var i = 0; i < infoPopup.length; i++){ 
-            if (infoPopup[i]=='Info'){
-                if (feature.properties.Info !== "null"){
-                    popupContent += '<p>'+feature.properties.Info+'<p>';
-                }
-            } 
-        }   
-        for(var i = 0; i < infoPopup.length; i++){
-            if (infoPopup[i]=='Lien'){
-                if (feature.properties.Lien !== "null"){
-                    popupContent += '<p><a href = '+feature.properties.Lien+' target=\"_blank\">Site internet<a></p>';
-                }
-            } 
-        }
-        for(var i = 0; i < infoPopup.length; i++){
-            if (infoPopup[i]=='Mail'){
-                if (feature.properties.Mail !== "null"  ){
-                    popupContent += '<p>Contacter par mail : '+feature.properties.Mail+'</p>';
-                }
-            } 
-        }
-        for(var i = 0; i < infoPopup.length; i++){
-            if (infoPopup[i]=='Tel'){
-                if (feature.properties.Tel !== "null"){
-                    popupContent += '<p>Contacter par téléphone : '+feature.properties.Tel+'</p>';
-                }
-            } 
-        } 
-	  	for(var i = 0; i < infoPopup.length; i++){
-		   	if (infoPopup[i]=='Image'){
-		   		if (feature.properties.Image !== "null"){
-		   			if (feature.properties.Categorie == 'Département de formation'){
-                    popupTitle += '<img style = \'height : 60px; position : absolute; right : 0;top:0\' src = \''+ feature.properties.Image+'\'/>'
-		   			} else {
-                    popupContent += '<img style = \'height : 60px; left : 50%\' src = \''+ feature.properties.Image+'\'/>'
-                	}
-                }
-            }
-        } 		  
+        
+        getPopupContent(feature);
+	  
         if (type=='marker'){
         	popup = new mapboxgl.Popup({ 
             offset: [0,-40],
@@ -1376,9 +1320,9 @@ function getPopup(infoPopup,couche,iconURL,type){
                 .addTo(map);
         }	
 
-        }); 
+    }); 
 }
-var salleRecherchee = null
+var salleRecherchee = null;
 function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
     salleRecherchee = null;
 
@@ -1411,36 +1355,7 @@ function createHTMLList(categorie,listeDeNoms,elementCible,overlayCount){
 }
 // Fonctions pour zoomer sur l'item sélectionné dans la liste
 function getSwitchPopup(){
-    var popupTitle = null;
-    var popupContent = '';
-    
-    if (salleRecherchee.properties.Categorie !== null){
-        popupTitle = salleRecherchee.properties.Categorie;
-    }   
-    if (salleRecherchee.properties.Nom !== null){
-        popupTitle = salleRecherchee.properties.Nom;
-    }
-    if (salleRecherchee.properties.Batiment !== null){
-        popupContent += '<p>Batiment '+salleRecherchee.properties.Batiment;
-    }   
-    if (salleRecherchee.properties.Niveau !== null){
-        popupContent += ' '+salleRecherchee.properties.Niveau;
-    }   
-    if (salleRecherchee.properties.Capacite !== null){
-        popupContent += '<p>'+salleRecherchee.properties.Capacite+'<p>';
-    }
-    if (salleRecherchee.properties.Info !== null){
-        popupContent += '<p>'+salleRecherchee.properties.Info+'<p>';
-    }
-    if (salleRecherchee.properties.Lien !== null){
-        popupContent += '<p><a href = '+salleRecherchee.properties.Lien+' target=\"_blank\">Site internet<a></p>';
-    }
-    if (salleRecherchee.properties.Mail !== null){
-        popupContent += '<p>Contacter par mail : '+salleRecherchee.properties.Mail+'</p>';
-    }
-    if (salleRecherchee.properties.Tel !== null){
-        popupContent += '<p>Contacter par téléphone :'+salleRecherchee.properties.Tel+'</p>';
-    }
+    getPopupContent(salleRecherchee);
     popupList = new mapboxgl.Popup({
         offset:[0,-45],
         closeButton: false
@@ -1449,6 +1364,7 @@ function getSwitchPopup(){
     .setHTML('<h1>'+popupTitle+'</h1><p>'+popupContent+'</p>')
         .addTo(map);
 };
+
 function switchPOI(value){
     value = value.split("!").join("'");
     salleRecherchee = null;
@@ -1506,7 +1422,7 @@ function switchPOI(value){
     zoomLaHarpe.addEventListener('click', function(){
         map.setMaxBounds(rennesBounds);
         map.flyTo({
-            zoom:flyingZoom,
+            zoom:zoomBase,
             center:[-1.7091, 48.1254]
         });
         zoomLaHarpe.style.backgroundColor = '#286090';
@@ -1518,7 +1434,7 @@ function switchPOI(value){
     zoomVillejean.addEventListener('click', function(){
         map.setMaxBounds(rennesBounds);
         map.flyTo({
-            zoom:flyingZoom,
+            zoom:zoomBase,
             center:[-1.7013, 48.119365]
         });
         zoomVillejean.style.backgroundColor = '#286090';
@@ -1529,7 +1445,7 @@ function switchPOI(value){
     zoomMazier.addEventListener('click',function(){
         map.setMaxBounds(mazierBounds);
         map.flyTo({
-            zoom:flyingZoom,
+            zoom:zoomBase,
             center:[-2.7410000,48.513033]
         });
         zoomMazier.style.backgroundColor = '#286090';
@@ -1571,24 +1487,6 @@ $.ajax({
     return jsonLines;
 })();
 
-
-var ServicescenLinkState = null;
-setInterval(function (){
-	ServicescenLinkState = ServicescenLink.nextElementSibling.className;
-},500);
-var ServicesgenLinkState = null;
-setInterval(function (){
-	ServicesgenLinkState = ServicesgenLink.nextElementSibling.className;
-},500);
-var ServicescomLinkState = null;
-setInterval(function (){
-	ServicescomLinkState = ServicescomLink.nextElementSibling.className;
-},500);
-setInterval(function (){
-	sallesSpeLinkState = sallesSpecifiquesLink.nextElementSibling.className;
-},500);
-
-var listLayers = [ServicescomLink,ServicesgenLink,ServicescenLink,sallesSpecifiquesLink];
 
 map.on("load", function() {
     // Couche herbe
@@ -1645,32 +1543,32 @@ map.on("load", function() {
 	}
 
 	if (overlay == 'Amphithéâtre'){
-        addCategoryOverlay(amphitheatresLink,'Amphithéâtre','layer','marker',amphiURL,tailleMarker,amphiInfoPopup,amphiCount);
+        addCategoryOverlay(amphitheatresLink,'Amphithéâtre','layer','marker',amphiURL,tailleMarker,amphiCount);
         amphiCount += 1;		
 	}
     amphitheatresLink.onclick = function(e){
-        addCategoryOverlay(amphitheatresLink,'Amphithéâtre','layer','marker',amphiURL,tailleMarker,amphiInfoPopup,amphiCount);
+        addCategoryOverlay(amphitheatresLink,'Amphithéâtre','layer','marker',amphiURL,tailleMarker,amphiCount);
         amphiCount += 1;    	
 	}
 
 	if (overlay == 'Salle informatique'){
-        addCategoryOverlay(sallesInfoLink,'Salle informatique','layer','marker',sallesInfoURL,tailleMarker,sallesInfoInfoPopup,sallesInfoCount);
+        addCategoryOverlay(sallesInfoLink,'Salle informatique','layer','marker',sallesInfoURL,tailleMarker,sallesInfoCount);
         sallesInfoCount += 1;		
 	}
     sallesInfoLink.onclick = function(e){
-        addCategoryOverlay(sallesInfoLink,'Salle informatique','layer','marker',sallesInfoURL,tailleMarker,sallesInfoInfoPopup,sallesInfoCount);
+        addCategoryOverlay(sallesInfoLink,'Salle informatique','layer','marker',sallesInfoURL,tailleMarker,sallesInfoCount);
         sallesInfoCount += 1;
     }
 
 	if (overlay == 'Salles spécifiques'){
-    	addCategoryOverlay(sallesSpecifiquesLink,'Salles spécifiques',sallesSpeLinkState,'marker',sallesSpeURL,tailleMarker,sallesSpeInfoPopup,sallesSpeCount);
+    	addCategoryOverlay(sallesSpecifiquesLink,'Salles spécifiques',sallesSpeLinkState,'marker',sallesSpeURL,tailleMarker,sallesSpeCount);
         if (sallesSpeCount==0){
             createHTMLList('Salles spécifiques',listeSallesSpecifiques,insertSallesSpecifiques,sallesSpeCount);
         }
         sallesSpeCount +=1;	
 	}    
     sallesSpecifiquesLink.onclick = function(e){
-        addCategoryOverlay(sallesSpecifiquesLink,'Salles spécifiques',sallesSpeLinkState,'marker',sallesSpeURL,tailleMarker,sallesSpeInfoPopup,sallesSpeCount);
+        addCategoryOverlay(sallesSpecifiquesLink,'Salles spécifiques',sallesSpeLinkState,'marker',sallesSpeURL,tailleMarker,sallesSpeCount);
         if (sallesSpeCount==0){
             createHTMLList('Salles spécifiques',listeSallesSpecifiques,insertSallesSpecifiques,sallesSpeCount);
         }
@@ -1680,14 +1578,14 @@ map.on("load", function() {
 //////////////////////////////////  Structures et services //////////////////////////////////////
 
 	if (overlay == 'Services commun'){
-        addCategoryOverlay(ServicescomLink,'Services commun',ServicescomLinkState,'marker',ServicescomURL,tailleMarker,ServicescomInfoPopup,ServicescomCount);
+        addCategoryOverlay(ServicescomLink,'Services commun',ServicescomLinkState,'marker',ServicescomURL,tailleMarker,ServicescomCount);
         if (ServicescomCount==0){
             createHTMLList('Services commun',listeServicescom,insertServicescom,ServicescomCount);
         }
         ServicescomCount += 1;
 	}  
     ServicescomLink.onclick = function(e){
-        addCategoryOverlay(ServicescomLink,'Services commun',ServicescomLinkState,'marker',ServicescomURL,tailleMarker,ServicescomInfoPopup,ServicescomCount);
+        addCategoryOverlay(ServicescomLink,'Services commun',ServicescomLinkState,'marker',ServicescomURL,tailleMarker,ServicescomCount);
         if (ServicescomCount==0){
             createHTMLList('Services commun',listeServicescom,insertServicescom,ServicescomCount);
         }
@@ -1695,14 +1593,14 @@ map.on("load", function() {
     }
 
 	if (overlay == 'Services généraux'){
-        addCategoryOverlay(ServicesgenLink,'Services généraux',ServicesgenLinkState,'marker',ServicesgenURL,tailleMarker,ServicesgenInfoPopup,ServicesgenCount);
+        addCategoryOverlay(ServicesgenLink,'Services généraux',ServicesgenLinkState,'marker',ServicesgenURL,tailleMarker,ServicesgenCount);
         if (ServicesgenCount==0){
             createHTMLList('Services généraux',listeServicesgen,insertServicesgen,ServicesgenCount);
         }
         ServicesgenCount += 1;
 	}      
     ServicesgenLink.onclick = function(e){
-        addCategoryOverlay(ServicesgenLink,'Services généraux',ServicesgenLinkState,'marker',ServicesgenURL,tailleMarker,ServicesgenInfoPopup,ServicesgenCount);
+        addCategoryOverlay(ServicesgenLink,'Services généraux',ServicesgenLinkState,'marker',ServicesgenURL,tailleMarker,ServicesgenCount);
         if (ServicesgenCount==0){
             createHTMLList('Services généraux',listeServicesgen,insertServicesgen,ServicesgenCount);
         }
@@ -1711,14 +1609,14 @@ map.on("load", function() {
 
 
 	if (overlay == 'Services centraux'){
-        addCategoryOverlay(ServicescenLink,'Services centraux',ServicescenLinkState,'marker',ServicescenURL,tailleMarker,ServicescenInfoPopup,ServicescenCount);
+        addCategoryOverlay(ServicescenLink,'Services centraux',ServicescenLinkState,'marker',ServicescenURL,tailleMarker,ServicescenCount);
         if (ServicescenCount==0){
             createHTMLList('Services centraux',listeServicescen,insertServicescen,ServicescenCount);
         }
         ServicescenCount += 1;
 	}           
     ServicescenLink.onclick = function(e){
-        addCategoryOverlay(ServicescenLink,'Services centraux',ServicescenLinkState,'marker',ServicescenURL,tailleMarker,ServicescenInfoPopup,ServicescenCount);
+        addCategoryOverlay(ServicescenLink,'Services centraux',ServicescenLinkState,'marker',ServicescenURL,tailleMarker,ServicescenCount);
         if (ServicescenCount==0){
             createHTMLList('Services centraux',listeServicescen,insertServicescen,ServicescenCount);
         }
@@ -1727,14 +1625,14 @@ map.on("load", function() {
 
 //////////////////////////////////  Bibliothèques et culture //////////////////////////////////////
 	if (overlay == 'Lieu culturel'){
-        addCategoryOverlay(lieuCulturelLink,'Lieu culturel','list','marker',lieuCulturelURL,tailleMarker,lieuCulturelInfoPopup,lieuCulturelCount);
+        addCategoryOverlay(lieuCulturelLink,'Lieu culturel','list','marker',lieuCulturelURL,tailleMarker,lieuCulturelCount);
         if (lieuCulturelCount==0){
             createHTMLList('Lieu culturel',listelieuCulturel,insertLieuCulturel,lieuCulturelCount);
         }
         lieuCulturelCount += 1;
 	}  
     lieuCulturelLink.onclick = function(e){
-        addCategoryOverlay(lieuCulturelLink,'Lieu culturel','list','marker',lieuCulturelURL,tailleMarker,lieuCulturelInfoPopup,lieuCulturelCount);
+        addCategoryOverlay(lieuCulturelLink,'Lieu culturel','list','marker',lieuCulturelURL,tailleMarker,lieuCulturelCount);
         if (lieuCulturelCount==0){
             createHTMLList('Lieu culturel',listelieuCulturel,insertLieuCulturel,lieuCulturelCount);
         }
@@ -1742,59 +1640,59 @@ map.on("load", function() {
     }
 
 	if (overlay == 'Bibliothèques'){
-        addCategoryOverlay(bibliothequesLink,'Bibliothèques','layer','marker',bibliothequesURL,tailleMarker,bibliothequesInfoPopup,bibliothequesCount);
+        addCategoryOverlay(bibliothequesLink,'Bibliothèques','layer','marker',bibliothequesURL,tailleMarker,bibliothequesCount);
         bibliothequesCount += 1;	
 	}
     bibliothequesLink.onclick = function(e){
-        addCategoryOverlay(bibliothequesLink,'Bibliothèques','layer','marker',bibliothequesURL,tailleMarker,bibliothequesInfoPopup,bibliothequesCount);
+        addCategoryOverlay(bibliothequesLink,'Bibliothèques','layer','marker',bibliothequesURL,tailleMarker,bibliothequesCount);
         bibliothequesCount += 1;
     }
 
 ////////////////////////////////// Restauration et logement //////////////////////////////////////
 	if (overlay == 'Résidence Universitaire'){
-        addCategoryOverlay(resUnivLink,'Résidence Universitaire','layer','marker',resUnivURL,tailleMarker,resUnivInfoPopup,resUnivCount);
+        addCategoryOverlay(resUnivLink,'Résidence Universitaire','layer','marker',resUnivURL,tailleMarker,resUnivCount);
         resUnivCount += 1;	
 	}
     resUnivLink.onclick = function(e){
-        addCategoryOverlay(resUnivLink,'Résidence Universitaire','layer','marker',resUnivURL,tailleMarker,resUnivInfoPopup,resUnivCount);
+        addCategoryOverlay(resUnivLink,'Résidence Universitaire','layer','marker',resUnivURL,tailleMarker,resUnivCount);
         resUnivCount += 1;
     }
 
 	if (overlay == 'Restaurant Universitaire'){
-        addCategoryOverlay(restoUnivLink,'Restaurant Universitaire','layer','marker',restoUnivURL,tailleMarker,restoUnivInfoPopup,restoUnivCount);
+        addCategoryOverlay(restoUnivLink,'Restaurant Universitaire','layer','marker',restoUnivURL,tailleMarker,restoUnivCount);
         restoUnivCount += 1;
 	}    
     restoUnivLink.onclick = function(e){
-        addCategoryOverlay(restoUnivLink,'Restaurant Universitaire','layer','marker',restoUnivURL,tailleMarker,restoUnivInfoPopup,restoUnivCount);
+        addCategoryOverlay(restoUnivLink,'Restaurant Universitaire','layer','marker',restoUnivURL,tailleMarker,restoUnivCount);
         restoUnivCount += 1;
     }
 
 	if (overlay == 'Cafétéria'){
-        addCategoryOverlay(cafeteriasLink,'Cafétéria','layer','marker',cafeteriasURL,taillePetitMarker,cafeteriasInfoPopup,cafeteriasCount);
+        addCategoryOverlay(cafeteriasLink,'Cafétéria','layer','marker',cafeteriasURL,taillePetitMarker,cafeteriasCount);
         cafeteriasCount += 1;
 	}       
     cafeteriasLink.onclick = function(e){
-        addCategoryOverlay(cafeteriasLink,'Cafétéria','layer','marker',cafeteriasURL,taillePetitMarker,cafeteriasInfoPopup,cafeteriasCount);
+        addCategoryOverlay(cafeteriasLink,'Cafétéria','layer','marker',cafeteriasURL,taillePetitMarker,cafeteriasCount);
         cafeteriasCount += 1;
     }
 
 
 //////////////////////////////////  Sport et santé //////////////////////////////////////
 	if (overlay == 'Equipement sportif'){
-        addCategoryOverlay(equipementSportifLink,'Equipement sportif','layer','marker',equipementSportifURL,tailleMarker,equipementSportifInfoPopup,equipementSportifCount);
+        addCategoryOverlay(equipementSportifLink,'Equipement sportif','layer','marker',equipementSportifURL,tailleMarker,equipementSportifCount);
         equipementSportifCount += 1;
 	}   
     equipementSportifLink.onclick = function(e){
-        addCategoryOverlay(equipementSportifLink,'Equipement sportif','layer','marker',equipementSportifURL,tailleMarker,equipementSportifInfoPopup,equipementSportifCount);
+        addCategoryOverlay(equipementSportifLink,'Equipement sportif','layer','marker',equipementSportifURL,tailleMarker,equipementSportifCount);
         equipementSportifCount += 1;
     }
 
 	if (overlay == 'Pole santé'){
-        addCategoryOverlay(polesanteLink,'Pole santé','layer','marker',polesanteURL,tailleMarker,polesanteInfoPopup,polesanteCount);
+        addCategoryOverlay(polesanteLink,'Pole santé','layer','marker',polesanteURL,tailleMarker,polesanteCount);
         polesanteCount += 1;
 	}  
     polesanteLink.onclick = function(e){
-        addCategoryOverlay(polesanteLink,'Pole santé','layer','marker',polesanteURL,tailleMarker,polesanteInfoPopup,polesanteCount);
+        addCategoryOverlay(polesanteLink,'Pole santé','layer','marker',polesanteURL,tailleMarker,polesanteCount);
         polesanteCount += 1;
     }
 
@@ -1803,15 +1701,15 @@ map.on("load", function() {
 
 
     associationsfilieresLink.onclick = function(e){
-        addCategoryOverlay(associationsfilieresLink,'Associations de filières','layer','marker',associationsfilieresURL,taillePetitMarker,associationsfilieresInfoPopup,associationsfilieresCount);
+        addCategoryOverlay(associationsfilieresLink,'Associations de filières','layer','marker',associationsfilieresURL,taillePetitMarker,associationsfilieresCount);
         associationsfilieresCount += 1;
     }
    associationsmasterLink.onclick = function(e){
-    addCategoryOverlay(associationsmasterLink,'Associations de Masters et Doctorats','layer','marker',associationsmasterURL,taillePetitMarker,associationsmasterInfoPopup,associationsmasterCount);
+    addCategoryOverlay(associationsmasterLink,'Associations de Masters et Doctorats','layer','marker',associationsmasterURL,taillePetitMarker,associationsmasterCount);
     associationsmasterCount += 1;
     }
      associationsbriochinesLink.onclick = function(e){
-        addCategoryOverlay(associationsbriochinesLink,'Associations briochines','layer','marker',associationsbriochinesURL,taillePetitMarker,associationsbriochinesInfoPopup,associationsbriochinesCount);
+        addCategoryOverlay(associationsbriochinesLink,'Associations briochines','layer','marker',associationsbriochinesURL,taillePetitMarker,associationsbriochinesCount);
         associationsbriochinesCount += 1;
  		for (var i = 0; i < Layers.length; i++) {        
  			if (Layers[i] = 'Associations briochines'){
@@ -1829,15 +1727,15 @@ map.on("load", function() {
     	}
     }
     associationscasLink.onclick = function(e){
-        addCategoryOverlay(associationscasLink,'Associations culturelles, artistiques et sportives','layer','marker',associationscasURL,taillePetitMarker,associationscasInfoPopup,associationscasCount);
+        addCategoryOverlay(associationscasLink,'Associations culturelles, artistiques et sportives','layer','marker',associationscasURL,taillePetitMarker,associationscasCount);
         associationscasCount += 1;
     }
       associationssolidariteLink.onclick = function(e){
-        addCategoryOverlay(associationssolidariteLink,'Associations de solidarité et de sensibilisation','layer','marker',associationssolidariteURL,taillePetitMarker,associationssolidariteInfoPopup,associationssolidariteCount);
+        addCategoryOverlay(associationssolidariteLink,'Associations de solidarité et de sensibilisation','layer','marker',associationssolidariteURL,taillePetitMarker,associationssolidariteCount);
         associationssolidariteCount += 1;
     }
      associationsLink.onclick = function(e){
-        addCategoryOverlay(associationsLink,'Autres','layer','marker',associationsURL,taillePetitMarker,associationsInfoPopup,associationsCount);
+        addCategoryOverlay(associationsLink,'Autres','layer','marker',associationsURL,taillePetitMarker,associationsCount);
         associationsCount += 1;
     }
 
@@ -1845,58 +1743,60 @@ map.on("load", function() {
 
 
     toilettesLink.onclick = function(e){
-        addCategoryOverlay(toilettesLink,'Toilettes','layer','marker',toilettesURL,taillePetitMarker,toilettesInfoPopup,toilettesCount);
+        addCategoryOverlay(toilettesLink,'Toilettes','layer','marker',toilettesURL,taillePetitMarker,toilettesCount);
         toilettesCount += 1;
     }
     copieurLink.onclick = function(e){
-        addCategoryOverlay(copieurLink,'Copieur','layer','marker',copieursURL,tailleMarker,copieursInfoPopup,copieurCount);
+        addCategoryOverlay(copieurLink,'Copieur','layer','marker',copieursURL,tailleMarker,copieurCount);
         copieurCount += 1;
     }    
     espaceDetenteLink.onclick = function(e){
-        addCategoryOverlay(espaceDetenteLink,'Espace détente','layer','marker',espaceDetenteURL,tailleMarker,espaceDetenteInfoPopup,espaceDetenteCount);
+        addCategoryOverlay(espaceDetenteLink,'Espace détente','layer','marker',espaceDetenteURL,tailleMarker,espaceDetenteCount);
         espaceDetenteCount += 1;
     }
 
 //////////////////////////////////  Mobilité et accessibilité ///////////////////////////////////////
 
     ascenseurLink.onclick = function(e){
-        addCategoryOverlay(ascenseurLink,'Ascenseur','layer','point',ascenseurColor,ascenseurIconSize,ascenseurInfoPopup,ascenseurCount);
+        addCategoryOverlay(ascenseurLink,'Ascenseur','layer','point',ascenseurColor,ascenseurIconSize,ascenseurCount);
         ascenseurCount += 1;
     }
     parkingLink.onclick = function(e){
-        addCategoryOverlay(parkingLink,'Parking','layer','picto',parkingURL,taillePicto,parkingInfoPopup,parkingCount);
+        addCategoryOverlay(parkingLink,'Parking','layer','picto',parkingURL,taillePicto,parkingCount);
         parkingCount += 1;
-        addCategoryOverlay(parkingLink,'Parking PMR','layer','picto',parkingPMRURL,taillePicto,parkingPMRInfoPopup,parkingPMRCount);
+        addCategoryOverlay(parkingLink,'Parking PMR','layer','picto',parkingPMRURL,taillePicto,parkingPMRCount);
         parkingPMRCount += 1;
     }
 
     
     parkingVeloLink.onclick = function(e){
-        addCategoryOverlay(parkingVeloLink,'Parking vélo','layer','point',parkingVeloColor,parkingVeloIconSize,parkingVeloInfoPopup,parkingVeloCount);
+        addCategoryOverlay(parkingVeloLink,'Parking vélo','layer','point',parkingVeloColor,parkingVeloIconSize,parkingVeloCount);
         parkingVeloCount += 1;
     }
     lineairePMRLink.onclick = function(e){
-        addCategoryOverlay(lineairePMRLink,'Cheminements accessibles','layer','line',lineairePMRColor,tailleLine,lineairePMRInfoPopup,lineairePMRCount);
+        addCategoryOverlay(lineairePMRLink,'Cheminements accessibles','layer','line',lineairePMRColor,tailleLine,lineairePMRCount);
         lineairePMRCount += 1;
-        addCategoryOverlay(lineairePMRLink,'Accès PMR','layer','point',accesPMRColor,accesPMRIconSize,accesPMRInfoPopup,accesPMRCount);
+        addCategoryOverlay(lineairePMRLink,'Accès PMR','layer','point',accesPMRColor,accesPMRIconSize,accesPMRCount);
         accesPMRCount += 1;        
     }
 
     metroLink.onclick = function(e){
-        addCategoryOverlay(metroLink,'Cheminements Métro','layer','line',lineaireMetroColor,lineaireMetroIconSize,lineaireMetroInfoPopup,lineaireMetroCount);
+        addCategoryOverlay(metroLink,'Cheminements Métro','layer','line',lineaireMetroColor,lineaireMetroIconSize,lineaireMetroCount);
         lineaireMetroCount += 1;
-        addCategoryOverlay(metroLink,'Métro','layer','picto',metroURL,taillePicto,metroInfoPopup,metroCount);
+        addCategoryOverlay(metroLink,'Métro','layer','picto',metroURL,taillePicto,metroCount);
         metroCount += 1;        
     }   
     velostarLink.onclick = function(e){
-        addCategoryOverlay(velostarLink,'Station vélostar','layer','point',velostarColor,taillePoint,velostarInfoPopup,velostarCount);
-        velostarCount += 1;       
+        addCategoryOverlay(velostarLink,'Station vélostar','layer','point',velostarColor,taillePoint,velostarCount);
+        velostarCount += 1;
+        addRealTimeVelostar();       
     }
     busLink.onclick = function(e){
-        addCategoryOverlay(busLink,'Cheminements Bus','layer','line',busLineColor,tailleLine,busLineInfoPopup,busLineCount);
+        addCategoryOverlay(busLink,'Cheminements Bus','layer','line',busLineColor,tailleLine,busLineCount);
         busLineCount += 1; 
-        addCategoryOverlay(busLink,'Bus','layer','picto',busURL,taillePicto,busInfoPopup,busCount);
-        busCount += 1;      
+        addCategoryOverlay(busLink,'Bus','layer','picto',busURL,taillePicto,busCount);
+        busCount += 1;  
+        addRealTimeBus();    
     }           
 });
 //////////////////////////////////// couches temps réel //////////////////////////////////////////////
@@ -1907,7 +1807,7 @@ var prevInfo = null;
 var velostarTRCount = 0
 var nomLayer= null
 var velostarLink = document.getElementById('Stations vélostar');
-velostarLink.onclick = function (e) {
+function addRealTimeVelostar(){
     velostarTRCount +=1 ;
     if (velostarTRCount === 1){
         updateData();
@@ -2028,6 +1928,7 @@ velostarLink.onclick = function (e) {
             map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
         });    
     }
+
 // Couche des BUS
 var geojsonBus = null;
 var previousDataBus = { times: [], stations: [] };
@@ -2035,7 +1936,7 @@ var prevInfo = null;
 var busTRCount = 0
 var nomLayerBus= null
 var busLink = document.getElementById('Réseau de bus');
-busLink.onclick = function (e) {
+function addRealTimeBus() {
     busTRCount +=1;
     if (busTRCount === 1){
         updateBusData();
@@ -2090,7 +1991,7 @@ busLink.onclick = function (e) {
             }
             
             //On créé un nouveau calque de données
-            nomLayerBus = "bus"+previousDataBus.times.length;
+            nomLayerBus = "busTR"+previousDataBus.times.length;
             Layers.push(nomLayerBus);
             map.addLayer({
                 id: nomLayerBus,
@@ -2420,27 +2321,22 @@ if (screen.width>700){
 	attributionContainer.style.right = '0';
 	attributionContainer.style.display = 'inline-block';
 	attributionContainer.style.zIndex = '9999';
-
 	attributionLink1 = document.createElement('a');
 	attributionLink1.innerHTML = '© OpenMapTiles '
 	attributionLink1.setAttribute("class","attribution");
 	attributionLink1.setAttribute('href','https://openmaptiles.org');
-
 	attributionLink2 = document.createElement('a');
 	attributionLink2.innerHTML = '© OpenStreetMap contributors ';
 	attributionLink2.setAttribute("class","attribution");
 	attributionLink2.setAttribute('href','http://www.openstreetmap.org/about');
-
 	attributionLink3 = document.createElement('a');
 	attributionLink3.innerHTML = '© Mapbox GL ';
 	attributionLink3.setAttribute("class","attribution");
 	attributionLink3.setAttribute('href','https://www.mapbox.com/mapbox-gl-js/api');
-
 	attributionLink4 = document.createElement('a');
 	attributionLink4.innerHTML = '© Master SIGAT';
 	attributionLink4.setAttribute("class","attribution");
 	attributionLink4.setAttribute('href','https://esigat.wordpress.com');
-
 	var carte = document.getElementById('map');
 	carte.appendChild(attributionContainer);
 	attributionContainer.appendChild(attributionLink1);
