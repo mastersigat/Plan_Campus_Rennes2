@@ -1789,7 +1789,7 @@ map.on("load", function() {
     velostarLink.onclick = function(e){
         addCategoryOverlay(velostarLink,'Station vélostar','layer','point',velostarColor,taillePoint,velostarCount);
         velostarCount += 1;
-        addRealTimeVelostar();       
+        setInterval(addRealTimeVelostar(),1000);       
     }
     busLink.onclick = function(e){
         addCategoryOverlay(busLink,'Cheminements Bus','layer','line',busLineColor,tailleLine,busLineCount);
@@ -1895,10 +1895,10 @@ function addRealTimeVelostar(){
         }       
     } else {
         var clickedLayer = this.textContent;
-        e.preventDefault();
-        e.stopPropagation();
+
         var visibility = map.getLayoutProperty(nomLayer,'visibility');
         if (visibility === 'visible') {
+        	console.log("hey")
             map.setLayoutProperty(nomLayer,'visibility','none');
             Layers = Layers.filter(item => item != nomLayer);
         } else {
@@ -2010,8 +2010,7 @@ function addRealTimeBus() {
         busCount +=1;
     } else {
         var clickedLayer = this.textContent;
-        e.preventDefault();
-        e.stopPropagation();
+
         var visibility = map.getLayoutProperty(nomLayerBus,'visibility');
         if (visibility === 'visible') {
             map.setLayoutProperty(nomLayerBus,'visibility','none');
