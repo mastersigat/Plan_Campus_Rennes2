@@ -108,7 +108,59 @@
                             </li>
             
                         </ul>
-                    </li>                                         
+                    </li> 
+                     <li>
+                        <a href="#">Départements de formations <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/scolarites.png"/><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li >
+                                <a  id = "Formation UFRL" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR Langues<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertFUFRL"></ul>
+                            </li>
+                            <li > 
+                                <a  id = "Formation UFRSH" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR Sciences Humaines<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertFUFRSH"></ul>
+                            </li>
+                            <li >
+                                <a  id = "Formation UFRSS" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR Sciences Sociales<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertFUFRSS"></ul>
+                            </li>
+                            <li >
+                                <a  id = "Formation UFRSTAPS" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR STAPS<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertFUFRSTAPS"></ul>
+                            </li>
+                            <li >
+                                <a  id = "Formation UFRALC" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR ALC<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertFUFRALC"></ul>
+                            </li>
+            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Départements de Recherches <img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/scolarites.png"/><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li >
+                                <a  id = "Recherche UFRL" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR Langues<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertRUFRL"></ul>
+                            </li>
+                            <li > 
+                                <a  id = "Recherche UFRSH" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR Sciences Humaines<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertRUFRSH"></ul>
+                            </li>
+                            <li >
+                                <a  id = "Recherche UFRSS" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR Sciences Sociales<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertRUFRSS"></ul>
+                            </li>
+                            <li >
+                                <a  id = "Recherche UFRSTAPS" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR STAPS<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertRUFRSTAPS"></ul>
+                            </li>
+                            <li >
+                                <a  id = "Recherche UFRALC" href="#"><img  src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/case1.png" class = "caseB">UFR ALC<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level" id = "insertRUFRALC"></ul>
+                            </li>
+            
+                        </ul>
+                    </li>                                                                 
                     <li>
                         <a href="#">Bibliothèques et Culture<img src = "https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/biblio.png"/><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -357,6 +409,68 @@ var overlayPoint = getQueryStringValue("point").toString();
     var ServicesgenLink = document.getElementById('Services généraux');
     var insertServicesgen = document.getElementById('insertServicesgen');
     var ServicesgenURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/servcesge.png';
+    //formations  
+    // Formation UFR Sciences Humaines
+    var FUFRSHCount = 0; 
+    var listeFUFRSH = [];
+    var FUFRSHLink = document.getElementById('Formation UFRSH');
+    var insertFUFRSH = document.getElementById('insertFUFRSH');
+    var FUFRSHURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/formation_marker.png';
+    // Formation UFR Langue
+    var FUFRLCount = 0; 
+    var listeFUFRL = [];
+    var FUFRLLink = document.getElementById('Formation UFRL');
+    var insertFUFRL = document.getElementById('insertFUFRL');
+    var FUFRLURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/formation_marker.png'; 
+    // Formation UFR Sciences Sociales
+    var FUFRSSCount = 0; 
+    var listeFUFRSS = [];
+    var FUFRSSLink = document.getElementById('Formation UFRSS');
+    var insertFUFRSS = document.getElementById('insertFUFRSS');
+    var FUFRSSURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/formation_marker.png';
+    // Formation UFR STAPS
+    var FUFRSTAPSCount = 0; 
+    var listeFUFRSTAPS = [];
+    var FUFRSTAPSLink = document.getElementById('Formation UFRSTAPS');
+    var insertFUFRSTAPS = document.getElementById('insertFUFRSTAPS');
+    var FUFRSTAPSURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/formation_marker.png';
+	// Formation UFR ALC
+    var FUFRALCCount = 0; 
+    var listeFUFRALC = [];
+    var FUFRALCLink = document.getElementById('Formation UFRALC');
+    var insertFUFRALC = document.getElementById('insertFUFRALC');
+    var FUFRALCURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/formation_marker.png';
+// recherche
+    // Recherche UFR Sciences Sociales
+    var RUFRSSCount = 0; 
+    var listeRUFRSS = [];
+    var RUFRSSLink = document.getElementById('Recherche UFRSS');
+    var insertRUFRSS = document.getElementById('insertRUFRSS');
+    var RUFRSSURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/recherche_marker.png';
+    // Recherche UFR STAPS
+    var RUFRSTAPSCount = 0; 
+    var listeRUFRSTAPS = [];
+    var RUFRSTAPSLink = document.getElementById('Recherche UFRSTAPS');
+    var insertRUFRSTAPS = document.getElementById('insertRUFRSTAPS');
+    var RUFRSTAPSURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/recherche_marker.png';
+    // Recherche UFR ALC
+    var RUFRALCCount = 0; 
+    var listeRUFRALC = [];
+    var RUFRALCLink = document.getElementById('Recherche UFRALC');
+    var insertRUFRALC = document.getElementById('insertRUFRALC');
+    var RUFRALCURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/recherche_marker.png';
+	// Recherche UFR Langue
+    var RUFRLCount = 0; 
+    var listeRUFRL = [];
+    var RUFRLLink = document.getElementById('Recherche UFRL');
+    var insertRUFRL = document.getElementById('insertRUFRL');
+    var RUFRLURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/recherche_marker.png';
+    // Recherche UFR Sciences Humaines
+    var RUFRSHCount = 0; 
+    var listeRUFRSH = [];
+    var RUFRSHLink = document.getElementById('Recherche UFRSH');
+    var insertRUFRSH = document.getElementById('insertRUFRSH');
+    var RUFRSHURL = 'https://raw.githubusercontent.com/Xueimuohtreb/Plan-interactif/master/icons/layers_icons/recherche_marker.png';
     // Couche bibliothèques
     var bibliothequesCount = 0; // initialisation du compteur de clics
     var bibliothequesLink = document.getElementById("Bibliothèques");
@@ -490,8 +604,49 @@ var overlayPoint = getQueryStringValue("point").toString();
 	setInterval(function (){
 		sallesSpeLinkState = sallesSpecifiquesLink.nextElementSibling.className;
 	},500);
+	 var FUFRLLinkState = null;
+    setInterval(function (){
+        FUFRLLinkState = FUFRLLink.nextElementSibling.className;
+    },500);
+var FUFRSHLinkState = null;
+    setInterval(function (){
+        FUFRSHLinkState = FUFRSHLink.nextElementSibling.className;
+    },500);
+var FUFRSSLinkState = null;
+    setInterval(function (){
+        FUFRSSLinkState = FUFRSSLink.nextElementSibling.className;
+    },500);
+var FUFRSTAPSLinkState = null;
+    setInterval(function (){
+        FUFRSTAPSLinkState = FUFRSTAPSLink.nextElementSibling.className;
+    },500);
+var FUFRALCLinkState = null;
+    setInterval(function (){
+        FUFRALCLinkState = FUFRALCLink.nextElementSibling.className;
+    },500);
+    var RUFRLLinkState = null;
+    setInterval(function (){
+        RUFRLLinkState = RUFRLLink.nextElementSibling.className;
+    },500);
+var RUFRSHLinkState = null;
+    setInterval(function (){
+        RUFRSHLinkState = RUFRSHLink.nextElementSibling.className;
+    },500);
+var RUFRSSLinkState = null;
+    setInterval(function (){
+        RUFRSSLinkState = RUFRSSLink.nextElementSibling.className;
+    },500);
+var RUFRSTAPSLinkState = null;
+    setInterval(function (){
+        RUFRSTAPSLinkState = RUFRSTAPSLink.nextElementSibling.className;
+    },500);
+var RUFRALCLinkState = null;
+    setInterval(function (){
+        RUFRALCLinkState = RUFRALCLink.nextElementSibling.className;
+    },500);
 
-	var listLayers = [ServicescomLink,ServicesgenLink,ServicescenLink,sallesSpecifiquesLink];
+	var listLayers = [ServicescomLink,ServicesgenLink,ServicescenLink,sallesSpecifiquesLink,FUFRLLink,FUFRSHLink,FUFRSSLink,FUFRSTAPSLink,FUFRALCLink,RUFRLLink,RUFRSHLink,RUFRSSLink,RUFRSTAPSLink,RUFRALCLink];
+    
     ////////////// Autres variables
     var Layers = []; // Liste des couches
     var popup = null; // Variable popup
@@ -1621,6 +1776,147 @@ map.on("load", function() {
             createHTMLList('Services centraux',listeServicescen,insertServicescen,ServicescenCount);
         }
         ServicescenCount += 1;
+    }
+    if (overlay == 'Formation UFRL'){
+        addCategoryOverlay(FUFRLLink,'Formation UFRL',FUFRLLinkState,'marker',FUFRLURL,tailleMarker,FUFRLCount);
+        if (FUFRLCount==0){
+            createHTMLList('Formation UFRL',listeFUFRL,insertFUFRL,FUFRLCount);
+        }
+        FUFRLCount += 1;
+    }
+    //////////////////////////////////  Formation et recherche //////////////////////////////////////  
+    FUFRLLink.onclick = function(e){
+        addCategoryOverlay(FUFRLLink,'Formation UFRL',FUFRLLinkState,'marker',FUFRLURL,tailleMarker,FUFRLCount);
+        if (FUFRLCount==0){
+            createHTMLList('Formation UFRL',listeFUFRL,insertFUFRL,FUFRLCount);
+        }
+        FUFRLCount += 1;
+    }
+if (overlay == 'Formation UFRSH'){
+        addCategoryOverlay(FUFRSHLink,'Formation UFRSH',FUFRSHLinkState,'marker',FUFRSHURL,tailleMarker,FUFRSHCount);
+        if (FUFRSHCount==0){
+            createHTMLList('Formation UFRSH',listeFUFRSH,insertFUFRSH,FUFRSHCount);
+        }
+        FUFRSHCount += 1;
+    }  
+    FUFRSHLink.onclick = function(e){
+        addCategoryOverlay(FUFRSHLink,'Formation UFRSH',FUFRSHLinkState,'marker',FUFRSHURL,tailleMarker,FUFRSHCount);
+        if (FUFRSHCount==0){
+            createHTMLList('Formation UFRSH',listeFUFRSH,insertFUFRSH,FUFRSHCount);
+        }
+        FUFRSHCount += 1;
+    }
+if (overlay == 'Formation UFRSS'){
+        addCategoryOverlay(FUFRSSLink,'Formation UFRSS',FUFRSSLinkState,'marker',FUFRSSURL,tailleMarker,FUFRSSCount);
+        if (FUFRSSCount==0){
+            createHTMLList('Formation UFRSS',listeFUFRSS,insertFUFRSS,FUFRSSCount);
+        }
+        FUFRSSCount += 1;
+    }  
+    FUFRSSLink.onclick = function(e){
+        addCategoryOverlay(FUFRSSLink,'Formation UFRSS',FUFRSSLinkState,'marker',FUFRSSURL,tailleMarker,FUFRSSCount);
+        if (FUFRSSCount==0){
+            createHTMLList('Formation UFRSS',listeFUFRSS,insertFUFRSS,FUFRSSCount);
+        }
+        FUFRSSCount += 1;
+    }
+if (overlay == 'Formation UFRSTAPS'){
+        addCategoryOverlay(FUFRSTAPSLink,'Formation UFRSTAPS',FUFRSTAPSLinkState,'marker',FUFRSTAPSURL,tailleMarker,FUFRSTAPSCount);
+        if (FUFRSTAPSCount==0){
+            createHTMLList('Formation UFRSTAPS',listeFUFRSTAPS,insertFUFRSTAPS,FUFRSTAPSCount);
+        }
+        FUFRSTAPSCount += 1;
+    }  
+    FUFRSTAPSLink.onclick = function(e){
+        addCategoryOverlay(FUFRSTAPSLink,'Formation UFRSTAPS',FUFRSTAPSLinkState,'marker',FUFRSTAPSURL,tailleMarker,FUFRSTAPSCount);
+        if (FUFRSTAPSCount==0){
+            createHTMLList('Formation UFRSTAPS',listeFUFRSTAPS,insertFUFRSTAPS,FUFRSTAPSCount);
+        }
+        FUFRSTAPSCount += 1;
+    }
+if (overlay == 'Formation UFRALC'){
+        addCategoryOverlay(FUFRALCLink,'Formation UFRALC',FUFRALCLinkState,'marker',FUFRALCURL,tailleMarker,FUFRALCCount);
+        if (FUFRALCCount==0){
+            createHTMLList('Formation UFRALC',listeFUFRALC,insertFUFRALC,FUFRALCCount);
+        }
+        FUFRALCCount += 1;
+    }  
+    FUFRALCLink.onclick = function(e){
+        addCategoryOverlay(FUFRALCLink,'Formation UFRALC',FUFRALCLinkState,'marker',FUFRALCURL,tailleMarker,FUFRALCCount);
+        if (FUFRALCCount==0){
+            createHTMLList('Formation UFRALC',listeFUFRALC,insertFUFRALC,FUFRALCCount);
+        }
+        FUFRALCCount += 1;
+    }
+    if (overlay == 'Recherche UFRL'){
+        addCategoryOverlay(RUFRLLink,'Recherche UFRL',RUFRLLinkState,'marker',RUFRLURL,tailleMarker,RUFRLInfoPopup,RUFRLCount);
+        if (RUFRLCount==0){
+            createHTMLList('Recherche UFRL',listeRUFRL,insertRUFRL,RUFRLCount);
+        }
+        RUFRLCount += 1;
+    }  
+    RUFRLLink.onclick = function(e){
+        addCategoryOverlay(RUFRLLink,'Recherche UFRL',RUFRLLinkState,'marker',RUFRLURL,tailleMarker,RUFRLCount);
+        if (RUFRLCount==0){
+            createHTMLList('Recherche UFRL',listeRUFRL,insertRUFRL,RUFRLCount);
+        }
+        RUFRLCount += 1;
+    }
+if (overlay == 'Recherche UFRSH'){
+        addCategoryOverlay(RUFRSHLink,'Recherche UFRSH',RUFRSHLinkState,'marker',RUFRSHURL,tailleMarker,RUFRSHCount);
+        if (RUFRSHCount==0){
+            createHTMLList('Recherche UFRSH',listeRUFRSH,insertRUFRSH,RUFRSHCount);
+        }
+        RUFRSHCount += 1;
+    }  
+    RUFRSHLink.onclick = function(e){
+        addCategoryOverlay(RUFRSHLink,'Recherche UFRSH',RUFRSHLinkState,'marker',RUFRSHURL,tailleMarker,RUFRSHCount);
+        if (RUFRSHCount==0){
+            createHTMLList('Recherche UFRSH',listeRUFRSH,insertRUFRSH,RUFRSHCount);
+        }
+        RUFRSHCount += 1;
+    }
+if (overlay == 'Recherche UFRSS'){
+        addCategoryOverlay(RUFRSSLink,'Recherche UFRSS',RUFRSSLinkState,'marker',RUFRSSURL,tailleMarker,RUFRSSCount);
+        if (RUFRSSCount==0){
+            createHTMLList('Recherche UFRSS',listeRUFRSS,insertRUFRSS,RUFRSSCount);
+        }
+        RUFRSSCount += 1;
+    }  
+    RUFRSSLink.onclick = function(e){
+        addCategoryOverlay(RUFRSSLink,'Recherche UFRSS',RUFRSSLinkState,'marker',RUFRSSURL,tailleMarker,RUFRSSCount);
+        if (RUFRSSCount==0){
+            createHTMLList('Recherche UFRSS',listeRUFRSS,insertRUFRSS,RUFRSSCount);
+        }
+        RUFRSSCount += 1;
+    }
+if (overlay == 'Recherche UFRSTAPS'){
+        addCategoryOverlay(RUFRSTAPSLink,'Recherche UFRSTAPS',RUFRSTAPSLinkState,'marker',RUFRSTAPSURL,tailleMarker,RUFRSTAPSCount);
+        if (RUFRSTAPSCount==0){
+            createHTMLList('Recherche UFRSTAPS',listeRUFRSTAPS,insertRUFRSTAPS,RUFRSTAPSCount);
+        }
+        RUFRSTAPSCount += 1;
+    }  
+    RUFRSTAPSLink.onclick = function(e){
+        addCategoryOverlay(RUFRSTAPSLink,'Recherche UFRSTAPS',RUFRSTAPSLinkState,'marker',RUFRSTAPSURL,tailleMarker,RUFRSTAPSCount);
+        if (RUFRSTAPSCount==0){
+            createHTMLList('Recherche UFRSTAPS',listeRUFRSTAPS,insertRUFRSTAPS,RUFRSTAPSCount);
+        }
+        RUFRSTAPSCount += 1;
+    }
+if (overlay == 'Recherche UFRALC'){
+        addCategoryOverlay(RUFRALCLink,'Recherche UFRALC',RUFRALCLinkState,'marker',RUFRALCURL,tailleMarker,RUFRALCCount);
+        if (RUFRALCCount==0){
+            createHTMLList('Recherche UFRALC',listeRUFRALC,insertRUFRALC,RUFRALCCount);
+        }
+        RUFRALCCount += 1;
+    }  
+    RUFRALCLink.onclick = function(e){
+        addCategoryOverlay(RUFRALCLink,'Recherche UFRALC',RUFRALCLinkState,'marker',RUFRALCURL,tailleMarker,RUFRALCCount);
+        if (RUFRALCCount==0){
+            createHTMLList('Recherche UFRALC',listeRUFRALC,insertRUFRALC,RUFRALCCount);
+        }
+        RUFRALCCount += 1;
     }
 
 //////////////////////////////////  Bibliothèques et culture //////////////////////////////////////
